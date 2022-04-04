@@ -2,7 +2,8 @@
     "name": "micha/annonces",
     "autoload": {
         "psr-4": {
-            "Router\\":"routes/"
+            "Router\\":"routes/",
+            "App\\":"app/"
         }
     },
     "authors": [
