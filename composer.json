@@ -1,0 +1,15 @@
+{
+    "name": "micha/annonces",
+    "autoload": {
+        "psr-4": {
+            "Router\\":"routes/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Micka73100",
+            "email": "Michael-73@live.Fr"
+        }
+    ],
+    "require": {}
+}
