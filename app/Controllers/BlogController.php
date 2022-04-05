@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use Database\DbConnection;
 
 class BlogController extends Controller {
 
@@ -12,7 +13,14 @@ class BlogController extends Controller {
 
     public function show(int $id)
     {
+        $db = new DbConnection('projet4', 'localhost', 'root', '');
+        $db->getPDO();
+        $sql= $db->getPDO()->query('SELECT * FROM annonces');
+        $annonces=$sql->fetchAll(); 
+        var_dump($annonces); 
+ 
         return $this->view('blog.show', compact('id'));
+        
     }
 }
 
