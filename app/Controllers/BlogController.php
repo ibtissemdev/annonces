@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 
-class BlogController extends controllers {
+class BlogController extends Controller {
 
     public function index()
     {
@@ -12,7 +12,7 @@ class BlogController extends controllers {
 
     public function show(int $id)
     {
-        return $this->view('blog.index', compact('id'));
+        return $this->view('blog.show', compact('id'));
     }
 }
 

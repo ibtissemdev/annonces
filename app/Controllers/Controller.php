@@ -1,8 +1,8 @@
 <?php
 
-namespace app\Controllers;
+namespace App\Controllers;
 
-class Controllers{
+class Controller{
 
     public function view(string $path, array $params = null)
     {
