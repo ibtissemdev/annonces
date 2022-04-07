@@ -21,10 +21,10 @@ class DbConnection {
 
  public function getPDO(): PDO {
     //Si $this->pdo est différent de null alors on le retourne (condition ternaire)
-    return $this->pdo ?? $this->pdo = new PDO("mysql:dbname={$this->dbname};host={$this->host}", $this->username, $this->password,
-        PDO
-);
-
+    return $this->pdo ?? $this->pdo = new PDO("mysql:dbname={$this->dbname};host={$this->host}", $this->username, $this->password, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, //récupère un objet
+        PDO::MYSQL_ATTR_INIT_COMMAND => 'SET CHARACTER SET UTF8' //pour reconnaître tous les caractères
+    ]);
  }
-
 }

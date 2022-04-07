@@ -8,6 +8,7 @@ define ('VIEWS', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SE
 define ('SCRIPTS', dirname($_SERVER['SCRIPT_NAME']) . DIRECTORY_SEPARATOR);
 
 $router = new Router($_GET['url']);
+$router->get('/posts', 'App\Controllers\BlogController@accueil');
 $router->get('/', 'App\Controllers\BlogController@index');
 $router->get('/posts/:id', 'App\Controllers\BlogController@show'); 
 
