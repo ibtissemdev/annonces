@@ -28,7 +28,7 @@
   </div>
 </nav>
 
-    <div class="contener">
+    <div class="container">
             <?= $content ?>
     </div>
     

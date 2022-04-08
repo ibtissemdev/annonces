@@ -16,6 +16,9 @@ $router = new Router($_GET['url']);
 $router->get('/posts', 'App\Controllers\AnnonceController@accueil');
 $router->get('/', 'App\Controllers\AnnonceController@index');
 $router->get('/posts/:id', 'App\Controllers\AnnonceController@show'); 
+$router->get('/posts/delete/:id', 'App\Controllers\AnnonceController@sup'); 
+$router->get('/posts', 'App\Controllers\AnnonceController@form'); 
+
 
 $router->run();
 
