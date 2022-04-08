@@ -2,8 +2,9 @@
 
 namespace App\Controllers;
 
+use App\Models\Annonce;
 
-class BlogController extends Controller {
+class AnnonceController extends Controller {
 
     public function accueil(){
         return $this->view('blog.accueil');
@@ -11,16 +12,18 @@ class BlogController extends Controller {
 
     public function index()
     {
-       $sql= $this->db->getPDO()->query('SELECT * FROM annonces ORDER BY nom DESC');
-       $annonces=$sql->fetchAll(); 
+        $annonce= new Annonce ($this->getDb());
+        $annonces= $annonce->findAll();
+
+      
     return $this->view('blog.index', compact('annonces'));//permet d'envoyer un tableau qui contient nos données qui aura la clée annonces
     }
 
     public function show(int $id)
     {
-        $sql= $this->db->getPDO()->prepare('SELECT * FROM annonces WHERE id=?');
-        $sql-> execute([$id]);
-        $annonce= $sql ->fetch() ; 
+        $annonce= new Annonce ($this->getDb());
+        $annonce= $annonce->findById($id);
+
         return $this->view('blog.show', compact('annonce'));
         
     }

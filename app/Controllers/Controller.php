@@ -3,8 +3,8 @@
 namespace App\Controllers;
 
 use Database\DbConnection;
-
-class Controller{
+//Classe abstraite : classe qui ne sera jamais instancié
+abstract class  Controller{
 
     protected $db; 
 
@@ -13,7 +13,12 @@ class Controller{
         $this->db= $db;
     }
 
-    public function view(string $path, array $params = null)
+    protected function getDb() {
+
+        return $this->db;
+      }
+     
+    protected function view(string $path, array $params = null)
     {
         ob_start();
         $path = str_replace('.', DIRECTORY_SEPARATOR, $path);
@@ -21,6 +26,7 @@ class Controller{
         $content = ob_get_clean();
         require VIEWS . 'layout.php';
     }
+
 }
 
 
