@@ -65,8 +65,8 @@ class AnnonceController extends Controller {
 
             $newMail=$mail->setMail($_POST['mail']);
             if (isset($_GET['id'])) {
-              $annonce->update($_GET['id'],$newAnnonce);
-              } else {
+            $annonce->update($_GET['id'],$newAnnonce);
+            } else {
                 $annonce->insert($newAnnonce);
                 $mail->insert($newMail);
               }
