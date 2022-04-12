@@ -22,9 +22,7 @@
       <li class="nav-item">
         <a class="nav-link" href="/posts">Les derniers articles</a>
       </li>
-     
     </ul>
-   
   </div>
 </nav>
 

@@ -16,8 +16,8 @@ abstract class  Controller{
     protected function getDb() {
 
         return $this->db;
-      }
-     
+    }
+    
     protected function view(string $path, array $params = null)
     {
         ob_start();

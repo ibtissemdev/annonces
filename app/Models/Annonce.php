@@ -9,7 +9,7 @@ class Annonce extends Model {
     protected $description;
     protected $prix;
     protected $ville;
-   
+
     /**
      * Get the value of categorie
      */ 

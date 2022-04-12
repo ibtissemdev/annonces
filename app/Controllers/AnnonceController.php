@@ -44,11 +44,11 @@ class AnnonceController extends Controller {
 
             
             if (isset($_GET['id'])) {
-              $annonce->update($_GET['id'],$newAnnonce);
-              } else {
+            $annonce->update($_GET['id'],$newAnnonce);
+            } else {
                 $annonce->insert($newAnnonce);
-              }
-              header('Location:index.php');
+            }
+            header('Location:index.php');
             }*/
 
     
