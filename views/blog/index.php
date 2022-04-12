@@ -8,11 +8,11 @@
             <h2> <?= $annonce->nom // on récupère en objet?></h2>
             <p><?= $annonce->categorie // on récupère en objet?></p>
             <small><?= $annonce->nom // on récupère en objet?></small>
-      <a href="/annonces/posts/<?=$annonce->id?>"><button class='btn btn-primary'>Lire plus</button></a>
+      <a href="/annonces/annonces/<?=$annonce->id?>"><button class='btn btn-primary'>Lire plus</button></a>
         </div>
    
     </div>
 
 <?php endforeach ?>
 
-<a href="/annonces/form/"><button class='btn btn-primary'>Ajouter</button></a>
+<a href="/annonces/formulaire"><button class='btn btn-primary'>Ajouter</button></a>

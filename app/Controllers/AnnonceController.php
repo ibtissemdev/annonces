@@ -32,9 +32,9 @@ class AnnonceController extends Controller {
      header('Location: /annonces/ ');
         }
 
-    public function form($newAnnonce){
+    public function form(){
         $annonce=new Annonce ($this->getDb());
-        return $this->view('blog.form', compact('annonce')); 
+        return $this->view('blog.formulaire', compact('annonce')); 
         /*if (!empty($_POST)) {
             $newAnnonce=$annonce->setCategorie($_POST['categorie'])
             ->setNom($_POST['nom'])
