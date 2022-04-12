@@ -56,6 +56,9 @@ abstract class Model{
    $champs = implode(",", $champs);
    $sth = $this->db->getPDO()->prepare("INSERT INTO {$this->table} ($keys) VALUES ($champs)");
    $sth->execute($values);
+   $result=$this->db->getPDO()->lastInsertId();
+   return $result;
+   
   
  }
 

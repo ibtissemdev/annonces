@@ -63,19 +63,21 @@ class AnnonceController extends Controller {
                 //Boucle qui permet d'uploader plusieurs images
                 // print_r($_FILES)
 
-            $newMail=$mail->setMail($_POST['mail']);
             if (isset($_GET['id'])) {
             $annonce->update($_GET['id'],$newAnnonce);
             } else {
-                $annonce->insert($newAnnonce);
-                $mail->insert($newMail);
+               $result= $annonce->insert($newAnnonce);
+               $newMail=$mail->setMail($_POST['mail'])->setId_annonce($result);
+                    $mail->insert($newMail);
+                }
+               
               }
             
               header('Location: /annonces/');
             }
     }
 
-}
+
 
 
 

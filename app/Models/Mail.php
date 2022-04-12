@@ -4,14 +4,12 @@ namespace App\Models;
 class Mail extends Model {
 
     protected $table='utilisateurs'; 
-    //protected $id_annonce;
+    protected $id_annonce;
     protected $mail;
 
    
-    /**
-     * Get the value of categorie
-     */ 
-    /*public function getiId_annonce()
+    
+    public function getiId_annonce()
     {
         return $this->id_annonce;
     }
@@ -21,12 +19,12 @@ class Mail extends Model {
      *
      * @return  self
      */ 
-    // public function setId_annonce($id_annonce)
-    // {
-    //     $this->id_annonce = $id_annonce;
+    public function setId_annonce($id_annonce)
+    {
+        $this->id_annonce = $id_annonce;
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
     /**
      * Get the value of mail

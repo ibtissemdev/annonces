@@ -23,9 +23,8 @@
     <input type="hidden" name="Id" value="<?php if (isset($params['annonce']->id)) { echo  $paramas['annonce']->id;}?>">
 
              <label for="logement">Où  </label>
-            <select name="ville" id="ville" > Ville
-            <option value= "" disabled selected hidden> <?php 
-if (isset($params['annonce']->id)) { echo  $params['annonce']->ville;}?></option>
+            <select name="ville" id="ville" >
+        <?=(isset($params['annonce']->id)) ?  "<option>" . $params['annonce']->ville . "</option>" : "<option disabled selected hidden>Ville</option>";?>
                 <option value="Chambery">Chambéry</option>
                 <option value="Grenoble">Grenoble</option>
                 <option value="Annecy">Annecy</option>
@@ -34,8 +33,8 @@ if (isset($params['annonce']->id)) { echo  $params['annonce']->ville;}?></option
 
             <label for="categorie">Quoi </label>
             <select name="categorie" id="pet-select">
-            <option value= "" disabled selected hidden><?php 
-if (isset($params['annonce']->id)) { echo  $params['annonce']->categorie;}?></option>
+          <?=(isset($params['annonce']->id)) ?  "<option>" . $params['annonce']->categorie . "</option>" : "<option disabled selected hidden>Catégorie</option>";?>"
+
                 <option value="immobilier">Immobilier</option>
                 <option value="vehicule">Vehicules</option>
                 <option value="loisirs">Loisirs</option>
