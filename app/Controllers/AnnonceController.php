@@ -3,14 +3,11 @@
 namespace App\Controllers;
 
 use App\Models\Annonce;
-
+use App\Models\Mail;
 class AnnonceController extends Controller {
 
-    public function accueil(){
-        return $this->view('blog.accueil');
-    }
-
-    public function index()
+  
+  public function index()
     {
         $annonce= new Annonce ($this->getDb());
         $annonces= $annonce->findAll();
@@ -34,28 +31,51 @@ class AnnonceController extends Controller {
 
     public function form(){
         $annonce=new Annonce ($this->getDb());
-        return $this->view('blog.formulaire', compact('annonce')); 
-        /*if (!empty($_POST)) {
+    return $this->view('blog.formulaire', compact('annonce')); 
+    }   
+    
+    public function edit(int $id){
+        $annonce=(new Annonce ($this->getDb()))->findById($id);
+    return $this->view('blog.formulaire', compact('annonce')); 
+    }   
+    
+    public function create(){
+        $annonce=new Annonce ($this->getDb());
+        $mail=new Mail ($this->getDb());
+        if (!empty($_POST)) {
+            $countfiles = count($_FILES['file']['name']);
+            for($i=0;$i<$countfiles;$i++){
+                $filename = $_FILES['file']['name'][$i];
+                $photo[$i+1]=$filename;
+     
+                    move_uploaded_file($_FILES['file']['tmp_name'][$i],'images/'.$filename);}
+
             $newAnnonce=$annonce->setCategorie($_POST['categorie'])
             ->setNom($_POST['nom'])
             ->setDescription($_POST['description'])
             ->setPrix($_POST['prix'])
-            ->setVille($_POST['ville']);
+            ->setVille($_POST['ville'])->setphoto1($_FILES['file']['name'][0])
+            ->setphoto2($_FILES['file']['name'][1])
+            ->setphoto3($_FILES['file']['name'][2])
+            ->setphoto4($_FILES['file']['name'][3])
+            ->setphoto5($_FILES['file']['name'][4]);
+       
+                //Boucle qui permet d'uploader plusieurs images
+                // print_r($_FILES)
 
-            
+            $newMail=$mail->setMail($_POST['mail']);
             if (isset($_GET['id'])) {
               $annonce->update($_GET['id'],$newAnnonce);
               } else {
                 $annonce->insert($newAnnonce);
+                $mail->insert($newMail);
               }
-              header('Location:index.php');
-            }*/
-
-    
-    }   
+            
+              header('Location: /annonces/');
+            }
     }
 
-
+}
 
 
 

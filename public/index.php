@@ -18,7 +18,9 @@ $router->get('/', 'App\Controllers\AnnonceController/index');
 $router->get('/annonces/:id', 'App\Controllers\AnnonceController/show'); 
 $router->get('/annonces/delete/:id', 'App\Controllers\AnnonceController/sup'); 
 $router->get('/formulaire', 'App\Controllers\AnnonceController/form'); 
-
+$router->post('/formulaire', 'App\Controllers\AnnonceController/create'); 
+$router->get('/formulaire/:id', 'App\Controllers\AnnonceController/edit');
+$router->post('/formulaire/:id', 'App\Controllers\AnnonceController/create');
 
 $router->run();
 

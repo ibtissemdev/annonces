@@ -1,3 +1,6 @@
+<h1> <?= (isset($params['annonce']->id) && !empty($params['annonce']->id)) ? "Modifier ": "Ajouter"?> une annonce</h1>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -17,17 +20,22 @@
 <container>
     <h4>Créez votre annonce </h4>
     <form action=""  method="post" enctype="multipart/form-data">
+    <input type="hidden" name="Id" value="<?php if (isset($params['annonce']->id)) { echo  $paramas['annonce']->id;}?>">
+
              <label for="logement">Où  </label>
             <select name="ville" id="ville" > Ville
-            <option value= "" disabled selected hidden>Ville</option>
+            <option value= "" disabled selected hidden> <?php 
+if (isset($params['annonce']->id)) { echo  $params['annonce']->ville;}?></option>
                 <option value="Chambery">Chambéry</option>
                 <option value="Grenoble">Grenoble</option>
                 <option value="Annecy">Annecy</option>
                 <option value="Lyon">Lyon</option>
             </select>
+
             <label for="categorie">Quoi </label>
             <select name="categorie" id="pet-select">
-            <option value= "" disabled selected hidden>Catégorie</option>
+            <option value= "" disabled selected hidden><?php 
+if (isset($params['annonce']->id)) { echo  $params['annonce']->categorie;}?></option>
                 <option value="immobilier">Immobilier</option>
                 <option value="vehicule">Vehicules</option>
                 <option value="loisirs">Loisirs</option>
@@ -40,29 +48,34 @@
 
     <div>
     <label for="logement">Titre : </label>
-    <input type="text" id="logement" name="nom" required placeholder = "Ex : Une superbe voiture">
+    <input type="text" value="<?php 
+if (isset($params['annonce']->id)) { echo  $params['annonce']->nom;}?>" id="logement" name="nom" required placeholder = "Ex : Une superbe voiture">
     </div>
     
     <div>
     <label for="prix">Prix : </label>
-    <input type="number" id="wifi" name="prix" required placeholder = "Ex : Un prix correct">
+    <input type="number" value="<?php 
+if (isset($params['annonce']->id)) { echo  $params['annonce']->prix;}?>" id="wifi" name="prix" required placeholder = "Ex : Un prix correct">
     </div>
     <div>
     <label for="description">Desciption : </label>
-    <input type="text" id="parking" name="description" required placeholder = "Ex : Détails sur le produit">
+    <input type="text" id="parking" value="<?php 
+if (isset($params['annonce']->id)) { echo  $params['annonce']->description;}?>" name="description" required placeholder = "Ex : Détails sur le produit">
     </div>
     <div>
     <label for="file">Ajouter 5 photos : </label>
     <input type="file" name="file[]" multiple>
 
+    
     <div>
             <label for="email">Entrer votre email:</label>
-            <input type="email" id="email" size="30" name="mail" id="mail" placeholder="Entrer le mail" required>
+            <input type="email" id="email" value=" " size="30" name="mail" id="mail" placeholder="Entrer le mail" required>
 
             </div>
 
     <div id="submit">
-    <input type="submit" name="envoyer" value="Créer Annonce">
+    <input type="submit" name="envoyer" value="<?php 
+if (isset($params['annonce']->id)) { echo  'Modifier une annonce';} else {echo 'Ajouter une annonce'; }?>">
     </div>
 
     <input type="reset">
