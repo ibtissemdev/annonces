@@ -62,19 +62,19 @@ abstract class Model{
   
  }
 
- public function update($id,$data){
+ public function update($id, Model $data){
    $keys=[];
    $values=[];
    
  foreach ($data as $key => $value) {
-   if($value != null && $key!= 'table' && $key!='pdo') {
+   if($value != null && $key!= 'table' && $key!='db') {
    $keys[] = "$key = ?";
    $values[] = $value;
  }
 }
  $values[]=$id;
  $keys = implode(",", $keys);
- $sth = $this->pdo->prepare("UPDATE $this->table SET $keys WHERE Id = ?");
+ $sth = $this->db->getPDO()->prepare("UPDATE $this->table SET $keys WHERE id = ?");
  $sth->execute($values);
 }
 

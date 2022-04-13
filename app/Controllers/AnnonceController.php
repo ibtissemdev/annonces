@@ -48,7 +48,7 @@ class AnnonceController extends Controller {
                 $filename = $_FILES['file']['name'][$i];
                 $photo[$i+1]=$filename;
      
-                    move_uploaded_file($_FILES['file']['tmp_name'][$i],'images/'.$filename);}
+                    move_uploaded_file($_FILES['file']['tmp_name'][$i],'./images/'.$filename);}
 
             $newAnnonce=$annonce->setCategorie($_POST['categorie'])
             ->setNom($_POST['nom'])
@@ -60,11 +60,18 @@ class AnnonceController extends Controller {
             ->setphoto4($_FILES['file']['name'][3])
             ->setphoto5($_FILES['file']['name'][4]);
        
-                //Boucle qui permet d'uploader plusieurs images
-                // print_r($_FILES)
 
-            if (isset($_GET['id'])) {
-            $annonce->update($_GET['id'],$newAnnonce);
+            if (isset($_POST['id']) && !empty($_POST['id'])){
+          
+            $countfiles = count($_FILES['file']['name']);
+            for($i=0;$i<$countfiles;$i++){
+                $filename = $_FILES['file']['name'][$i];
+                $photo[$i+1]=$filename;
+     
+                    move_uploaded_file($_FILES['file']['tmp_name'][$i],'./images/'.$filename);}
+//echo "<pre>",print_r($_POST),"</pre>"; die ();
+                    $annonce->update($_POST['id'],$newAnnonce);
+                    
             } else {
                $result= $annonce->insert($newAnnonce);
                $newMail=$mail->setMail($_POST['mail'])->setId_annonce($result);
@@ -73,22 +80,8 @@ class AnnonceController extends Controller {
                
               }
             
-              header('Location: /annonces/');
+              //header('Location: /annonces/');
             }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ?>

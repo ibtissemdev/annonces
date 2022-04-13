@@ -13,6 +13,7 @@ define('DB_PWD', '');
 
 
 $router = new Router($_GET['url']);
+            //$path                                     $action
 $router->get('/annonces', 'App\Controllers\AnnonceController/accueil');
 $router->get('/', 'App\Controllers\AnnonceController/index');
 $router->get('/annonces/:id', 'App\Controllers\AnnonceController/show'); 

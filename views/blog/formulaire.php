@@ -20,8 +20,8 @@
 <container>
     <h4>Créez votre annonce </h4>
     <form action=""  method="post" enctype="multipart/form-data">
-    <input type="hidden" name="Id" value="<?php if (isset($params['annonce']->id)) { echo  $paramas['annonce']->id;}?>">
-
+    <input type="hidden" name="id" value="<?php if (isset($params['annonce']->id)) { echo  $params['annonce']->id;}?>">
+   
              <label for="logement">Où  </label>
             <select name="ville" id="ville" >
         <?=(isset($params['annonce']->id)) ?  "<option>" . $params['annonce']->ville . "</option>" : "<option disabled selected hidden>Ville</option>";?>
@@ -62,9 +62,20 @@ if (isset($params['annonce']->id)) { echo  $params['annonce']->prix;}?>" id="wif
 if (isset($params['annonce']->id)) { echo  $params['annonce']->description;}?>" name="description" required placeholder = "Ex : Détails sur le produit">
     </div>
     <div>
-    <label for="file">Ajouter 5 photos : </label>
-    <input type="file" name="file[]" multiple>
+   
 
+
+    <?php 
+    $test='photo';
+for ($i=1 ; $i<=5 ; $i++) {
+
+    $test='photo'.$i;
+    ?>
+     <label for="file">Ajouter photo <?=$i ?> <?php 
+if (isset($params['annonce']->id)) { echo '<img src= "../public/images/' . $params['annonce']->$test. '" alt="photo hébergement">';}?></label>
+   <input type="file" name="file[]">
+
+<?php } ?>
     
     <div>
             <label for="email">Entrer votre email:</label>

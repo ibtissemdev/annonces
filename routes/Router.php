@@ -6,8 +6,10 @@ class Router {
     public $url;
     public $routes = [];
 
+
+//On envoie l'url que l'on récupère en variable
     public function __construct($url)
-    {
+    {//retire les / en début et en fin d'url
         $this->url =trim($url, '/');
     }
 
@@ -22,8 +24,9 @@ class Router {
     }
 
     public function run()
-    {
+    {//Rercherche automatique de la méthode GET ou POST
         foreach ($this->routes[$_SERVER['REQUEST_METHOD']] as $route) {
+            //Si la route match avec l'Url alors on appelle notre route
             if ($route->matches($this->url)) {
                 return $route->execute();
             }
