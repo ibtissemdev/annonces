@@ -11,6 +11,8 @@
 
  
 <container>
+    <?php require '../index.html' ;
+    ?>
     <h4>Créez votre annonce </h4>
  <p></p>
 

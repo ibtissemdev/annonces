@@ -11,11 +11,7 @@
     <title>Corner Shop</title>
 </head>
 <body>
-    <nav>
-        <img src="assets\logo_bg_removed.png" alt="logo du site"> 
-        <input id="searchbar" onkeyup="search_animal()" type="text"
-        name="search" placeholder="Je recherche..."> 
-    </nav>
+ 
 
 <container>
     <h4>Créez votre annonce </h4>

@@ -210,7 +210,7 @@ class Annonce extends Model {
      */ 
     public function setPhoto1($photo1)
     {
-        error_log("setter photo 1 : ".$photo1);
+        //error_log("setter photo 1 : ".$photo1);
         $this->photo1 = $photo1;
 
         return $this;

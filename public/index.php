@@ -1,7 +1,7 @@
 <?php 
 
 use Router\Router; 
-
+// A chaque nouvelle instance d'une classe pas besoin de require
 require '../vendor/autoload.php'; 
 
 define ('VIEWS', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR);
@@ -13,18 +13,26 @@ define('DB_PWD', '');
 
 
 $router = new Router($_GET['url']);
-            //$path                                     $action
+        //      $path        namespace                      $action
 $router->get('/annonces', 'App\Controllers\AnnonceController/accueil');
+$router->get('/genpdf', 'App\Controllers\AnnonceController/genPdf');
+
 $router->get('/', 'App\Controllers\AnnonceController/index');
+
 $router->get('/annonces/:id', 'App\Controllers\AnnonceController/show'); 
+
 $router->get('/annonces/delete/:id', 'App\Controllers\AnnonceController/sup'); 
 $router->get('/formulaire', 'App\Controllers\AnnonceController/form'); 
+       //post cart Récupération de données     
 $router->post('/formulaire', 'App\Controllers\AnnonceController/create'); 
+
 $router->get('/formulaire/:id', 'App\Controllers\AnnonceController/edit');
 $router->post('/formulaire/:id', 'App\Controllers\AnnonceController/create');
+
 $router->get('/valid/:id', 'App\Controllers\AnnonceController/valid');
 $router->post('/valid/:id', 'App\Controllers\AnnonceController/valid');
 
+//Vérifie si quelque chose match sur notre route
 $router->run();
 
 ?>

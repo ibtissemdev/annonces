@@ -57,6 +57,7 @@ $resultat = $sth->fetchAll(PDO::FETCH_ASSOC);
   }
  
   ?>
+  <a href="/annonces/formulaire"><button class='btn btn-primary'>Ajouter</button></a>
 <div class="liste">
 <?php foreach ($params['annonces'] as $annonce) : ?>
 
@@ -73,4 +74,3 @@ $resultat = $sth->fetchAll(PDO::FETCH_ASSOC);
 
 <?php endforeach ?>
 </div>
-<a href="/annonces/formulaire"><button class='btn btn-primary'>Ajouter</button></a>

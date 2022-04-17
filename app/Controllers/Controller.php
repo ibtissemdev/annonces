@@ -7,7 +7,7 @@ use Database\DbConnection;
 abstract class  Controller{
 
     protected $db; 
-
+    // A la construction du controller on prend une instance de Dbconnection et on le stocke dans db
     public function __construct(DbConnection  $db)
     {
         $this->db= $db;
