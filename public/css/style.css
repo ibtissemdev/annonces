@@ -1,3 +1,85 @@
+@import url("https://fonts.googleapis.com/css2?family=Beau+Rivage&display=swap");
+body {
+  margin: 40px;
+}
 
+.logo {
+  font-family: "Beau Rivage", cursive;
+  text-decoration: none;
+  font-size: 40px;
+  font-weight: 900;
+  color: #323432;
+}
+
+nav {
+  padding: 20px;
+  background-color: #FAC900;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.liste {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+img {
+  width: 150px;
+}
+
+span {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 80px;
+}
+
+.annonce {
+  border: 2px solid;
+  border: outset;
+  border-radius: 6px;
+  margin: 10px;
+  box-shadow: 10px 5px 5px rgb(214, 212, 212);
+  width: 500px;
+  height: 300px;
+}
+
+button {
+  margin: 10px;
+}
+
+.plus {
+  background-color: #FAC900;
+  /* Green */
+  border: none;
+  color: white;
+  padding: 15px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  -webkit-transition-duration: 0.4s;
+  /* Safari */
+  transition-duration: 0.4s;
+}
+
+.plus:hover {
+  background-color: #323432;
+  /* Green */
+  color: white;
+  box-shadow: 10px 5px 5px rgb(214, 212, 212);
+}
 
 /*# sourceMappingURL=style.css.map */

@@ -21,7 +21,7 @@
     <h4>Créez votre annonce </h4>
     <form action=""  method="post" enctype="multipart/form-data">
     <input type="hidden" name="id" value="<?php if (isset($params['annonce']->id)) { echo  $params['annonce']->id;}?>">
-   
+    <input type="hidden" name="idTmp" value="<?= rand(10000, 99999) ?>">
              <label for="logement">Où  </label>
             <select name="ville" id="ville" >
         <?=(isset($params['annonce']->id)) ?  "<option>" . $params['annonce']->ville . "</option>" : "<option disabled selected hidden>Ville</option>";?>
@@ -34,7 +34,6 @@
             <label for="categorie">Quoi </label>
             <select name="categorie" id="pet-select">
           <?=(isset($params['annonce']->id)) ?  "<option>" . $params['annonce']->categorie . "</option>" : "<option disabled selected hidden>Catégorie</option>";?>"
-
                 <option value="immobilier">Immobilier</option>
                 <option value="vehicule">Vehicules</option>
                 <option value="loisirs">Loisirs</option>

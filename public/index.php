@@ -22,6 +22,8 @@ $router->get('/formulaire', 'App\Controllers\AnnonceController/form');
 $router->post('/formulaire', 'App\Controllers\AnnonceController/create'); 
 $router->get('/formulaire/:id', 'App\Controllers\AnnonceController/edit');
 $router->post('/formulaire/:id', 'App\Controllers\AnnonceController/create');
+$router->get('/valid/:id', 'App\Controllers\AnnonceController/valid');
+$router->post('/valid/:id', 'App\Controllers\AnnonceController/valid');
 
 $router->run();
 

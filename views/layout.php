@@ -4,26 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon super site !</title>
-    <link rel="stylesheet" href="<?= SCRIPTS . 'css' .DIRECTORY_SEPARATOR . 'app.css'?>">
+    <title>La bonne place !</title>
+    <link rel="stylesheet" href="<?= SCRIPTS . 'css' .DIRECTORY_SEPARATOR . 'style.css'?>">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/">Blog</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+<nav class="">
+  
+  <a class="logo" href="/">La bonne place</a>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="/">Accueil </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/posts">Les derniers articles</a>
-      </li>
-    </ul>
-  </div>
+  <form action="recherche.php" method="post">
+  <label for="recherche">Recherche</label>
+<input type="search" name="search" >
+<button name="envoyer">Envoyer</button>
+</form>
 </nav>
 
     <div class="container">
