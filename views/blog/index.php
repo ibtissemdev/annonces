@@ -65,7 +65,8 @@ $resultat = $sth->fetchAll(PDO::FETCH_ASSOC);
 <div class="annonce">
         <span><div class="nom"><h2> <?= $annonce->nom // on récupère en objet?></h2>
             <p><?= $annonce->categorie // on récupère en objet?></p></div>
-             <?= '<img src= "./public/images/' . $annonce->photo1 . '" alt="photo annonce">'; // on récupère en objet?>
+             <img src="<?=$annonce->photo1?>" alt="photo annonce"> 
+
 
     <a href="/annonces/annonces/<?=$annonce->id?>"><button class='plus'>Lire plus</button></a></span>
 

@@ -27,14 +27,12 @@
 <span><img src="http://localhost/annonces/public/images/<?=($_FILES['photo4']) ? $_FILES['photo4']['name'] : "image vide" ?>"></span><br>
 <span><img src="http://localhost/annonces/public/images/<?=($_FILES['photo5']) ? $_FILES['photo5']['name'] : "image vide" ?>"></span><br>
 
-<?php var_dump($_FILES) ;?>
+
 
 
     <?php error_log(print_r($_POST['idTmp'],1)) ?><br>
 <?php $slug=$_POST['idTmp'].'/'.$_POST['ville'].'/'.$_POST['categorie'].'/'.$_POST['nom'].'/'.$_POST['prix'].'/'.$_POST['description'].'/'.$_POST['mail'].'/'.$_FILES['photo1']['name'].'/'.$_FILES['photo2']['name'].'/'.$_FILES['photo3']['name'].'/'.$_FILES['photo4']['name'].'/'.$_FILES['photo5']['name'];
-// $ivlen=openssl_cipher_iv_length($cipher="AES-256-CBC");
-// $iv=openssl_random_pseudo_bytes($ivlen);
-var_dump($slug) ;
+
 $slugcrypter=base64_encode($slug);
 ?>
 

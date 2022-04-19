@@ -7,7 +7,7 @@ use App\Models\Mail;
 
 
 class AnnonceController extends Controller
-{
+{//lien absolu pour l'image
     public const PATH_IMG_ABSOLUTE="http://localhost/annonces/public/images/";
 
     public function image(){
@@ -58,73 +58,54 @@ class AnnonceController extends Controller
     }
 
     public function valid()
-    {   session_start();
-        // echo "<pre>",print_r($_SESSION),"</pre>"; 
-        // error_log("Valid " . print_r($_SESSION,1));
+    {   ini_set('session.gc_maxlifetime',3600); //durée de vie de la session
+         session_start();
         $annonce = new Annonce($this->getDb());
         $mail = new Mail($this->getDb());
-        error_log(print_r($_GET['url'], 1));
-$tmp=$_GET['url'];
+        $tmp=str_replace("valid/","", $_GET['url']);
 
-$tmp=str_replace("valid/","", $tmp);
-var_dump($tmp);
-    //     $tmp = explode("/", $_GET['url']);
+   //Decrypte l'ensemble des données récupérées dans l'url
+        $slugdecryte=base64_decode($tmp);
 
-    //     $slugreconstitue="";
-    //    for ($i=1; $i<=count($tmp); $i++) {
-    //        $slugreconstitue.=$tmp[$i];
-
-    //    }
-
-//        $ivlen=openssl_cipher_iv_length($cipher="AES-256-CBC");
-// $iv=openssl_random_pseudo_bytes($ivlen);
-// $slugcrypter=openssl_encrypt($slug,"AES-256-CBC","unmotdepassecomplique",$options=OPENSSL_RAW_DATA,$iv);
-
-       $slugdecryte=base64_decode($tmp);
-        //print_r($slugdecryte);
          $donnees = explode("/",$slugdecryte);
-         var_dump($donnees);
-  
+
+    //element constituants les donnees                              0 => idTmp       
         if (!empty($donnees[0])&&($_SESSION['idTmp']==$donnees[0])) {
-            //error_log(print_r($_POST,1));
-
-            $newAnnonce = $annonce->setCategorie($donnees[2])
-                ->setNom($donnees[3])
-                ->setDescription($donnees[5])
-                ->setPrix($donnees[4])
-                ->setVille($donnees[1])
-                ->setphoto1(self::PATH_IMG_ABSOLUTE.$donnees[7])
-                ->setphoto2(self::PATH_IMG_ABSOLUTE.$donnees[8])
-                ->setphoto3(self::PATH_IMG_ABSOLUTE.$donnees[9])
-                ->setphoto4(self::PATH_IMG_ABSOLUTE.$donnees[10])
-                ->setphoto5(self::PATH_IMG_ABSOLUTE.$donnees[11]);
+            $newAnnonce = $annonce
+                ->setVille($donnees[1])                             //1=>ville   
+                ->setCategorie($donnees[2])                         //2=>categorie
+                ->setNom($donnees[3])                               //3=>nom
+                ->setPrix($donnees[4])                              //4=>prix
+                ->setDescription($donnees[5])                       //5=>description
+                ->setphoto1(self::PATH_IMG_ABSOLUTE.$donnees[7])    //7=>photo1
+                ->setphoto2(self::PATH_IMG_ABSOLUTE.$donnees[8])    //8=>photo8
+                ->setphoto3(self::PATH_IMG_ABSOLUTE.$donnees[9])    //9=>photo9
+                ->setphoto4(self::PATH_IMG_ABSOLUTE.$donnees[10])   //10=>photo10
+                ->setphoto5(self::PATH_IMG_ABSOLUTE.$donnees[11]);  //11=>photo11
             $result = $annonce->insert($newAnnonce);
-
+//Insertion de l'e-mail avec l'id_annonce
             $newMail=$mail->setMail($donnees[6])->setId_annonce($result);
             $mail->insert($newMail);
+ //Envoie du deuxième e-mail           
             $to = $donnees[6];
             $subject = 'Annonce ajoutée';
             $message = 'Votre annonce a bien été ajouté';
             $headers = "From: ibtissem.khir@gmail.com";
             mail($to, $subject, $message, $headers);
+//Destruction de la session idTmp
             unset($_SESSION['idTmp']);
         } else {
             echo 'aucune donnée reçue';
         }
     }
 
-    
     public function create()
     {
         $annonce = new Annonce($this->getDb());
         $mail = new Mail($this->getDb());
-        // var_dump($_POST);
-        //var_dump($_SESSION);
-
+ 
         //CONDITION SI $_POST N'EST PAS VIDE ALORS ON RECUPERE LES DONNEES
         if (!empty($_POST)) {
-            //UPLOAD D'IMAGE
-            //$countfiles = count($_FILES['file']['name']);
             for ($i =1; $i <= 5; $i++) {
                 $filename = $_FILES["photo$i"]['name'];
                 $photo[$i + 1] = $filename;
@@ -142,14 +123,6 @@ var_dump($tmp);
                 ->setphoto4($_FILES['photo4']['name'])
                 ->setphoto5($_FILES['photo5']['name']);
          
-            // error_log("newAnnonce" . print_r($newAnnonce, 1));
-            //ON STOCKE LES DONNES DU FORMULAIRES DANS LE $_SESSION
-            //$_SESSION[] = $photo;
-      
-        
-           //error_log("SESSION ".print_r($_SESSION,1));
-            //$_SESSION=[$_FILES['file']['name'][0]];
-         
             //CONDITION POUR VERIFIER SI ON A UN ID ALORS ON APPELLE LA FONCTION UPDATE
             if (isset($_POST['id']) && !empty($_POST['id'])) {
                 for ($i =1; $i <= 5; $i++) {
@@ -157,8 +130,7 @@ var_dump($tmp);
                     $photo[$i + 1] = $filename;
                     move_uploaded_file($_FILES["photo$i"]['tmp_name'], './images/' . $filename);
                 }
-               // echo "<pre>", print_r($_POST), "</pre>";
-               // die();
+
                 $annonce->update($_POST['id'], $newAnnonce);
 
                 //ENVOIE DU MAIL APRES AVOIR REMPLI LES CHAMPS DU FORMULAIRE
@@ -166,12 +138,10 @@ var_dump($tmp);
 
                 $mail = $_POST['mail'];
                 print_r($mail);
-
                 $to = $mail;
                 $subject = "Validation annonce";
                 ob_start();
                 require '../views/blog/formulaire.mail.php';
-                // Pour revenir à la ligne tous les 70 caractères environ
                 $message = ob_get_clean();
                 $message = wordwrap($message, 70, "\r\n");
                 // Le destinataire : 
@@ -184,11 +154,6 @@ var_dump($tmp);
                 } else {
                     echo 'Votre message n\'a pas pu être envoyé';
                 }
-
-                // print_r($result);
-                //    $result= $annonce->insert($newAnnonce);
-                //    $newMail=$mail->setMail($_POST['mail'])->setId_annonce($result);
-                //         $mail->insert($newMail);
 
             }
         }
