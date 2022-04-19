@@ -8,6 +8,16 @@
     <link rel="stylesheet" href="<?= SCRIPTS . 'css' .DIRECTORY_SEPARATOR . 'style.css'?>">
 </head>
 <body>
+<nav class="">
+  
+  <a class="logo" href="/annonces"><img class="logo" src="../../annonces\lebonteko.png" alt="logo le bon T ko"></a>
+
+  <form action="recherche.php" method="post">
+  <label for="recherche">Recherche</label>
+<input type="search" name="search" >
+<button name="envoyer">Envoyer</button>
+</form>
+</nav>
 
     <div class="container">
             <?= $content ?>

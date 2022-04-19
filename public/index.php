@@ -18,7 +18,7 @@ $router->get('/annonces', 'App\Controllers\AnnonceController/accueil');
 $router->get('/genpdf', 'App\Controllers\AnnonceController/genPdf');
 
 $router->get('/', 'App\Controllers\AnnonceController/index');
-
+$router->get('/annonces/public/images/:id','App\Controllers\AnnonceController/image');
 $router->get('/annonces/:id', 'App\Controllers\AnnonceController/show'); 
 
 $router->get('/annonces/delete/:id', 'App\Controllers\AnnonceController/sup'); 
@@ -28,8 +28,8 @@ $router->post('/formulaire', 'App\Controllers\AnnonceController/create');
 
 $router->get('/formulaire/:id', 'App\Controllers\AnnonceController/edit');
 $router->post('/formulaire/:id', 'App\Controllers\AnnonceController/create');
-
-$router->get('/valid/:id', 'App\Controllers\AnnonceController/valid');
+//Lien du mail 
+$router->get('/valid/:slug', 'App\Controllers\AnnonceController/valid');
 $router->post('/valid/:id', 'App\Controllers\AnnonceController/valid');
 
 //Vérifie si quelque chose match sur notre route

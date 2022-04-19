@@ -19,6 +19,7 @@ nav {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+ 
 }
 
 .liste {
@@ -83,4 +84,9 @@ button {
     background-color: #323432; /* Green */
     color: white;
     box-shadow: 10px 5px 5px rgb(214, 212, 212);
+}
+
+.logo {
+
+    width: 200px;
 }

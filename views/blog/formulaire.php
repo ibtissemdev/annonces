@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <h1> <?= (isset($params['annonce']->id) && !empty($params['annonce']->id)) ? "Modifier ": "Ajouter"?> une annonce</h1>
 
 
@@ -12,12 +14,12 @@
 </head>
 <body>
  
-
+<?php $idtmp=rand(10000, 99999); $_SESSION['idTmp']=$idtmp ?>
 <container>
     <h4>Créez votre annonce </h4>
     <form action=""  method="post" enctype="multipart/form-data">
     <input type="hidden" name="id" value="<?php if (isset($params['annonce']->id)) { echo  $params['annonce']->id;}?>">
-    <input type="hidden" name="idTmp" value="<?= rand(10000, 99999) ?>">
+    <input type="hidden" name="idTmp" value="<?= $idtmp ?>">
              <label for="logement">Où  </label>
             <select name="ville" id="ville" >
         <?=(isset($params['annonce']->id)) ?  "<option>" . $params['annonce']->ville . "</option>" : "<option disabled selected hidden>Ville</option>";?>
@@ -68,7 +70,7 @@ for ($i=1 ; $i<=5 ; $i++) {
     ?>
      <label for="file">Ajouter photo <?=$i ?> <?php 
 if (isset($params['annonce']->id)) { echo '<img src= "../public/images/' . $params['annonce']->$test. '" alt="photo hébergement">';}?></label>
-   <input type="file" name="file[]">
+   <input type="file" name="<?=$test?>">
 
 <?php } ?>
     

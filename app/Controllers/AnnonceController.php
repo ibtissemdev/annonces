@@ -5,9 +5,16 @@ namespace App\Controllers;
 use App\Models\Annonce;
 use App\Models\Mail;
 
-session_start();
+
 class AnnonceController extends Controller
 {
+    public const PATH_IMG_ABSOLUTE="http://localhost/annonces/public/images/";
+
+    public function image(){
+
+        return $this->view('blog.formulaire.mail.php' );
+    }
+
     public function index()
     {
         $annonce = new Annonce($this->getDb());
@@ -18,7 +25,9 @@ class AnnonceController extends Controller
     public function genPdf()
     {
         $annonce = new Annonce($this->getDb());
-        return $this->view('blog.genpdf'); //permet d'envoyer un tableau qui contient nos données qui aura la clée annonces
+        $annonces = $annonce->findAll();
+        return $this->view('blog.genpdf', compact('annonces') ); //permet d'envoyer un tableau qui contient nos données qui aura la clée annonces
+        
     }
 
     public function show(int $id)
@@ -49,37 +58,56 @@ class AnnonceController extends Controller
     }
 
     public function valid()
-    {   
-        echo "<pre>",print_r($_SESSION),"</pre>"; 
-        error_log("Valid " . print_r($_SESSION,1));
+    {   session_start();
+        // echo "<pre>",print_r($_SESSION),"</pre>"; 
+        // error_log("Valid " . print_r($_SESSION,1));
         $annonce = new Annonce($this->getDb());
         $mail = new Mail($this->getDb());
         error_log(print_r($_GET['url'], 1));
-        $tmp = explode("/", $_GET['url']);
-        $idtmp = $tmp[1];
-        print_r($idtmp);
+$tmp=$_GET['url'];
 
-       // echo "<pre> fonction valid",print_r($_SESSION),"</pre>"; 
-     
-        if (!empty($idtmp)) {
+$tmp=str_replace("valid/","", $tmp);
+var_dump($tmp);
+    //     $tmp = explode("/", $_GET['url']);
+
+    //     $slugreconstitue="";
+    //    for ($i=1; $i<=count($tmp); $i++) {
+    //        $slugreconstitue.=$tmp[$i];
+
+    //    }
+
+//        $ivlen=openssl_cipher_iv_length($cipher="AES-256-CBC");
+// $iv=openssl_random_pseudo_bytes($ivlen);
+// $slugcrypter=openssl_encrypt($slug,"AES-256-CBC","unmotdepassecomplique",$options=OPENSSL_RAW_DATA,$iv);
+
+       $slugdecryte=base64_decode($tmp);
+        //print_r($slugdecryte);
+         $donnees = explode("/",$slugdecryte);
+         var_dump($donnees);
+  
+        if (!empty($donnees[0])&&($_SESSION['idTmp']==$donnees[0])) {
             //error_log(print_r($_POST,1));
-            $newAnnonce = $annonce->setCategorie($_SESSION['categorie'])
-                ->setNom($_SESSION['nom'])
-                ->setDescription($_SESSION['description'])
-                ->setPrix($_SESSION['prix'])
-                ->setVille($_SESSION['ville'])
-                ->setphoto1($_SESSION['photo1'])
-                ->setphoto2($_SESSION['photo2'])
-                ->setphoto3($_SESSION['photo3'])
-                ->setphoto4($_SESSION['photo4'])
-                ->setphoto5($_SESSION['photo5']);
+
+            $newAnnonce = $annonce->setCategorie($donnees[2])
+                ->setNom($donnees[3])
+                ->setDescription($donnees[5])
+                ->setPrix($donnees[4])
+                ->setVille($donnees[1])
+                ->setphoto1(self::PATH_IMG_ABSOLUTE.$donnees[7])
+                ->setphoto2(self::PATH_IMG_ABSOLUTE.$donnees[8])
+                ->setphoto3(self::PATH_IMG_ABSOLUTE.$donnees[9])
+                ->setphoto4(self::PATH_IMG_ABSOLUTE.$donnees[10])
+                ->setphoto5(self::PATH_IMG_ABSOLUTE.$donnees[11]);
             $result = $annonce->insert($newAnnonce);
-            $mail->setMail($_POST['mail'])->setId_annonce($result);
-            $to = $_POST['mail'];
+
+            $newMail=$mail->setMail($donnees[6])->setId_annonce($result);
+            $mail->insert($newMail);
+            $to = $donnees[6];
             $subject = 'Annonce ajoutée';
             $message = 'Votre annonce a bien été ajouté';
             $headers = "From: ibtissem.khir@gmail.com";
             mail($to, $subject, $message, $headers);
+            unset($_SESSION['idTmp']);
         } else {
             echo 'aucune donnée reçue';
         }
@@ -96,11 +124,11 @@ class AnnonceController extends Controller
         //CONDITION SI $_POST N'EST PAS VIDE ALORS ON RECUPERE LES DONNEES
         if (!empty($_POST)) {
             //UPLOAD D'IMAGE
-            $countfiles = count($_FILES['file']['name']);
-            for ($i = 0; $i < $countfiles; $i++) {
-                $filename = $_FILES['file']['name'][$i];
+            //$countfiles = count($_FILES['file']['name']);
+            for ($i =1; $i <= 5; $i++) {
+                $filename = $_FILES["photo$i"]['name'];
                 $photo[$i + 1] = $filename;
-                move_uploaded_file($_FILES['file']['tmp_name'][$i], './images/' . $filename);
+                move_uploaded_file($_FILES["photo$i"]['tmp_name'], './images/' . $filename);
             }
             //ON DEFFINIE LES SETTERS
             $newAnnonce = $annonce->setCategorie($_POST['categorie'])
@@ -108,27 +136,26 @@ class AnnonceController extends Controller
                 ->setDescription($_POST['description'])
                 ->setPrix($_POST['prix'])
                 ->setVille($_POST['ville'])
-                ->setphoto1($_FILES['file']['name'][0])
-                ->setphoto2($_FILES['file']['name'][1])
-                ->setphoto3($_FILES['file']['name'][2])
-                ->setphoto4($_FILES['file']['name'][3])
-                ->setphoto5($_FILES['file']['name'][4]);
+                ->setphoto1($_FILES['photo1']['name'])
+                ->setphoto2($_FILES['photo2']['name'])
+                ->setphoto3($_FILES['photo3']['name'])
+                ->setphoto4($_FILES['photo4']['name'])
+                ->setphoto5($_FILES['photo5']['name']);
          
             // error_log("newAnnonce" . print_r($newAnnonce, 1));
             //ON STOCKE LES DONNES DU FORMULAIRES DANS LE $_SESSION
             //$_SESSION[] = $photo;
-            $_SESSION = $newAnnonce;
+      
         
            //error_log("SESSION ".print_r($_SESSION,1));
             //$_SESSION=[$_FILES['file']['name'][0]];
          
             //CONDITION POUR VERIFIER SI ON A UN ID ALORS ON APPELLE LA FONCTION UPDATE
             if (isset($_POST['id']) && !empty($_POST['id'])) {
-                $countfiles = count($_FILES['file']['name']);
-                for ($i = 0; $i < $countfiles; $i++) {
-                    $filename = $_FILES['file']['name'][$i];
+                for ($i =1; $i <= 5; $i++) {
+                    $filename = $_FILES["photo$i"]['name'];
                     $photo[$i + 1] = $filename;
-                    move_uploaded_file($_FILES['file']['tmp_name'][$i], './images/' . $filename);
+                    move_uploaded_file($_FILES["photo$i"]['tmp_name'], './images/' . $filename);
                 }
                // echo "<pre>", print_r($_POST), "</pre>";
                // die();
@@ -153,7 +180,7 @@ class AnnonceController extends Controller
                 $headers[] = 'Content-type: text/html; charset=utf-8';
                 if (mail($to, $subject, $message, implode("\r\n", $headers))) {
                     echo 'Votre message a bien été envoyé';
-                    echo "<pre>",print_r($_SESSION),"</pre>"; 
+                    
                 } else {
                     echo 'Votre message n\'a pas pu être envoyé';
                 }
