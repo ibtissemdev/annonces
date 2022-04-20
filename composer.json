@@ -13,5 +13,7 @@
             "email": "Michael-73@live.Fr"
         }
     ],
-    "require": {}
+    "require": {
+        "dompdf/dompdf": "^1.2"
+    }
 }

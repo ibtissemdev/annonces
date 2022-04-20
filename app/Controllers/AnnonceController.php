@@ -51,6 +51,10 @@ class AnnonceController extends Controller
         return $this->view('blog.formulaire', compact('annonce'));
     }
 
+    public function formUpdate()
+    {  
+        return $this->view('blog.formulairemodif');
+    }
     public function edit(int $id)
     {
         $annonce = (new Annonce($this->getDb()))->findById($id);
@@ -66,8 +70,7 @@ class AnnonceController extends Controller
 
    //Decrypte l'ensemble des données récupérées dans l'url
         $slugdecryte=base64_decode($tmp);
-
-         $donnees = explode("/",$slugdecryte);
+        $donnees = explode("/",$slugdecryte);
 
     //element constituants les donnees                              0 => idTmp       
         if (!empty($donnees[0])&&($_SESSION['idTmp']==$donnees[0])) {
@@ -82,16 +85,33 @@ class AnnonceController extends Controller
                 ->setphoto3(self::PATH_IMG_ABSOLUTE.$donnees[9])    //9=>photo9
                 ->setphoto4(self::PATH_IMG_ABSOLUTE.$donnees[10])   //10=>photo10
                 ->setphoto5(self::PATH_IMG_ABSOLUTE.$donnees[11]);  //11=>photo11
+
+                
             $result = $annonce->insert($newAnnonce);
+
 //Insertion de l'e-mail avec l'id_annonce
             $newMail=$mail->setMail($donnees[6])->setId_annonce($result);
             $mail->insert($newMail);
+
  //Envoie du deuxième e-mail           
             $to = $donnees[6];
-            $subject = 'Annonce ajoutée';
-            $message = 'Votre annonce a bien été ajouté';
-            $headers = "From: ibtissem.khir@gmail.com";
-            mail($to, $subject, $message, $headers);
+            $subject = "Validation annonce";
+            ob_start();
+            require '../views/blog/mail.sup.php';
+            $message = ob_get_clean();
+            $message = wordwrap($message, 70, "\r\n");
+            // Le destinataire : 
+            $headers[] = "From: ibtissem.khiri@gmail.com";
+            $headers[] = 'MIME-Version: 1.0';
+            $headers[] = 'Content-type: text/html; charset=utf-8';
+            if (mail($to, $subject, $message, implode("\r\n", $headers))) {
+                echo 'Votre message a bien été envoyé';
+          
+             
+            } else {
+                echo 'Votre message n\'a pas pu être envoyé';
+            }
+            
 //Destruction de la session idTmp
             unset($_SESSION['idTmp']);
         } else {
@@ -103,7 +123,6 @@ class AnnonceController extends Controller
     {
         $annonce = new Annonce($this->getDb());
         $mail = new Mail($this->getDb());
- 
         //CONDITION SI $_POST N'EST PAS VIDE ALORS ON RECUPERE LES DONNEES
         if (!empty($_POST)) {
             for ($i =1; $i <= 5; $i++) {
@@ -139,9 +158,9 @@ class AnnonceController extends Controller
                 $mail = $_POST['mail'];
                 print_r($mail);
                 $to = $mail;
-                $subject = "Validation annonce";
+                $subject = "Vérification annonce";
                 ob_start();
-                require '../views/blog/formulaire.mail.php';
+                require '../views/blog/formulairemail.php';
                 $message = ob_get_clean();
                 $message = wordwrap($message, 70, "\r\n");
                 // Le destinataire : 
