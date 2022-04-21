@@ -182,14 +182,15 @@ class AnnonceController extends Controller
                     echo 'le cookie est détruit';
                 }
             } else {
-                echo 'aucune donnée reçue';
+                echo 'Le temps imparti est écoulé';
+                header('Location: /annonces/?cookie=ecoule');
             }
         } else { //Sinon c'est qu'on a cliqué sur modifier (dans le mail)
             require '../views/blog/formulairemail.php';
 
             $slugcrypter_update = base64_decode($tmp);
             $donnees = explode("/", $slugcrypter_update);
-            //element constituants les donnees                              0 => idTmp       
+            //element constituants les donnees                           0 => idTmp       
             if (!empty($donnees[0]) && ($_COOKIE['idTmp'] == $donnees[0])) {
                 $newAnnonce = $annonce
                     ->setVille($donnees[1])                             //1=>ville   
@@ -197,11 +198,11 @@ class AnnonceController extends Controller
                     ->setNom($donnees[3])                               //3=>nom
                     ->setPrix($donnees[4])                              //4=>prix
                     ->setDescription($donnees[5])                       //5=>description
-                    ->setphoto1(self::PATH_IMG_ABSOLUTE .$donnees[7])                            //7=>photo1
-                    ->setphoto2(self::PATH_IMG_ABSOLUTE .$donnees[8])                            //8=>photo8
-                    ->setphoto3(self::PATH_IMG_ABSOLUTE .$donnees[9])                            //9=>photo9
-                    ->setphoto4(self::PATH_IMG_ABSOLUTE .$donnees[10])                           //10=>photo10
-                    ->setphoto5(self::PATH_IMG_ABSOLUTE .$donnees[11]);                          //11=>photo11
+                    ->setphoto1(self::PATH_IMG_ABSOLUTE .$donnees[7])   //7=>photo1
+                    ->setphoto2(self::PATH_IMG_ABSOLUTE .$donnees[8])   //8=>photo8
+                    ->setphoto3(self::PATH_IMG_ABSOLUTE .$donnees[9])   //9=>photo9
+                    ->setphoto4(self::PATH_IMG_ABSOLUTE .$donnees[10])  //10=>photo10
+                    ->setphoto5(self::PATH_IMG_ABSOLUTE .$donnees[11]); //11=>photo11
 
                 $result = $annonce->insert($newAnnonce);
 
@@ -256,22 +257,7 @@ class AnnonceController extends Controller
                 $mail->insert($newMail);
 
             }
-            //Envoie du deuxième e-mail qui permet d'afficher/modifier/supprimer l'annonce qui vient d'$etre rentrée dans la bdd          
-            $to = $_POST['mail'];
-            $subject = "Votre annonce a bien été modifié";
-            ob_start();
-            require '../views/blog/mail.sup.php';
-            $message = ob_get_clean();
-            $message = wordwrap($message, 70, "\r\n");
-            // Le destinataire : 
-            $headers[] = "From: ibtissem.khiri@gmail.com";
-            $headers[] = 'MIME-Version: 1.0';
-            $headers[] = 'Content-type: text/html; charset=utf-8';
-            if (mail($to, $subject, $message, implode("\r\n", $headers))) {
-                echo 'Votre message a bien été envoyé';
-            } else {
-                echo 'Votre message n\'a pas pu être envoyé';
-            }
+            
         }
     }
 }

@@ -1,62 +1,23 @@
 <?php 
-//Récupérer le nombre d'enregistrements
+
 
 use App\Models\Annonce;
-
+//Récupérer le nombre d'enregistrements
 $count=new Annonce($this->getDb());;
 $count =  $this->db->getPDO()->prepare("SELECT count(Id) as cpt  FROM annonces");
 $count->setFetchMode(PDO::FETCH_ASSOC);
 $count->execute();
 $tcount = $count->fetchAll();
 
-//Pagination 
-@$page = $_GET["page"];
-if (empty($page)) $page = 1;
-$nbr_elements_par_page =3;
-
-$nbr_de_pages = ceil($tcount[0]["cpt"] / $nbr_elements_par_page);
-$debut = ($page - 1) * $nbr_elements_par_page;
-
-$sth =  $this->db->getPDO()->prepare("SELECT * FROM annonces LIMIT $debut, $nbr_elements_par_page");
-$sth->execute();
-$resultat = $sth->fetchAll(PDO::FETCH_ASSOC);
+//Si l'utilisateur a tardé à valider l'annonce ce message s'affichera en le redirigeant sur la page d'accueil
+if(isset($_GET['cookie'])) { echo "Le délais d'une heure est écoulé, recommencez votre saisie";} 
 
 ?>
-
 
 <h1>Les dernières annonces</h1>
 
 <header><?= $tcount[0]["cpt"]; ?> Enregistrements au total</header>
 
-<div class="pagination">
-  <?php
- 
-    $precedent=$page-1;
-    if ($page>1){
-      echo"<a href='?page=$precedent'>Précédent</a>&nbsp";
-  
-}else {
-  echo "<a>précédent</a>&nbsp";
-}
-
-  for ($i = 1; $i <=$nbr_de_pages; $i++) {
-    if ($page != $i) {
-
-      echo "<a href='?page=$i'>$i</a>&nbsp";
-    } else {
-      echo "<a>$i</a>&nbsp";
-     
-    }
-  }
- 
-  $suivant=$page+1;
-  if ($suivant<=$nbr_de_pages){
-    echo "<a href='?page=$suivant'>Suivant</a>&nbsp";
-  } else {
-    echo "<a>Suivant</a>&nbsp";
-  }
- 
-  ?>
   <a href="/annonces/formulaire"><button class='btn btn-primary'>Ajouter</button></a>
 <div class="liste">
 <?php foreach ($params['annonces'] as $annonce) : ?>
