@@ -27,12 +27,13 @@ $router->get('/formulaire', 'App\Controllers\AnnonceController/form');
 $router->post('/formulaire', 'App\Controllers\AnnonceController/create'); 
 
 $router->get('/formulaire/:id', 'App\Controllers\AnnonceController/edit');
-$router->post('/formulaire/:id', 'App\Controllers\AnnonceController/create');
+$router->post('/formulaire/:id', 'App\Controllers\AnnonceController/updateMail');
 //Lien du mail 
 $router->get('/valid/:slug', 'App\Controllers\AnnonceController/valid');
 $router->post('/valid/:id', 'App\Controllers\AnnonceController/valid');
 // $router->get('/formulairemodif/:slug', 'App\Controllers\AnnonceController/formUpdate');
-// $router->get('/formulairemodif', 'App\Controllers\AnnonceController/formUpdate');
+$router->get('/formulairemail/:slug', 'App\Controllers\AnnonceController/formUpdate');
+$router->post('/formulairemail/:slug', 'App\Controllers\AnnonceController/updateMail');
 //$router->post('/formulaire.modif', 'App\Controllers\AnnonceController/valid');
 //Vérifie si quelque chose match sur notre route
 $router->run();

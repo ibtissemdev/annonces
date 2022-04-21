@@ -74,13 +74,14 @@ for ($i=1 ; $i<=5 ; $i++) {
 if (isset($params['annonce']->id)) { echo '<img src= "../public/images/' . $params['annonce']->$test. '" alt="photo hébergement">';}?></label>
    <input type="file" name="<?=$test?>">
 
-<?php } ?>
+<?php }  if(!isset($params['annonce']->id)) {?>
     
     <div>
             <label for="email">Entrer votre email:</label>
             <input type="email" id="email" value=" " size="30" name="mail" id="mail" placeholder="Entrer le mail" required>
 
             </div>
+            <?php } ?>
 
     <div id="submit">
     <input type="submit" name="envoyer" value="<?php 

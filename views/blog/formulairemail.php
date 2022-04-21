@@ -28,13 +28,20 @@
 <span><img src="http://localhost/annonces/public/images/<?=($_FILES['photo4']) ? $_FILES['photo4']['name'] : "image vide" ?>"></span><br>
 <span><img src="http://localhost/annonces/public/images/<?=($_FILES['photo5']) ? $_FILES['photo5']['name'] : "image vide" ?>"></span><br>
 
-<?php } else if (empty($_POST)){ ?>
+<?php } else if (empty($_POST)){ 
+      $tmp = str_replace("formulairemail/", "", $_GET['url']);
+
+      //Decrypte l'ensemble des données récupérées dans l'url
+      $slugcrypter_modif = base64_decode($tmp);
+      $donnees = explode("/", $slugcrypter_modif);
+    ?>
 
 <form action=""  method="post" enctype="multipart/form-data">
-    <input type="hidden" name="idTmp" value="<?= $idtmp ?>">
-             <label for="logement">Où  </label>
+    <input type="hidden" name="idTmp" value="<?= $donnees[0] ?>">
+
+             <label for="ville">Où  </label>
             <select name="ville" id="ville" >
-            <option value=""><?=$donnees[1]?></option>
+            <option value="<?=$donnees[1]?>"><?=$donnees[1]?></option>
                 <option value="Chambery">Chambéry</option>
                 <option value="Grenoble">Grenoble</option>
                 <option value="Annecy">Annecy</option>
@@ -42,8 +49,8 @@
             </select>
 
             <label for="categorie">Quoi </label>
-            <select name="categorie" id="pet-select">
-            <option value=""><?=$donnees[2]?></option>
+            <select name="categorie" id="">
+            <option value="<?=$donnees[2]?>"><?=$donnees[2]?></option>
                 <option value="immobilier">Immobilier</option>
                 <option value="vehicule">Vehicules</option>
                 <option value="loisirs">Loisirs</option>
@@ -71,34 +78,43 @@
    
     <?php 
     $test='photo';
-for ($i=1 ; $i<=5 ; $i++) {
-
-    $test='photo'.$i;
+for ($i=7 ; $i<=11 ; $i++) {
+$j=$i-6;
+    $test='photo'.$j;
     ?>
-     <label for="file">Ajouter photo <?=$i ?></label>
+     <label for="file">Ajouter photo <?=$j ?> <?php echo'<img src= "'.'http://localhost/annonces/public/images/'.$donnees[$i]. '" alt="photo hébergement">';?> </label>
    <input type="file" name="<?=$test?>">
 
-<?php } ?>
+<?php }  /* $slug=$donnees[0].'/'.$donnees[1].'/'.$donnees[2].'/'.$donnees[3].'/'.$donnees[4].'/'.$donnees[5].'/'.$donnees[6].'/'.$donnees[7].'/'.$donnees[8].'/'.$donnees[9].'/'.$donnees[10].'/'.$donnees[11].'/';
+$slugcrypter_valid=base64_encode($slug.'valid');
+*/?>
+   <div>
     
+    <input type="hidden" id="mail" value="<?=$donnees[6]?>" name="mail" >
+    </div>
 
     <div id="submit">
-    <button  type="submit" name="envoyer"><a  href="http://localhost/annonces/valid/<?=$donnees[0]?>">Modifier</a></button><br>
+    <button  type="submit" name="modifier">Modifier</button><br>
    
     </div>
 
     <input type="reset">
     </form>
-    <?php } ?>
-    
-<?php $slug=$_POST['idTmp'].'/'.$_POST['ville'].'/'.$_POST['categorie'].'/'.$_POST['nom'].'/'.$_POST['prix'].'/'.$_POST['description'].'/'.$_POST['mail'].'/'.$_FILES['photo1']['name'].'/'.$_FILES['photo2']['name'].'/'.$_FILES['photo3']['name'].'/'.$_FILES['photo4']['name'].'/'.$_FILES['photo5']['name'].'/';
+    <?php } 
+    if($_POST) {
+
+ 
+ 
+ $slug=$_POST['idTmp'].'/'.$_POST['ville'].'/'.$_POST['categorie'].'/'.$_POST['nom'].'/'.$_POST['prix'].'/'.$_POST['description'].'/'.$_POST['mail'].'/'.$_FILES['photo1']['name'].'/'.$_FILES['photo2']['name'].'/'.$_FILES['photo3']['name'].'/'.$_FILES['photo4']['name'].'/'.$_FILES['photo5']['name'].'/';
 
 $slugcrypter_valid=base64_encode($slug."valid");
 $slugcrypter_update=base64_encode($slug."update");
 
 ?>
    <button  type="submit" name="envoyer"><a  href="http://localhost/annonces/valid/<?=$slugcrypter_valid?>">Valider</a></button><br>
-   <button  type="submit" name="envoyer"><a  href="http://localhost/annonces/valid/<?=$slugcrypter_update?>">Modifier</a></button><br>
+   <button  type="submit" name="envoyer"><a  href="http://localhost/annonces/formulairemail/<?=$slugcrypter_update?>">Modifier</a></button><br>
    </form>
+   <?php    } ?>
 </container>
 </body>
 
