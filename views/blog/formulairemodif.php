@@ -1,3 +1,16 @@
+<?php 
+print_r($_GET['url']);
+
+
+$tmp=str_replace("manage/","", $_GET['url']);
+
+//Decrypte l'ensemble des données récupérées dans l'url
+     $slugdecryte=base64_decode($tmp);
+     $donnees = explode("/",$slugdecryte);
+     print_r($donnees);
+?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -8,11 +21,7 @@
     <title>Corner Shop</title>
 </head>
 <body>
-<span>Ville : <?= $_POST['ville'] ?> </span><br>
-<span>Catégorie : <?= $_POST['categorie'] ?></span><br>
-<span>Nom: <?= $_POST['nom']?></span><br>
-<span>Prix : <?= $_POST['prix']?></span><br>
-<span>Desciption : <?=$_POST['description']?></span><br>
+
 
 <container>
     <h4>modifier </h4>
@@ -20,7 +29,7 @@
     <input type="hidden" name="idTmp" value="<?= $idtmp ?>">
              <label for="logement">Où  </label>
             <select name="ville" id="ville" >
-        <?=$donnees[1]?>
+            <option value=""><?=$donnees[1]?></option>
                 <option value="Chambery">Chambéry</option>
                 <option value="Grenoble">Grenoble</option>
                 <option value="Annecy">Annecy</option>
@@ -29,7 +38,7 @@
 
             <label for="categorie">Quoi </label>
             <select name="categorie" id="pet-select">
-          <?=$donnees[2]?>"
+            <option value=""><?=$donnees[2]?></option>
                 <option value="immobilier">Immobilier</option>
                 <option value="vehicule">Vehicules</option>
                 <option value="loisirs">Loisirs</option>
@@ -66,14 +75,10 @@ for ($i=1 ; $i<=5 ; $i++) {
 
 <?php } ?>
     
-    <div>
-            <label for="email">Entrer votre email:</label>
-            <input type="email" id="email" value=" " size="30" name="mail" id="mail" placeholder="Entrer le mail" required>
-
-            </div>
 
     <div id="submit">
-    <input type="submit" name="envoyer" value="">
+    <button  type="submit" name="envoyer"><a  href="http://localhost/annonces/valid/<?=$donnees[0]?>">Valider</a></button><br>
+    <input type="submit" name="modifier" value="modifier">
     </div>
 
     <input type="reset">

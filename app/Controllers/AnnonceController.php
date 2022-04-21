@@ -52,8 +52,8 @@ class AnnonceController extends Controller
     }
 
     public function formUpdate()
-    {  
-        return $this->view('blog.formulairemodif');
+    {   $annonce = new Annonce($this->getDb());
+        return $this->view('blog.formulairemodif',compact('annonce'));
     }
     public function edit(int $id)
     {
@@ -62,18 +62,22 @@ class AnnonceController extends Controller
     }
 
     public function valid()
-    {   ini_set('session.gc_maxlifetime',3600); //durée de vie de la session
-         session_start();
+    {   
+        // session_start();
         $annonce = new Annonce($this->getDb());
         $mail = new Mail($this->getDb());
         $tmp=str_replace("valid/","", $_GET['url']);
 
    //Decrypte l'ensemble des données récupérées dans l'url
-        $slugdecryte=base64_decode($tmp);
-        $donnees = explode("/",$slugdecryte);
+   $slugcrypter_valid=base64_decode($tmp);
+        $donnees = explode("/",$slugcrypter_valid);
 
+
+
+    if ($donnees[12]=="valid") {
+        
     //element constituants les donnees                              0 => idTmp       
-        if (!empty($donnees[0])&&($_SESSION['idTmp']==$donnees[0])) {
+        if (!empty($donnees[0])&&($_COOKIE['idTmp']==$donnees[0])) {
             $newAnnonce = $annonce
                 ->setVille($donnees[1])                             //1=>ville   
                 ->setCategorie($donnees[2])                         //2=>categorie
@@ -86,7 +90,6 @@ class AnnonceController extends Controller
                 ->setphoto4(self::PATH_IMG_ABSOLUTE.$donnees[10])   //10=>photo10
                 ->setphoto5(self::PATH_IMG_ABSOLUTE.$donnees[11]);  //11=>photo11
 
-                
             $result = $annonce->insert($newAnnonce);
 
 //Insertion de l'e-mail avec l'id_annonce
@@ -106,19 +109,53 @@ class AnnonceController extends Controller
             $headers[] = 'Content-type: text/html; charset=utf-8';
             if (mail($to, $subject, $message, implode("\r\n", $headers))) {
                 echo 'Votre message a bien été envoyé';
-          
-             
+
             } else {
                 echo 'Votre message n\'a pas pu être envoyé';
             }
             
 //Destruction de la session idTmp
-            unset($_SESSION['idTmp']);
+           unset($_COOKIE['idTmp']);
+           unset($_COOKIE["PHPSESSID"]);
+           setcookie ("idTmp",NULL, 0); 
+            if(isset($_COOKIE)){
+
+                var_dump($_COOKIE);
+            } else {
+                echo 'le cookie est détruit';
+            }
+
         } else {
             echo 'aucune donnée reçue';
         }
-    }
+    } else {
+       require '../views/blog/formulairemail.php';
 
+        $slugcrypter_update=base64_decode($tmp);
+        $donnees = explode("/",$slugcrypter_update);
+        //element constituants les donnees                              0 => idTmp       
+        if (!empty($donnees[0])&&($_COOKIE['idTmp']==$donnees[0])) {
+            $newAnnonce = $annonce
+                ->setVille($donnees[1])                             //1=>ville   
+                ->setCategorie($donnees[2])                         //2=>categorie
+                ->setNom($donnees[3])                               //3=>nom
+                ->setPrix($donnees[4])                              //4=>prix
+                ->setDescription($donnees[5])                       //5=>description
+                ->setphoto1($donnees[7])    //7=>photo1
+                ->setphoto2($donnees[8])    //8=>photo8
+                ->setphoto3($donnees[9])    //9=>photo9
+                ->setphoto4($donnees[10])   //10=>photo10
+                ->setphoto5($donnees[11]);  //11=>photo11
+
+            $result = $annonce->insert($newAnnonce);
+
+//Insertion de l'e-mail avec l'id_annonce
+            $newMail=$mail->setMail($donnees[6])->setId_annonce($result);
+            $mail->insert($newMail);
+
+
+    }}}
+    
     public function create()
     {
         $annonce = new Annonce($this->getDb());
@@ -164,12 +201,11 @@ class AnnonceController extends Controller
                 $message = ob_get_clean();
                 $message = wordwrap($message, 70, "\r\n");
                 // Le destinataire : 
-                $headers[] = "From: ibtissem.khir@gmail.com";
+                $headers[] = "From: ibtissem.khiri@gmail.com";
                 $headers[] = 'MIME-Version: 1.0';
                 $headers[] = 'Content-type: text/html; charset=utf-8';
                 if (mail($to, $subject, $message, implode("\r\n", $headers))) {
                     echo 'Votre message a bien été envoyé';
-                    
                 } else {
                     echo 'Votre message n\'a pas pu être envoyé';
                 }

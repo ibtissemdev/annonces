@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?php //session_start(); ?>
 
 <h1> <?= (isset($params['annonce']->id) && !empty($params['annonce']->id)) ? "Modifier ": "Ajouter"?> une annonce</h1>
 
@@ -14,7 +14,9 @@
 </head>
 <body>
  
-<?php $idtmp=rand(10000, 99999); $_SESSION['idTmp']=$idtmp ?>
+<?php $idtmp=rand(10000, 99999); ;
+ setcookie("idTmp", $idtmp, time()+3600);  /* expire dans 1 heure */
+?>
 <container>
     <h4>Créez votre annonce </h4>
     <form action=""  method="post" enctype="multipart/form-data">
