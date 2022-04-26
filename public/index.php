@@ -14,10 +14,12 @@ define('DB_PWD', '');
 
 $router = new Router($_GET['url']);
         //      $path        namespace                      $action
-$router->get('/annonces', 'App\Controllers\AnnonceController/accueil');
+//$router->get('/annonces', 'App\Controllers\AnnonceController/accueil');
 $router->get('/genpdf', 'App\Controllers\AnnonceController/genPdf');
 
 $router->get('/', 'App\Controllers\AnnonceController/index');
+$router->post('/', 'App\Controllers\AnnonceController/search');
+
 $router->get('/annonces/public/images/:id','App\Controllers\AnnonceController/image');
 $router->get('/annonces/:id', 'App\Controllers\AnnonceController/show'); 
 
@@ -34,6 +36,12 @@ $router->post('/valid/:id', 'App\Controllers\AnnonceController/valid');
 // $router->get('/formulairemodif/:slug', 'App\Controllers\AnnonceController/formUpdate');
 $router->get('/formulairemail/:slug', 'App\Controllers\AnnonceController/formUpdate');
 $router->post('/formulairemail/:slug', 'App\Controllers\AnnonceController/updateMail');
+
+$router->get('/annonces/:page', 'App\Controllers\AnnonceController/pagination');
+$router->get('/annonces', 'App\Controllers\AnnonceController/search');
+
+
+
 //$router->post('/formulaire.modif', 'App\Controllers\AnnonceController/valid');
 //Vérifie si quelque chose match sur notre route
 $router->run();

@@ -78,8 +78,12 @@ abstract class Model{
  $sth->execute($values);
 }
 
+ public function recherche($recherche){
+   $sql="SELECT * FROM {$this->table} WHERE categorie LIKE '%$recherche%'";
+ $sth=$this->db->getPDO()->prepare($sql);
+  $sth-> execute();
+ $resultat=$sth->fetchall();
 
-
+  return $resultat; 
+ }
 }
-
-?>

@@ -26,6 +26,21 @@ nav {
   flex-wrap: wrap;
 }
 
+.boutton {
+  background-color: #44D9E6;
+  /* Green */
+  border: none;
+  color: white;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  -webkit-transition-duration: 0.4s;
+  /* Safari */
+  transition-duration: 0.4s;
+}
+
 img {
   width: 150px;
 }
@@ -85,6 +100,11 @@ button {
 
 .logo {
   width: 200px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-around;
 }
 
 /*# sourceMappingURL=style.css.map */

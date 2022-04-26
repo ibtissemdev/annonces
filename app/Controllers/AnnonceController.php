@@ -33,6 +33,19 @@ class AnnonceController extends Controller
         return $this->view('blog.show', compact('annonce'));
     }
 
+    public function search() {
+ $annonce =new Annonce($this->getDb());
+ if($_POST['recherche']) {
+  
+  $recherche=$_POST['recherche'];
+    $resultat=$annonce->recherche($recherche);
+return $this->view('blog.index', compact('resultat'));
+ } else {
+    $annonces = $annonce->findAll();
+ }
+ return $this->view('blog.index', compact('annonces'));
+    }
+
     public function sup(int $id)
     {//Fonction qui supprime selon l'Id
         $annonce = new Annonce($this->getDb());
@@ -250,7 +263,6 @@ class AnnonceController extends Controller
             } else {
 
                 $result = $annonce->insert($newAnnonce);
-
                 //Insertion de l'e-mail avec l'id_annonce
                 $newMail = $mail->setMail($_POST['mail'])
                                 ->setId_annonce($result);
@@ -260,4 +272,33 @@ class AnnonceController extends Controller
             
         }
     }
+   /* public function pagination() {
+
+        $currentPage=(int)($_GET['page'] ?? 1);
+if($currentPage <=0) {
+  throw new Exception('Numéro de page invalide'); 
+}
+print_r($currentPage);
+                                                          //Sous forme de tableau numérique, on récupère la première colonne
+$count=(int)  $this->db->getPDO()->query('SELECT COUNT(id)FROM annonces ')->fetch(PDO::FETCH_NUM)[0];
+//Arrondir à la virgule supérieur
+$perpage=3;
+$pages = ceil($count/ $perpage);
+var_dump($pages); 
+if($currentPage > $pages) {
+  throw new Exception('Cette page n\'existe pas'); 
+}
+
+$offset = $perpage * ($currentPage - 1);
+$sql= $this->db->getPDO()->query("SELECT * FROM annonces ORDER BY nom DESC LIMIT $perpage OFFSET $offset");
+$result= $sql->fetchAll(); 
+
+
+if(($currentPage>1) && ($currentPage<=$pages)) { ?>
+ <a href="/annonces/?page=<?=$currentPage-1?>">&laquo; Page précédente</a>
+<?php }
+ if(($currentPage>=1) && ($currentPage<$pages)){
+  ?> <a href="/annonces/?page=<?=$currentPage+1?>"> Page suivante &laquo;</a>
+   <?php }
+}*/
 }
