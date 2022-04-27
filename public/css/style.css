@@ -16,7 +16,7 @@ nav {
   background-color: #FAC900;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   height: 150px;
 }
 
@@ -105,6 +105,43 @@ button {
 .pagination {
   display: flex;
   justify-content: space-around;
+}
+
+.recherche {
+  display: flex;
+  justify-content: space-around;
+}
+
+label {
+  font-size: 20px;
+  margin: 5px;
+}
+
+#recherche {
+  background: #FAC900;
+  width: 100px;
+  height: 20px;
+  font-size: 16px;
+}
+
+form {
+  background-color: #FAFAFA;
+  padding: 10px;
+  width: 600px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: #44D9E6 solid 2px;
+}
+
+.partie1 {
+  display: flex;
+  flex-direction: column;
+}
+
+.partie2 {
+  display: flex;
+  flex-direction: column;
 }
 
 /*# sourceMappingURL=style.css.map */

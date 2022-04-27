@@ -222,6 +222,27 @@ return $this->view('blog.index', compact('resultat'));
                 //Insertion de l'e-mail avec l'id_annonce
                 $newMail = $mail->setMail($donnees[6])->setId_annonce($result);
                 $mail->insert($newMail);
+                
+                echo  $donnees[6];
+
+                 //Envoie du deuxième e-mail qui permet d'afficher/modifier/supprimer l'annonce qui vient d'$etre rentrée dans la bdd          
+                 $to = $donnees[6];
+                 $subject = "Votre annonce a été validé";
+                 ob_start();
+                 require '../views/blog/mail.sup.php';
+                 $message = ob_get_clean();
+                 $message = wordwrap($message, 70, "\r\n");
+                 // Le destinataire : 
+                 $headers[] = "From: ibtissem.khiri@gmail.com";
+                 $headers[] = 'MIME-Version: 1.0';
+                 $headers[] = 'Content-type: text/html; charset=utf-8';
+                 if (mail($to, $subject, $message, implode("\r\n", $headers))) {
+                     echo 'Votre message a bien été envoyé';
+                 } else {
+                     echo 'Votre message n\'a pas pu être envoyé';
+                 }
+ 
+                
             }
         }
     }
@@ -244,11 +265,11 @@ return $this->view('blog.index', compact('resultat'));
                 ->setDescription($_POST['description'])
                 ->setPrix($_POST['prix'])
                 ->setVille($_POST['ville'])
-                ->setphoto1($_FILES['photo1']['name'])
-                ->setphoto2($_FILES['photo2']['name'])
-                ->setphoto3($_FILES['photo3']['name'])
-                ->setphoto4($_FILES['photo4']['name'])
-                ->setphoto5($_FILES['photo5']['name']);
+                ->setphoto1(self::PATH_IMG_ABSOLUTE .$_FILES['photo1']['name'])
+                ->setphoto2(self::PATH_IMG_ABSOLUTE .$_FILES['photo2']['name'])
+                ->setphoto3(self::PATH_IMG_ABSOLUTE .$_FILES['photo3']['name'])
+                ->setphoto4(self::PATH_IMG_ABSOLUTE .$_FILES['photo4']['name'])
+                ->setphoto5(self::PATH_IMG_ABSOLUTE .$_FILES['photo5']['name']);
 
             //CONDITION POUR VERIFIER SI ON A UN ID ALORS ON APPELLE LA FONCTION UPDATE
             if (isset($_POST['id']) && !empty($_POST['id'])) {
