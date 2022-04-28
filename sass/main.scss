@@ -6,7 +6,7 @@ margin: 40px;
 
 }
 .logo {
-font-family: 'Beau Rivage', cursive; 
+font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif ;
 text-decoration: none;
 font-size: 40px;
 font-weight: 900;
@@ -126,13 +126,13 @@ font-size: 20px;
   }
 
   #recherche {
-background: #FAC900;
+background: white;
 width: 100px;
 height: 20px;
 font-size: 16px;
   }
   form {
-    background-color:#FAFAFA;
+    background-color:#FAC900;
     padding:10px;
     width: 600px;
     display: flex;
@@ -151,3 +151,60 @@ font-size: 16px;
     display: flex;
     flex-direction: column;
   }
+
+  h4 {
+      font-size: 20px;
+      text-align: center;
+  }
+
+  select {
+   
+    background: white;
+    background-image: none;
+    box-shadow: 10px 10px 10px grey;
+    font-size: 16px;
+    
+  }
+  fieldset {
+    margin-bottom: 15px;
+    padding: 10px;
+  }
+
+  legend {
+    padding: 0px 3px;
+    font-weight: bold;
+    font-variant: small-caps;
+  }
+  label {
+    margin-top:10px;
+    display:block;
+    }
+   label.inline {
+    display:inline;
+    margin-right:50px;
+    }
+
+input {
+    padding:3px;
+    border:1px solid black;
+    border-radius:5px;
+    width:200px;
+    box-shadow:1px 1px 2px #C0C0C0 inset;
+
+}
+  input[type=submit], input[type=reset] {
+    width:100px;
+    margin-left:5px;
+    box-shadow:5px 5px 5px grey;
+    cursor:pointer; }
+    
+
+    #submit {
+        button {
+            width:100px;
+            margin-left:5px;
+            box-shadow:5px 5px 5px grey;
+            cursor:pointer;
+
+        }
+    }

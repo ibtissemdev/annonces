@@ -29,6 +29,8 @@
                                                             echo  $params['annonce']->id;
                                                         } ?>">
                 <input type="hidden" name="idTmp" value="<?= $idtmp ?>">
+                <fieldset>
+                <legend>Informations annonces</legend>
                 <label for="logement">Où </label>
                 <select name="ville" id="ville">
                     <?= (isset($params['annonce']->id)) ?  "<option>" . $params['annonce']->ville . "</option>" : "<option disabled selected hidden>Ville</option>"; ?>
@@ -74,7 +76,10 @@
 
 
             </div>
+            </fieldset>
             <div class="partie2">
+            <fieldset>
+                <legend>Photos</legend>
                 <?php
                 $test = 'photo';
                 for ($i = 1; $i <= 5; $i++) {
@@ -96,7 +101,7 @@
 
                     </div>
                 <?php } ?>
-
+                </fieldset>
                 <div id="submit">
                     <input type="submit" name="envoyer" value="<?php
                                                                 if (isset($params['annonce']->id)) {

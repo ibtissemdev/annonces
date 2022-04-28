@@ -162,7 +162,7 @@ return $this->view('blog.index', compact('resultat'));
 
                 //Insère l'annonce une fois que l'utilisateur a valider avec l'e-mail
                 $result = $annonce->insert($newAnnonce);
-
+print_r($newAnnonce);
                 //Insertion de l'e-mail dans la table mail avec l'id_annonce
                 $newMail = $mail->setMail($donnees[6])->setId_annonce($result);
                 $mail->insert($newMail);
@@ -205,6 +205,7 @@ return $this->view('blog.index', compact('resultat'));
             $donnees = explode("/", $slugcrypter_update);
             //element constituants les donnees                           0 => idTmp       
             if (!empty($donnees[0]) && ($_COOKIE['idTmp'] == $donnees[0])) {
+                
                 $newAnnonce = $annonce
                     ->setVille($donnees[1])                             //1=>ville   
                     ->setCategorie($donnees[2])                         //2=>categorie
@@ -218,13 +219,10 @@ return $this->view('blog.index', compact('resultat'));
                     ->setphoto5(self::PATH_IMG_ABSOLUTE .$donnees[11]); //11=>photo11
 
                 $result = $annonce->insert($newAnnonce);
-
                 //Insertion de l'e-mail avec l'id_annonce
                 $newMail = $mail->setMail($donnees[6])->setId_annonce($result);
                 $mail->insert($newMail);
-                
-                echo  $donnees[6];
-
+              
                  //Envoie du deuxième e-mail qui permet d'afficher/modifier/supprimer l'annonce qui vient d'$etre rentrée dans la bdd          
                  $to = $donnees[6];
                  $subject = "Votre annonce a été validé";
