@@ -36,7 +36,7 @@ if (isset($_GET['cookie'])) {
   <?php endif 
 */ ?>
 
-<a href="/annonces/formulaire"><button class='boutton'>Ajouter</button></a>
+<a href="/annonces/formulaire"><button class='boutton'>Ajouter une annnonce</button></a>
 <div class="recherche">
 <form action="" method="post">
   <label for="recherche">Recherche</label>
@@ -72,9 +72,9 @@ if (isset($_GET['cookie'])) {
       <div class="annonce">
         <span>
           <div class="nom">
-            <h2> <?= $annonce->nom // on récupère en objet
+            <h2>Non : <?= $annonce->nom // on récupère en objet
                   ?></h2>
-            <p><?= $annonce->categorie // on récupère en objet
+            <p>Catégorie : <?= $annonce->categorie // on récupère en objet
                 ?></p>
           </div>
           <img src="<?= $annonce->photo1 ?>" alt="photo annonce">

@@ -3,31 +3,48 @@
 
 body {
 margin: 40px;
+text-align: center;
+}
 
-}
-.logo {
-font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif ;
-text-decoration: none;
-font-size: 40px;
-font-weight: 900;
-color: #323432;
 
-}
-nav {
-    padding: 20px;
-    background-color: #FAC900;
-    display: flex;
-    flex-direction: row;
-    justify-content:space-around;
-    height: 150px;
- 
-}
 
 .liste {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-  
+
+}
+
+nav {
+background: #FAC900;
+display: flex;
+justify-content: space-between;
+flex-direction: row;
+align-items: center;
+padding-left: 50px;
+padding-right: 50px;
+position: relative;
+height: 120px;
+
+
+.ml4 {
+    position: relative;
+    font-weight: 900;
+    font-size: 2em;
+    position: absolute;
+   
+  }
+  .ml4 .letters {
+    position: absolute;
+    margin: auto;
+    left: 600px;
+    top: 0.3em;
+    bottom: 80px;
+    right: 0;
+    opacity: 0; 
+    height: auto;
+
+  }
 }
 
 .boutton {
@@ -69,9 +86,9 @@ margin : 80px;
     border: outset;
     border-radius: 6px;
     margin : 10px;
-    box-shadow: 10px 5px 5px rgb(214, 212, 212);
+    box-shadow: 10px 10px 10px rgb(214, 212, 212);
     width: 500px;
-    height: 300px;
+    height: auto;
 
 }
 
@@ -208,3 +225,45 @@ input {
 
         }
     }
+
+    #slider {
+        position: relative;
+        width: 500px;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    #slider img {
+        width: 500px;
+    }
+
+    #precedent,
+    #suivant {
+        cursor: pointer;
+        transition: opacity 0.3s ease;
+        opacity: 0;
+        position: absolute;
+        font-size: 50px;
+        color: rgba(220, 220, 220, 0.8);
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 10px;
+        margin: -50px;
+     
+    }
+    
+    #precedent {
+        left: 0;
+    }
+    
+    #suivant {
+        right: 0;
+    }
+    
+    #slider:hover #precedent,
+    #slider:hover #suivant {
+        opacity: 1;
+    }
+
+  

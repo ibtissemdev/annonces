@@ -14,9 +14,8 @@
 
     <container>
 
-        <h4>Créez votre annonce </h4>
-        <?php if ($_POST) { ?>
-
+        <h4>Modifiez de votre annonce </h4>
+        <?php if ($_POST) { error_log("formulairemail.php avec POST");  ?>
 
             <span>Ville : <?= $_POST['ville'] ?></span><br>
             <span>Catégorie :<?= $_POST['categorie'] ?></span><br>
@@ -31,6 +30,9 @@
             <span><img src="http://localhost/annonces/public/images/<?= ($_FILES['photo5']) ? $_FILES['photo5']['name'] : "image vide" ?>"></span><br>
 
         <?php } else if (empty($_POST)) {
+
+error_log("formulairemail.php SANS POST");
+
             $tmp = str_replace("formulairemail/", "", $_GET['url']);
 
             //Decrypte l'ensemble des données récupérées dans l'url
@@ -110,9 +112,12 @@ $slugcrypter_valid=base64_encode($slug.'valid');
                   
                     </div>
             </form>
+            <a href="/annonces/" ><button class="btn btn-secondary">Retour</button></a>
 
         <?php echo $donnees[6];
         }
+
+
         if ($_POST) {
 
 
@@ -127,6 +132,7 @@ $slugcrypter_valid=base64_encode($slug.'valid');
             <button type="submit" name="envoyer"><a href="http://localhost/annonces/formulairemail/<?= $slugcrypter_update ?>">Modifier</a></button><br>
             </form>
         <?php    } ?>
+        <a href="/annonces/" ><button class="btn btn-secondary">Retour</button></a>
     </container>
 </body>
 
