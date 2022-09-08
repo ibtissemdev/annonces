@@ -32,7 +32,7 @@ class Route {
 
 
     public function execute()
-    {// Délimiteur de notre action
+    {// Délimiteur de notre action ('/')
         $params = explode('/', $this->action);
         //Première clé du tableau params est notre controller
         $controller = new $params[0](new DBConnection(DB_NAME, DB_HOST, DB_USER, DB_PWD));

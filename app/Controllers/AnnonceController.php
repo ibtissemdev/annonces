@@ -34,9 +34,9 @@ class AnnonceController extends Controller
     }
 
     public function search()
-    {
+    {//Barre de recherche selon la catégorie de l'annonce
         $annonce = new Annonce($this->getDb());
-        if ($_POST['recherche']) {
+        if (isset($_POST['recherche'])) {
 
             $recherche = $_POST['recherche'];
             $resultat = $annonce->recherche($recherche);
@@ -73,11 +73,12 @@ class AnnonceController extends Controller
     }
 
     public function create()
-    { //Premier formulaire en cliquant sur ajouter
+    { //Formulaire en cliquant sur ajouter dans la page d'accueil
         $annonce = new Annonce($this->getDb());
         $mail = new Mail($this->getDb());
         //CONDITION SI $_POST N'EST PAS VIDE ALORS ON RECUPERE LES DONNEES
         if (!empty($_POST)) {
+            //Update des images
             for ($i = 1; $i <= 5; $i++) {
                 $filename = $_FILES["photo$i"]['name'];
                 $photo[$i + 1] = $filename;
@@ -97,6 +98,7 @@ class AnnonceController extends Controller
 
             //CONDITION POUR VERIFIER SI ON A UN ID ALORS ON APPELLE LA FONCTION UPDATE
             if (isset($_POST['id']) && !empty($_POST['id'])) {
+                //Upload des images qui vont remplacer celles d'origine
                 for ($i = 1; $i <= 5; $i++) {
                     $filename = $_FILES["photo$i"]['name'];
                     $photo[$i + 1] = $filename;
@@ -105,11 +107,11 @@ class AnnonceController extends Controller
 
                 $annonce->update($_POST['id'], $newAnnonce);
 
-                //ENVOIE DU MAIL APRES AVOIR REMPLI LES CHAMPS DU FORMULAIRE
+                //ENVOIE DU MAIL APRES AVOIR REMPLI LES CHAMPS ET ENVOYE LE FORMULAIRE
             } else if (isset($_POST['envoyer']) && !empty($_POST['mail'])) {
 
                 $mail = $_POST['mail'];
-                print_r($mail);
+                // print_r($mail);
                 $to = $mail;
                 $subject = "Vérification annonce";
                 ob_start();
@@ -168,7 +170,7 @@ class AnnonceController extends Controller
                 $newMail = $mail->setMail($donnees[6])->setId_annonce($result);
                 $mail->insert($newMail);
 
-                //Envoie du deuxième e-mail qui permet d'afficher/modifier/supprimer l'annonce qui vient d'$etre rentrée dans la bdd          
+                //Envoie du deuxième e-mail qui permet d'afficher/modifier/supprimer l'annonce qui vient d'être rentrée dans la bdd          
                 $to = $donnees[6];
                 $subject = "Votre annonce a été validé";
                 ob_start();

@@ -24,5 +24,5 @@ $dompdf->loadHtml("brouette");//je veux du html
 $dompdf->setPaper('A4','portrait '); //format
 $dompdf->render();//Pour générer le pdf (rendu en mémoire)
 $fichier='mon-pdf.pdf';//changer le nom du fichier
-//$dompdf->stream();//Envoie du pdf en tant que fichier à télécharger / on passe le nom du fichier en paramètre
+$dompdf->stream();//Envoie du pdf en tant que fichier à télécharger / on passe le nom du fichier en paramètre
 ?>

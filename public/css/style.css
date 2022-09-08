@@ -5,9 +5,20 @@ body {
 }
 
 .liste {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: repeat 150x;
+  height: auto;
+}
+@media (max-width: 1080px) {
+  .liste {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 850px) {
+  .liste {
+    grid-template-columns: 1fr;
+  }
 }
 
 nav {
@@ -20,6 +31,16 @@ nav {
   padding-right: 50px;
   position: relative;
   height: 120px;
+}
+@media (max-width: 1080px) {
+  nav {
+    margin: 30px;
+  }
+}
+@media (max-width: 850px) {
+  nav {
+    width: 500px;
+  }
 }
 nav .ml4 {
   position: relative;
@@ -62,7 +83,6 @@ span {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
   padding: 20px;
 }
 
@@ -80,8 +100,13 @@ span {
   border-radius: 6px;
   margin: 10px;
   box-shadow: 10px 10px 10px rgb(214, 212, 212);
-  width: 500px;
+  width: 400px;
   height: auto;
+}
+@media (max-width: 850px) {
+  .annonce {
+    width: 500px;
+  }
 }
 
 button {
@@ -120,8 +145,15 @@ button {
 }
 
 .recherche {
+  background: #FAC900;
   display: flex;
   justify-content: space-around;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 50px;
+  padding-right: 50px;
+  position: relative;
+  width: 400px;
 }
 
 label {
@@ -197,7 +229,8 @@ input {
   box-shadow: 1px 1px 2px #C0C0C0 inset;
 }
 
-input[type=submit], input[type=reset] {
+input[type=submit],
+input[type=reset] {
   width: 100px;
   margin-left: 5px;
   box-shadow: 5px 5px 5px grey;

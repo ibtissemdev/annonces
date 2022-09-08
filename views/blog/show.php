@@ -7,7 +7,7 @@
         <div id="precedent" onclick="ChangeSlide(-1)"><</div>
         <div id="suivant" onclick="ChangeSlide(1)">></div>
 </div>
-<a href="/annonces/"><button class="btn btn-secondary">Retour</button></a>
+<a href="/annonces/"><button class="boutton">Retour</button></a>
 
 <script>
 var slide = new Array("<?= $params['annonce']->photo1 ?>", "<?= $params['annonce']->photo2 ?>", "<?= $params['annonce']->photo3 ?>", "<?= $params['annonce']->photo4 ?>","<?= $params['annonce']->photo5 ?>");

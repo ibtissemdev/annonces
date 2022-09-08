@@ -23,11 +23,11 @@
             <span>Prix : <?= $_POST['prix'] ?></span><br>
             <span>Description : <?= $_POST['description'] ?></span><br>
 
-            <span><img src="http://localhost/annonces/public/images/<?= ($_FILES['photo1']) ? $_FILES['photo1']['name'] : $donnees[6] ?>"></span><br>
+            <!-- <span><img src="http://localhost/annonces/public/images/<?= ($_FILES['photo1']) ? $_FILES['photo1']['name'] : $donnees[6] ?>"></span><br>
             <span><img src="http://localhost/annonces/public/images/<?= ($_FILES['photo2']) ? $_FILES['photo2']['name'] : "image vide" ?>"></span><br>
             <span><img src="http://localhost/annonces/public/images/<?= ($_FILES['photo3']) ? $_FILES['photo3']['name'] : "image vide" ?>"></span><br>
             <span><img src="http://localhost/annonces/public/images/<?= ($_FILES['photo4']) ? $_FILES['photo4']['name'] : "image vide" ?>"></span><br>
-            <span><img src="http://localhost/annonces/public/images/<?= ($_FILES['photo5']) ? $_FILES['photo5']['name'] : "image vide" ?>"></span><br>
+            <span><img src="http://localhost/annonces/public/images/<?= ($_FILES['photo5']) ? $_FILES['photo5']['name'] : "image vide" ?>"></span><br> -->
 
         <?php } else if (empty($_POST)) {
 
@@ -132,7 +132,7 @@ $slugcrypter_valid=base64_encode($slug.'valid');
             <button type="submit" name="envoyer"><a href="http://localhost/annonces/formulairemail/<?= $slugcrypter_update ?>">Modifier</a></button><br>
             </form>
         <?php    } ?>
-        <a href="/annonces/" ><button class="btn btn-secondary">Retour</button></a>
+        <a href="http://localhost/annonces/" ><button class="btn btn-secondary">Retour</button></a>
     </container>
 </body>
 

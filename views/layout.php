@@ -22,7 +22,7 @@
  
 </h1>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"> </script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"> </script>
 <script>
 var ml4 = {};
 ml4.opacityIn = [0,1];
@@ -75,7 +75,7 @@ anime.timeline({loop: true})
     duration: 500,
     delay: 500
   });
-</script>
+</script> -->
 
 
 
