@@ -55,7 +55,7 @@ margin: 30px;
 
     @media (max-width:850px) {
 
-        width: 500px;
+        width: auto;
      
         // object-fit: cover;
 
@@ -118,7 +118,21 @@ span {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 80px;
+    
+    width: 90%;
+    @media (max-width:1080px) {
+        margin: 30px;
+        width: auto;
+             
+            }
+        
+            @media (max-width:850px) {
+        
+                width: auto;
+             
+                // object-fit: cover;
+        
+            }
 }
 
 .annonce {
@@ -131,14 +145,12 @@ span {
     height: auto;
 
     @media (max-width:1080px) {
-
-
-     
+ 
     }
 
     @media (max-width:850px) {
 
-        width: 500px;
+        width: 300px;
      
         // object-fit: cover;
 
@@ -201,7 +213,18 @@ button {
 
     // display: flex;
     // justify-content: space-around;
-    
+    @media (max-width:1080px) {
+        width: 200px;
+    }
+
+    @media (max-width:850px) {
+
+        width: 200px;
+     
+        // object-fit: cover;
+
+    }
+
 }
 
 label {
