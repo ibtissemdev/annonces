@@ -9,6 +9,7 @@ use App\Models\Mail;
 class AnnonceController extends Controller
 { //lien absolu pour l'image
     public const PATH_IMG_ABSOLUTE = "http://localhost/annonces/public/images/";
+    
 
 
     public function index()
@@ -34,7 +35,7 @@ class AnnonceController extends Controller
     }
 
     public function search()
-    {//Barre de recherche selon la catégorie de l'annonce
+    { //Barre de recherche selon la catégorie de l'annonce
         $annonce = new Annonce($this->getDb());
         if (isset($_POST['recherche'])) {
 
@@ -79,22 +80,46 @@ class AnnonceController extends Controller
         //CONDITION SI $_POST N'EST PAS VIDE ALORS ON RECUPERE LES DONNEES
         if (!empty($_POST)) {
             //Update des images
+            $valid_ext = array("gif", "jpg", "png", "jpeg", "webp", "jfif");
+            $maxSize = 2000000;
             for ($i = 1; $i <= 5; $i++) {
+
                 $filename = $_FILES["photo$i"]['name'];
-                $photo[$i + 1] = $filename;
-                move_uploaded_file($_FILES["photo$i"]['tmp_name'], './images/' . $filename);
+                $location = './images/' . $filename;
+                $file_extension = pathinfo($location, PATHINFO_EXTENSION);
+                $file_extension = strtolower($file_extension);
+
+                if (in_array($file_extension, $valid_ext)) {
+                    if ($_FILES["photo$i"]['size'] < $maxSize) {
+
+                        $photo[$i + 1] = $filename;
+                        error_log(print_r($_FILES["photo$i"]['size'], 1));
+                        move_uploaded_file($_FILES["photo$i"]['tmp_name'], $location) ;
+                      
+                    } else {
+                        error_log('taille trop grande : '.$i);
+                        error_log(print_r($_FILES["photo$i"]['size'], 1));
+                    }
+                } else {
+                    error_log('extension non valide');
+                }
             }
+
+
+
+            // move_uploaded_file($_FILES["photo$i"]['tmp_name'], './images/' . $filename);
+
             //ON DEFFINIE LES SETTERS
             $newAnnonce = $annonce->setCategorie($_POST['categorie'])
                 ->setNom($_POST['nom'])
                 ->setDescription($_POST['description'])
                 ->setPrix($_POST['prix'])
-                ->setVille($_POST['ville'])
-                ->setphoto1($_FILES['photo1']['name'])
-                ->setphoto2($_FILES['photo2']['name'])
-                ->setphoto3($_FILES['photo3']['name'])
-                ->setphoto4($_FILES['photo4']['name'])
-                ->setphoto5($_FILES['photo5']['name']);
+                ->setVille($_POST['ville']);
+                // ->setphoto1($_FILES['photo1']['name'])
+                // ->setphoto2($_FILES['photo2']['name'])
+                // ->setphoto3($_FILES['photo3']['name'])
+                // ->setphoto4($_FILES['photo4']['name'])
+                // ->setphoto5($_FILES['photo5']['name']);
 
             //CONDITION POUR VERIFIER SI ON A UN ID ALORS ON APPELLE LA FONCTION UPDATE
             if (isset($_POST['id']) && !empty($_POST['id'])) {
@@ -122,7 +147,7 @@ class AnnonceController extends Controller
                 $headers[] = "From: ibtissem.khiri@gmail.com";
                 $headers[] = 'MIME-Version: 1.0';
                 $headers[] = 'Content-type: text/html; charset=utf-8';
-                if (mail($to, $subject, $message, implode("\r\n", $headers))==true) {
+                if (mail($to, $subject, $message, implode("\r\n", $headers)) == true) {
                     echo 'Vous allez recevoir un e-mail à l\'adresse indiquée pour valider ou modifier votre annonce <a href="/annonces/"><button class="btn btn-secondary">Retour</button></a>';
                 } else {
                     echo 'Une erreur est survenue <a href="/annonces/"><button class="btn btn-secondary">Retour</button></a>';
@@ -201,8 +226,7 @@ class AnnonceController extends Controller
                 echo 'Le temps imparti est écoulé';
                 header('Location: /annonces/?cookie=ecoule');
             }
-        } 
-        
+        }
     }
 
 
@@ -260,7 +284,7 @@ class AnnonceController extends Controller
                 $headers[] = 'Content-type: text/html; charset=utf-8';
 
                 error_log($message);
-                
+
                 if (mail($to, $subject, $message, implode("\r\n", $headers))) {
                     error_log($_POST['mail']);
                     echo 'Votre annonce a été ajouté avec succés, vous allez recevoir un e-mail à l\'adresse indiquée. <a href="/annonces/"><button class="btn btn-secondary">Retour</button></a>';
@@ -271,5 +295,4 @@ class AnnonceController extends Controller
             }
         }
     }
- 
 }

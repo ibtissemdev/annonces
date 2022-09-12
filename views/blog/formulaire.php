@@ -17,7 +17,7 @@
 
 <body>
 
-    <?php $idtmp = rand(10000, 99999);;
+    <?php $idtmp = rand(10000, 99999);
     setcookie("idTmp", $idtmp, time() + 3600);  /* expire dans 1 heure */
     ?>
     <container>
