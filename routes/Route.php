@@ -18,11 +18,12 @@ class Route {
         //On récupère l'Url
     public function matches(string $url)
     {//On remplace tout ce qui commence par : et qui serait un caractère alpha numérique qui ne soit pas un / et qui serait répété plusieurs fois (dans le path)
+        //exemple $router->post('/', 'App\Controllers\AnnonceController@search');
         $path = preg_replace('#:([\w]+)#', '([^/]+)', $this->path);
 
         $pathToMatch = "#^$path$#";
 //
-        if (preg_match($pathToMatch, $url, $matches)) {
+        if (preg_match($pathToMatch, $url, $matches)) {//parsing, interprétation de la route
             $this->matches = $matches;
             return true;
         } else {
@@ -32,8 +33,8 @@ class Route {
 
 
     public function execute()
-    {// Délimiteur de notre action ('/')
-        $params = explode('/', $this->action);
+    {
+        $params = explode('@', $this->action);// Délimiteur de notre action ('@')
         //Première clé du tableau params est notre controller
         $controller = new $params[0](new DBConnection(DB_NAME, DB_HOST, DB_USER, DB_PWD));
         //Deuxième clé du talbeau params : notre méthode
