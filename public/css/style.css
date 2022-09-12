@@ -1,21 +1,22 @@
 @import url("https://fonts.googleapis.com/css2?family=Beau+Rivage&display=swap");
 body {
-  margin: 40px;
+  margin: 20px;
   text-align: center;
 }
 
 .liste {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: repeat 150x;
+  grid-template-rows: repeat 150px;
   height: auto;
+  width: 90%;
 }
 @media (max-width: 1080px) {
   .liste {
     grid-template-columns: 1fr 1fr;
   }
 }
-@media (max-width: 850px) {
+@media (max-width: 800px) {
   .liste {
     grid-template-columns: 1fr;
   }
@@ -41,22 +42,6 @@ nav {
   nav {
     width: auto;
   }
-}
-nav .ml4 {
-  position: relative;
-  font-weight: 900;
-  font-size: 2em;
-  position: absolute;
-}
-nav .ml4 .letters {
-  position: absolute;
-  margin: auto;
-  left: 600px;
-  top: 0.3em;
-  bottom: 80px;
-  right: 0;
-  opacity: 0;
-  height: auto;
 }
 
 .boutton {
@@ -148,11 +133,6 @@ button {
 
 .logo {
   width: 200px;
-}
-
-.pagination {
-  display: flex;
-  justify-content: space-around;
 }
 
 .recherche {
@@ -273,9 +253,29 @@ input[type=reset] {
   justify-content: center;
   align-items: center;
 }
+@media (max-width: 1080px) {
+  #slider {
+    width: 300px;
+  }
+}
+@media (max-width: 850px) {
+  #slider {
+    width: 200px;
+  }
+}
 
 #slider img {
   width: 500px;
+}
+@media (max-width: 1080px) {
+  #slider img {
+    width: 300px;
+  }
+}
+@media (max-width: 800px) {
+  #slider img {
+    width: 200px;
+  }
 }
 
 #precedent,

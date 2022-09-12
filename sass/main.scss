@@ -2,7 +2,7 @@
 
 
 body {
-    margin: 40px;
+    margin:20px;
     text-align: center;
 }
 
@@ -13,8 +13,9 @@ body {
     //flex-wrap: wrap;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: repeat (150x);
+    grid-template-rows: repeat (150px);
     height: auto;
+   width: 90%;
 
     //flex-wrap: wrap;
     @media (max-width:1080px) {
@@ -23,7 +24,7 @@ body {
         grid-template-columns: 1fr 1fr;
     }
 
-    @media (max-width:850px) {
+    @media (max-width:800px) {
 
 
         grid-template-columns: 1fr;
@@ -62,25 +63,25 @@ margin: 30px;
     }
 
 
-    .ml4 {
-        position: relative;
-        font-weight: 900;
-        font-size: 2em;
-        position: absolute;
+    // .ml4 {
+    //     position: relative;
+    //     font-weight: 900;
+    //     font-size: 2em;
+    //     position: absolute;
 
-    }
+    // }
 
-    .ml4 .letters {
-        position: absolute;
-        margin: auto;
-        left: 600px;
-        top: 0.3em;
-        bottom: 80px;
-        right: 0;
-        opacity: 0;
-        height: auto;
+    // .ml4 .letters {
+    //     position: absolute;
+    //     margin: auto;
+    //     left: 600px;
+    //     top: 0.3em;
+    //     bottom: 80px;
+    //     right: 0;
+    //     opacity: 0;
+    //     height: auto;
 
-    }
+    // }
 }
 
 .boutton {
@@ -192,12 +193,12 @@ button {
     width: 200px;
 }
 
-.pagination {
+// .pagination {
 
-    display: flex;
-    justify-content: space-around;
+//     display: flex;
+//     justify-content: space-around;
 
-}
+// }
 
 .recherche {
     background: #FAC900;
@@ -332,10 +333,32 @@ input[type=reset] {
     display: flex;
     justify-content: center;
     align-items: center;
+    @media (max-width:1080px) {
+        width: 300px;
+    }
+
+    @media (max-width:850px) {
+
+        width: 200px;
+     
+      
+
+    }
 }
 
 #slider img {
     width: 500px;
+    @media (max-width:1080px) {
+        width: 300px;
+    }
+
+    @media (max-width:800px) {
+
+        width: 200px; 
+     
+      
+
+    }
 }
 
 #precedent,

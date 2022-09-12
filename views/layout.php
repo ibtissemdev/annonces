@@ -15,14 +15,14 @@
 
 
   
-  <h1 class="ml4">
+ <!--<h1 class="ml4">
   <span class="letters letters-1">Déposez</span>
   <span class="letters letters-2">une annonce</span>
   <span class="letters letters-3">facilement</span>
  
 </h1>
 
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"> </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"> </script>
 <script>
 var ml4 = {};
 ml4.opacityIn = [0,1];
