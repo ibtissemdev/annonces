@@ -22,6 +22,8 @@
             <span>Nom : <?= $_POST['nom'] ?></span><br>
             <span>Prix : <?= $_POST['prix'] ?></span><br>
             <span>Description : <?= $_POST['description'] ?></span><br>
+            <span>Catégorie_id : <?= $_POST['categorie'] ?></span><br>
+
 
             <!-- <span><img src="http://localhost/annonces/public/images/<?= ($_FILES['photo1']) ? $_FILES['photo1']['name'] : $donnees[6] ?>"></span><br>
             <span><img src="http://localhost/annonces/public/images/<?= ($_FILES['photo2']) ? $_FILES['photo2']['name'] : "image vide" ?>"></span><br>
@@ -57,14 +59,14 @@ error_log("formulairemail.php SANS POST");
                     <label for="categorie">Quoi </label>
                     <select name="categorie" id="">
                         <option value="<?= $donnees[2] ?>"><?= $donnees[2] ?></option>
-                        <option value="immobilier">Immobilier</option>
-                        <option value="vehicule">Vehicules</option>
-                        <option value="loisirs">Loisirs</option>
-                        <option value="meubles">Meubles</option>
-                        <option value="telephonie">Téléphonie</option>
-                        <option value="mode">Mode</option>
-                        <option value="emplois">Emplois</option>
-                        <option value="multimedia">Multimédia</option>
+                        <option value="1">Immobilier</option>
+                        <option value="2">Vehicules</option>
+                        <option value="3">Loisirs</option>
+                        <option value="4">Meubles</option>
+                        <option value="5">Téléphonie</option>
+                        <option value="6">Mode</option>
+                        <option value="7">Emplois</option>
+                        <option value="8">Multimédia</option>
                     </select>
 
                     <div>
@@ -122,7 +124,7 @@ $slugcrypter_valid=base64_encode($slug.'valid');
 
 
 
-            $slug = $_POST['idTmp'] . '/' . $_POST['ville'] . '/' . $_POST['categorie'] . '/' . $_POST['nom'] . '/' . $_POST['prix'] . '/' . $_POST['description'] . '/' . $_POST['mail'] . '/' . $_FILES['photo1']['name'] . '/' . $_FILES['photo2']['name'] . '/' . $_FILES['photo3']['name'] . '/' . $_FILES['photo4']['name'] . '/' . $_FILES['photo5']['name'] . '/';
+            $slug = $_POST['idTmp'] . '/' . $_POST['ville'] . '/' . $_POST['categorie'] . '/' . $_POST['nom'] . '/' . $_POST['prix'] . '/' . $_POST['description'] . '/' . $_POST['mail'] . '/' . $_FILES['photo1']['name'] . '/' . $_FILES['photo2']['name'] . '/' . $_FILES['photo3']['name'] . '/' . $_FILES['photo4']['name'] . '/' . $_FILES['photo5']['name'] . $_POST['categorie']. '/';
 
             $slugcrypter_valid = base64_encode($slug . "valid");
             $slugcrypter_update = base64_encode($slug . "update");

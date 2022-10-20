@@ -20,7 +20,7 @@ abstract class Model
   public function findAll(): array
   {
 
-    $sql = $this->db->getPDO()->query("SELECT * FROM {$this->table} ORDER BY nom DESC");
+    $sql = $this->db->getPDO()->query("SELECT * FROM {$this->table} ");
     return $sql->fetchAll();
   }
 
@@ -70,6 +70,7 @@ abstract class Model
     $sth->execute($values);
     $result = $this->db->getPDO()->lastInsertId();
     return $result;
+    
   }
 
   public function update($id, Model $data)

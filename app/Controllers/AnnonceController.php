@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\Annonce;
 use App\Models\Mail;
+use App\Models\Categorie;
 
 
 class AnnonceController extends Controller
@@ -77,6 +78,7 @@ class AnnonceController extends Controller
     { //Formulaire en cliquant sur ajouter dans la page d'accueil
         $annonce = new Annonce($this->getDb());
         $mail = new Mail($this->getDb());
+       
         //CONDITION SI $_POST N'EST PAS VIDE ALORS ON RECUPERE LES DONNEES
         if (!empty($_POST)) {
             //Update des images
@@ -114,12 +116,14 @@ class AnnonceController extends Controller
                 ->setNom($_POST['nom'])
                 ->setDescription($_POST['description'])
                 ->setPrix($_POST['prix'])
-                ->setVille($_POST['ville']);
+                ->setVille($_POST['ville'])
                 // ->setphoto1($_FILES['photo1']['name'])
                 // ->setphoto2($_FILES['photo2']['name'])
                 // ->setphoto3($_FILES['photo3']['name'])
                 // ->setphoto4($_FILES['photo4']['name'])
                 // ->setphoto5($_FILES['photo5']['name']);
+                ->setCategorie_id($_POST['categorie']);
+                
 
             //CONDITION POUR VERIFIER SI ON A UN ID ALORS ON APPELLE LA FONCTION UPDATE
             if (isset($_POST['id']) && !empty($_POST['id'])) {
@@ -164,6 +168,8 @@ class AnnonceController extends Controller
     { // Fonction appelée après que l'utilisateur aie cliqué sur le lien valider dans l'e-mail
         $annonce = new Annonce($this->getDb());
         $mail = new Mail($this->getDb());
+        $categorie = new Categorie($this->getDb());
+
         //On supprime le mot valid dans l'Url
         $tmp = str_replace("valid/", "", $_GET['url']);
         //Decrypte l'ensemble des données récupérées dans l'url
@@ -186,13 +192,16 @@ class AnnonceController extends Controller
                     ->setphoto2(self::PATH_IMG_ABSOLUTE . $donnees[8])    //8=>photo8
                     ->setphoto3(self::PATH_IMG_ABSOLUTE . $donnees[9])    //9=>photo9
                     ->setphoto4(self::PATH_IMG_ABSOLUTE . $donnees[10])   //10=>photo10
-                    ->setphoto5(self::PATH_IMG_ABSOLUTE . $donnees[11]);  //11=>photo11
+                    ->setphoto5(self::PATH_IMG_ABSOLUTE . $donnees[11])  //11=>photo11
+                    ->setCategorie_id($donnees[2])  ;                     //12=>categorie_id
 
                 //Insère l'annonce une fois que l'utilisateur a valider avec l'e-mail
                 $result = $annonce->insert($newAnnonce);
                 //print_r($newAnnonce);
                 //Insertion de l'e-mail dans la table mail avec l'id_annonce
                 $newMail = $mail->setMail($donnees[6])->setId_annonce($result);
+
+
                 $mail->insert($newMail);
 
                 //Envoie du deuxième e-mail qui permet d'afficher/modifier/supprimer l'annonce qui vient d'être rentrée dans la bdd          
@@ -253,7 +262,8 @@ class AnnonceController extends Controller
                 ->setphoto2(self::PATH_IMG_ABSOLUTE . $_FILES['photo2']['name'])
                 ->setphoto3(self::PATH_IMG_ABSOLUTE . $_FILES['photo3']['name'])
                 ->setphoto4(self::PATH_IMG_ABSOLUTE . $_FILES['photo4']['name'])
-                ->setphoto5(self::PATH_IMG_ABSOLUTE . $_FILES['photo5']['name']);
+                ->setphoto5(self::PATH_IMG_ABSOLUTE . $_FILES['photo5']['name'])
+                ->setCategorie_id($_POST['categorie']);
 
             //CONDITION POUR VERIFIER SI ON A UN ID ALORS ON APPELLE LA FONCTION UPDATE
             if (isset($_POST['id']) && !empty($_POST['id'])) {

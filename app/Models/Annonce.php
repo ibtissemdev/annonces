@@ -14,6 +14,7 @@ class Annonce extends Model {
     protected $photo3;
     protected $photo4;
     protected $photo5;
+    protected $categorie_id;
    
     /**
      * Get the value of categorie
@@ -212,6 +213,26 @@ class Annonce extends Model {
     {
         //error_log("setter photo 1 : ".$photo1);
         $this->photo1 = $photo1;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of categorie_id
+     */ 
+    public function getCategorie_id()
+    {
+        return $this->categorie_id;
+    }
+
+    /**
+     * Set the value of categorie_id
+     *
+     * @return  self
+     */ 
+    public function setCategorie_id($categorie_id)
+    {
+        $this->categorie_id = $categorie_id;
 
         return $this;
     }
