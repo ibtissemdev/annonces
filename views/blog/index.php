@@ -74,10 +74,10 @@ if (isset($_GET['cookie'])) {
           <div class="nom">
             <h2>Non : <?= $annonce->nom // on récupère en objet
                   ?></h2>
-            <p>Catégorie : <?= $annonce->categorie // on récupère en objet
+            <p>Catégorie : <?= $annonce->nom_categorie // on récupère en objet
                 ?></p>
           </div>
-          <img src="<?= $annonce->photo1 ?>" alt="photo annonce">
+          <img src="<?= $annonce->chemin ?>" alt="photo annonce">
 
           <a href="/annonces/annonces/<?= $annonce->id ?>"><button class='plus'>Lire plus</button></a>
         </span>
@@ -100,9 +100,10 @@ if (isset($_GET['cookie'])) {
   <div class="annonce">
     <span>
       <div class="nom">
-        <h2> <?= $annonce->nom // on récupère en objet
+        <h2> <?= $annonce->nom; // on récupère en objet
+     
               ?></h2>
-        <p><?= $annonce->categorie // on récupère en objet
+        <p><?= $annonce->nom_categorie // on récupère en objet
             ?></p>
       </div>
       <img src="<?= $annonce->photo1 ?>" alt="photo annonce">

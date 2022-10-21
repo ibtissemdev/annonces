@@ -88,18 +88,25 @@ error_log("formulairemail.php SANS POST");
                 <div class="partie2">
                 <fieldset>
                 <legend>Photos</legend>
+                <label for="file" > Photos chargés :</label>
+
                     <?php
-                    $test = 'photo';
-                    for ($i = 7; $i <= 11; $i++) {
-                        $j = $i - 6;
-                        $test = 'photo' . $j;
+                  
+                error_log(print_r($donnees),1)   ;
+                $nbrPhotos =count($donnees)-2;
+                $j=0;
+                    for ($i = 7; $i < $nbrPhotos; $i++) {
+                     $j++;
                     ?><div>
-                        <label for="file" > Ajouter photo <?= $j ?> <?php echo '<img src= "' . 'http://localhost/annonces/public/images/' . $donnees[$i] . '" alt="photo hébergement">'; ?>   <input type="file" name="<?= $test ?>"> </label>
+                      <?php echo 'Photo '.$j.'<img src= "' . 'http://localhost/annonces/public/images/' . $donnees[$i] . '" alt="photo hébergement">'.'<hr>'; 
+                                      }  /* $slug=$donnees[0].'/'.$donnees[1].'/'.$donnees[2].'/'.$donnees[3].'/'.$donnees[4].'/'.$donnees[5].'/'.$donnees[6].'/'.$donnees[7].'/'.$donnees[8].'/'.$donnees[9].'/'.$donnees[10].'/'.$donnees[11].'/';
+                                         $slugcrypter_valid=base64_encode($slug.'valid');
+                                         */ ?>
+                                         <span>Veuillez recharger toutes vos photos sinon elles seront supprimées</span>
+                   <input type="file" name="file[]" multiple> 
                      </div>
 
-                    <?php }  /* $slug=$donnees[0].'/'.$donnees[1].'/'.$donnees[2].'/'.$donnees[3].'/'.$donnees[4].'/'.$donnees[5].'/'.$donnees[6].'/'.$donnees[7].'/'.$donnees[8].'/'.$donnees[9].'/'.$donnees[10].'/'.$donnees[11].'/';
-$slugcrypter_valid=base64_encode($slug.'valid');
-*/ ?>
+   
                     <div>
 
                         <input type="hidden" id="mail" value="<?= $donnees[6] ?>" name="mail">
@@ -122,10 +129,29 @@ $slugcrypter_valid=base64_encode($slug.'valid');
 
         if ($_POST) {
 
+            error_log("formulairemail.php AVEC POST avant envoie du mail");
+            // $photo='/';
+        //  error_log(print_r($_FILES,1));
+         $nbrPhoto=count($_FILES['file']['name']);
+
+         $photo="";
+for($i = 0; $i < $nbrPhoto; $i++) {
+//    $_FILES[$i]['file']['name'];
+
+    // error_log(print_r("liste des photos : " .$_FILES['file']['name'][$i],1));
+    $photo.=$_FILES['file']['name'][$i];
+    $photo.='/';
+   
+
+}
+// error_log(print_r("liste des photos : " .$photo,1));
 
 
-            $slug = $_POST['idTmp'] . '/' . $_POST['ville'] . '/' . $_POST['categorie'] . '/' . $_POST['nom'] . '/' . $_POST['prix'] . '/' . $_POST['description'] . '/' . $_POST['mail'] . '/' . $_FILES['photo1']['name'] . '/' . $_FILES['photo2']['name'] . '/' . $_FILES['photo3']['name'] . '/' . $_FILES['photo4']['name'] . '/' . $_FILES['photo5']['name'] . $_POST['categorie']. '/';
+            $slug = $_POST['idTmp'] . '/' . $_POST['ville'] . '/' . $_POST['categorie'] . '/' . $_POST['nom'] . '/' . $_POST['prix'] . '/' . $_POST['description'] . '/' . $_POST['mail'] . '/' . $photo . $_POST['categorie']. '/';
+            
 
+            // $_FILES['photo1']['name'] . '/' . $_FILES['photo2']['name'] . '/' . $_FILES['photo3']['name'] . '/' . $_FILES['photo4']['name'] . '/' . $_FILES['photo5']['name'] 
+            
             $slugcrypter_valid = base64_encode($slug . "valid");
             $slugcrypter_update = base64_encode($slug . "update");
 

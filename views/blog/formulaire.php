@@ -23,7 +23,7 @@ use App\Models\Categorie;
 <body>
 
     <?php $idtmp = rand(10000, 99999);
-    setcookie("idTmp", $idtmp, time() + 3600);  /* expire dans 1 heure */
+    setcookie("idTmp", $idtmp, time() + 3600*10);  /* expire dans 1 heure */
     ?>
     <container>
 
@@ -96,18 +96,18 @@ use App\Models\Categorie;
                 <fieldset>
                     <legend>Photos</legend>
                     <?php
-                    $test = 'photo';
-                    for ($i = 1; $i <= 5; $i++) {
+                    // $test = 'photo';
+                    // for ($i = 1; $i <= 5; $i++) {
 
-                        $test = 'photo' . $i;
+                    //     $test = 'photo' . $i;
                     ?>
-                        <label for="file">Ajouter photo <?= $i ?> <?php
+                        <label for="file">Ajouter photo  <?php
                                                                     if (isset($params['annonce']->id)) {
                                                                         echo '<img src= "../public/images/' . $params['annonce']->$test . '" alt="photo hébergement">';
                                                                     } ?></label>
-                        <input type="file" name="<?= $test ?>">
+                        <input type="file" name="file[]" multiple>
 
-                    <?php }
+                    <?php 
                     if (!isset($params['annonce']->id)) { ?>
 
                         <div>

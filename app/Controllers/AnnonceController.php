@@ -4,19 +4,20 @@ namespace App\Controllers;
 
 use App\Models\Annonce;
 use App\Models\Mail;
-use App\Models\Categorie;
+use App\Models\Photo;
 
 
 class AnnonceController extends Controller
 { //lien absolu pour l'image
     public const PATH_IMG_ABSOLUTE = "http://localhost/annonces/public/images/";
-    
+
 
 
     public function index()
     { //Affiche la page d'accueil avec toutes les annonces
         $annonce = new Annonce($this->getDb());
         $annonces = $annonce->findAll();
+
         return $this->view('blog.index', compact('annonces')); //permet d'envoyer un tableau qui contient nos données qui aura la clée annonces
     }
 
@@ -32,7 +33,10 @@ class AnnonceController extends Controller
     { // Affiche une page de manière dynamique selon l'Id de l'annonce
         $annonce = new Annonce($this->getDb());
         $annonce = $annonce->findById($id);
-        return $this->view('blog.show', compact('annonce'));
+
+    $photo= new Photo($this->getDb());
+    $listeChemin=$photo->findCheminsById($id);
+        return $this->view('blog.show', compact('annonce','listeChemin'));
     }
 
     public function search()
@@ -78,7 +82,7 @@ class AnnonceController extends Controller
     { //Formulaire en cliquant sur ajouter dans la page d'accueil
         $annonce = new Annonce($this->getDb());
         $mail = new Mail($this->getDb());
-       
+
         //CONDITION SI $_POST N'EST PAS VIDE ALORS ON RECUPERE LES DONNEES
         if (!empty($_POST)) {
             //Update des images
@@ -96,10 +100,9 @@ class AnnonceController extends Controller
 
                         $photo[$i + 1] = $filename;
                         error_log(print_r($_FILES["photo$i"]['size'], 1));
-                        move_uploaded_file($_FILES["photo$i"]['tmp_name'], $location) ;
-                      
+                        move_uploaded_file($_FILES["photo$i"]['tmp_name'], $location);
                     } else {
-                        error_log('taille trop grande : '.$i);
+                        error_log('taille trop grande : ' . $i);
                         error_log(print_r($_FILES["photo$i"]['size'], 1));
                     }
                 } else {
@@ -123,7 +126,7 @@ class AnnonceController extends Controller
                 // ->setphoto4($_FILES['photo4']['name'])
                 // ->setphoto5($_FILES['photo5']['name']);
                 ->setCategorie_id($_POST['categorie']);
-                
+
 
             //CONDITION POUR VERIFIER SI ON A UN ID ALORS ON APPELLE LA FONCTION UPDATE
             if (isset($_POST['id']) && !empty($_POST['id'])) {
@@ -168,7 +171,7 @@ class AnnonceController extends Controller
     { // Fonction appelée après que l'utilisateur aie cliqué sur le lien valider dans l'e-mail
         $annonce = new Annonce($this->getDb());
         $mail = new Mail($this->getDb());
-        $categorie = new Categorie($this->getDb());
+        $photo = new Photo($this->getDb());
 
         //On supprime le mot valid dans l'Url
         $tmp = str_replace("valid/", "", $_GET['url']);
@@ -177,8 +180,10 @@ class AnnonceController extends Controller
         //on retourne un tableau avec toutes les données qui étaient séparées par un "/"
         $donnees = explode("/", $slugcrypter_valid);
 
+        error_log(print_r(end($donnees), 1));
+
         //On vérifie que le dernier élément de la chaîne est le mot "valid" => pour valider l'annonce
-        if ($donnees[12] == "valid") {
+        if (end($donnees) == "valid") {
             //element constituants les donnees récupérés dans l'Url       0 => idTmp       
             if (!empty($donnees[0]) && ($_COOKIE['idTmp'] == $donnees[0])) {
                 $newAnnonce = $annonce
@@ -193,13 +198,27 @@ class AnnonceController extends Controller
                     ->setphoto3(self::PATH_IMG_ABSOLUTE . $donnees[9])    //9=>photo9
                     ->setphoto4(self::PATH_IMG_ABSOLUTE . $donnees[10])   //10=>photo10
                     ->setphoto5(self::PATH_IMG_ABSOLUTE . $donnees[11])  //11=>photo11
-                    ->setCategorie_id($donnees[2])  ;                     //12=>categorie_id
+                    ->setCategorie_id($donnees[2]);                     //2=>categorie_id
 
                 //Insère l'annonce une fois que l'utilisateur a valider avec l'e-mail
                 $result = $annonce->insert($newAnnonce);
                 //print_r($newAnnonce);
                 //Insertion de l'e-mail dans la table mail avec l'id_annonce
                 $newMail = $mail->setMail($donnees[6])->setId_annonce($result);
+
+                // Insertion des photos dans la table photo
+                for ($i = 7; $i < 12; $i++) {
+                    $newPoto = $photo->setChemin(self::PATH_IMG_ABSOLUTE . $donnees[$i]);
+                    $photo->insert($newPoto);
+                    $idPhoto = $this->db->getPDO()->lastInsertId();
+
+                    echo "<pre>", print_r($idPhoto, 1), "</pre>";
+                    echo "<pre>", print_r($result, 1), "</pre>";
+
+                    $sth = "INSERT INTO liaison_photo (photo_id,annonce_id) VALUES ($idPhoto,$result)";
+                    $this->db->getPDO()->exec($sth);
+                }
+
 
 
                 $mail->insert($newMail);
@@ -245,12 +264,17 @@ class AnnonceController extends Controller
         error_log("Controller updateMail");
         $annonce = new Annonce($this->getDb());
         $mail = new Mail($this->getDb());
+        $photo = new Photo($this->getDb());
+
         //CONDITION SI $_POST N'EST PAS VIDE ALORS ON RECUPERE LES DONNEES
         if ($_POST && ($_COOKIE['idTmp'] == $_POST['idTmp'])) {
-            for ($i = 1; $i <= 5; $i++) {
-                $filename = $_FILES["photo$i"]['name'];
-                $photo[$i + 1] = $filename;
-                move_uploaded_file($_FILES["photo$i"]['tmp_name'], './images/' . $filename);
+            $nbrPhoto = count($_FILES);
+
+
+            for ($i = 0; $i <= $nbrPhoto; $i++) {
+                $filename = $_FILES["file"]['name'][$i];
+                //  $photo[$i + 1] = $filename;
+                move_uploaded_file($_FILES["file"]['tmp_name'][$i], './images/' . $filename);
             }
             //ON DEFFINIE LES SETTERS
             $newAnnonce = $annonce->setCategorie($_POST['categorie'])
@@ -258,11 +282,11 @@ class AnnonceController extends Controller
                 ->setDescription($_POST['description'])
                 ->setPrix($_POST['prix'])
                 ->setVille($_POST['ville'])
-                ->setphoto1(self::PATH_IMG_ABSOLUTE . $_FILES['photo1']['name'])
-                ->setphoto2(self::PATH_IMG_ABSOLUTE . $_FILES['photo2']['name'])
-                ->setphoto3(self::PATH_IMG_ABSOLUTE . $_FILES['photo3']['name'])
-                ->setphoto4(self::PATH_IMG_ABSOLUTE . $_FILES['photo4']['name'])
-                ->setphoto5(self::PATH_IMG_ABSOLUTE . $_FILES['photo5']['name'])
+                ->setphoto1(self::PATH_IMG_ABSOLUTE . $_FILES['file']['name'])
+                ->setphoto2(self::PATH_IMG_ABSOLUTE . $_FILES['file']['name'])
+                ->setphoto3(self::PATH_IMG_ABSOLUTE . $_FILES['file']['name'])
+                ->setphoto4(self::PATH_IMG_ABSOLUTE . $_FILES['file']['name'])
+                ->setphoto5(self::PATH_IMG_ABSOLUTE . $_FILES['file']['name'])
                 ->setCategorie_id($_POST['categorie']);
 
             //CONDITION POUR VERIFIER SI ON A UN ID ALORS ON APPELLE LA FONCTION UPDATE
@@ -281,6 +305,26 @@ class AnnonceController extends Controller
                 $newMail = $mail->setMail($_POST['mail'])
                     ->setId_annonce($result);
                 $mail->insert($newMail);
+
+
+
+                // Insertion des photos dans la table photo
+                $nbrPhoto = count($_FILES);
+error_log(print_r($_FILES,1));
+                for ($i = 0; $i <= $nbrPhoto; $i++) {
+                    $newPoto = $photo->setChemin(self::PATH_IMG_ABSOLUTE . $_FILES['file']['name'][$i]);
+
+
+                    $photo->insert($newPoto);
+                    $idPhoto = $this->db->getPDO()->lastInsertId();
+
+                    echo "<pre>", print_r($idPhoto, 1), "</pre>";
+                    echo "<pre>", print_r($result, 1), "</pre>";
+
+                    $sth = "INSERT INTO liaison_photo (photo_id,annonce_id) VALUES ($idPhoto,$result)";
+                    $this->db->getPDO()->exec($sth);
+                }
+
 
                 $to = $_POST['mail'];
                 $subject = "Votre annonce a été validé";

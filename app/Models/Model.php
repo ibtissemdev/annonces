@@ -19,19 +19,36 @@ abstract class Model
 
   public function findAll(): array
   {
-
-    $sql = $this->db->getPDO()->query("SELECT * FROM {$this->table} ");
+    $sql = $this->db->getPDO()->query("SELECT COUNT(annonces.id), description,annonces.id, prix, ville, nom_categorie, chemin, annonces.nom FROM {$this->table} LEFT JOIN categorie ON annonces.categorie_id=categorie.id_categorie
+    LEFT JOIN liaison_photo ON liaison_photo.annonce_id=annonces.id 
+    LEFT JOIN photos ON photos.id_photo=liaison_photo.photo_id
+    GROUP BY annonces.id
+    HAVING COUNT(annonces.id)
+    ");
     return $sql->fetchAll();
   }
 
   public function findById(int $id): stdClass //Classe standard prédéfinie
   {
-    
 
-    $sql = $this->db->getPDO()->prepare("SELECT * FROM {$this->table} WHERE id=?");
+    $sql = $this->db->getPDO()->prepare("SELECT description,annonces.id, prix, ville, nom_categorie, chemin, annonces.nom FROM {$this->table} 
+    LEFT JOIN categorie ON annonces.categorie_id=categorie.id_categorie
+    LEFT JOIN liaison_photo ON liaison_photo.annonce_id=annonces.id 
+    LEFT JOIN photos ON photos.id_photo=liaison_photo.photo_id WHERE annonces.id=?");
+
     $sql->execute([$id]);
     return $sql->fetch();
   }
+  public function findCheminsById(int $id): array //Classe standard prédéfinie
+  {
+    $sql = $this->db->getPDO()->prepare("SELECT chemin FROM {$this->table} 
+    LEFT JOIN liaison_photo ON liaison_photo.photo_id=photos.id_photo
+    LEFT JOIN annonces ON annonces.id=liaison_photo.annonce_id WHERE annonces.id=?");
+
+    $sql->execute([$id]);
+    return $sql->fetchall();
+  }
+
 
   public function delete($id)
   {
@@ -51,7 +68,7 @@ abstract class Model
 
   public function insert(Model $data)
   {
-   
+
     $keys = [];
     $champs = [];
     $values = [];
@@ -60,7 +77,7 @@ abstract class Model
       if ($value != null && $key != 'table' && $key != 'db') {
         $keys[] = $key;
         $champs[] = '?';
-        $valueFiltre =$this->valid_donnees($value);
+        $valueFiltre = $this->valid_donnees($value);
         $values[] = $valueFiltre;
       }
     }
@@ -70,7 +87,6 @@ abstract class Model
     $sth->execute($values);
     $result = $this->db->getPDO()->lastInsertId();
     return $result;
-    
   }
 
   public function update($id, Model $data)
@@ -81,7 +97,7 @@ abstract class Model
     foreach ($data as $key => $value) {
       if ($value != null && $key != 'table' && $key != 'db') {
         $keys[] = "$key = ?";
-        $valueFiltre =$this->valid_donnees($value);
+        $valueFiltre = $this->valid_donnees($value);
         $values[] = $valueFiltre;
       }
     }

@@ -1,8 +1,11 @@
 <h1><?= $params['annonce']->nom ?></h1>
+
 <p><?= $params['annonce']->description ?></p>
+<p><?php print_r($params['listeChemin']) ?></p>
+
 <div id="slider">
   
-        <img src="<?= $params['annonce']->photo1 ?>" alt="photo1" id="slide">
+        <img src="<?= $params['annonce']->chemin ?>" alt="photo1" id="slide">
    
         <div id="precedent" onclick="ChangeSlide(-1)"><</div>
         <div id="suivant" onclick="ChangeSlide(1)">></div>
@@ -10,7 +13,7 @@
 <a href="/annonces/"><button class="boutton">Retour</button></a>
 
 <script>
-var slide = new Array("<?= $params['annonce']->photo1 ?>", "<?= $params['annonce']->photo2 ?>", "<?= $params['annonce']->photo3 ?>", "<?= $params['annonce']->photo4 ?>","<?= $params['annonce']->photo5 ?>");
+var slide = new Array("<?php  $params['annonce']->photo1 ?>", "<?= $params['annonce']->photo2 ?>", "<?= $params['annonce']->photo3 ?>", "<?= $params['annonce']->photo4 ?>","<?= $params['annonce']->photo5 ?>", );
 var numero = 0;
 
 function ChangeSlide(sens) {
