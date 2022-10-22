@@ -1,7 +1,22 @@
 <h1><?= $params['annonce']->nom ?></h1>
 
-<p><?= $params['annonce']->description ?></p>
-<p><?php print_r($params['listeChemin']) ?></p>
+<p> Descritpion : <?= $params['annonce']->description ?></p>
+<p><?php 
+// print_r($params['listeChemin']);
+$tableau=[];
+foreach($params['listeChemin'] as $photo) {
+
+$tableau[]=$photo->chemin;
+
+}
+
+
+$tableau= implode('","',$tableau);
+
+print_r($tableau);
+?></p>
+
+
 
 <div id="slider">
   
@@ -13,7 +28,7 @@
 <a href="/annonces/"><button class="boutton">Retour</button></a>
 
 <script>
-var slide = new Array("<?php  $params['annonce']->photo1 ?>", "<?= $params['annonce']->photo2 ?>", "<?= $params['annonce']->photo3 ?>", "<?= $params['annonce']->photo4 ?>","<?= $params['annonce']->photo5 ?>", );
+var slide =new Array("<?=$tableau?>");
 var numero = 0;
 
 function ChangeSlide(sens) {

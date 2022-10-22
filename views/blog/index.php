@@ -1,4 +1,6 @@
 <?php
+
+use App\Models\Categorie;
 // PAGINATION
 
 //Si elle n'existe pas 1 s'affiche 
@@ -22,7 +24,7 @@ $sql= $this->db->getPDO()->query("SELECT * FROM annonces ORDER BY nom DESC LIMIT
 
 //Si l'utilisateur a tardé à valider l'annonce ce message s'affichera en le redirigeant sur la page d'accueil
 if (isset($_GET['cookie'])) {
-  echo "Le délais d'une heure est écoulé, recommencez votre saisie";
+  echo "<strong> Le délai d'une heure est écoulé, votre annonce n'a pas été publié recommencez votre saisie </strong><br>";
 }
 
 /*if(($currentPage>1) && ($currentPage<=$pages)):
@@ -42,13 +44,20 @@ if (isset($_GET['cookie'])) {
   <label for="recherche">Recherche</label>
   <select name="recherche" id="recherche">
   <option value= "" disabled selected hidden>Catégorie</option>
-    <option value="Immobilier">Immobilier</option>
-    <option value="Vehicule">Vehicule</option>
-    <option value="Loisirs">Loisirs</option>
-    <option value="Meuble">Meuble</option>
-    <option value="Téléphonie">Téléphonie</option>
-    <option value="Mode">Mode</option>
-    <option value="Multimédia">Multimédia</option>
+    <?php
+                        $categorie = new Categorie($this->getDb());
+                        $liste = $categorie->findAllCategorie();
+                        // print_r($liste);
+
+                        foreach ($liste as $cat) {
+
+                            // print_r($cat->nom_categorie);
+                            // print_r($cat->id_categorie);
+
+                        ?>
+                            <option value="<?= $cat->id_categorie ?>"><?= $cat->nom_categorie ?></option>
+
+                        <?php } ?>
   </select>
   <button class="boutton" type="search">Envoyer</button>
 </form>
@@ -106,7 +115,7 @@ if (isset($_GET['cookie'])) {
         <p><?= $annonce->nom_categorie // on récupère en objet
             ?></p>
       </div>
-      <img src="<?= $annonce->photo1 ?>" alt="photo annonce">
+      <img src="<?= $annonce->chemin ?>" alt="photo annonce">
 
       <a href="/annonces/annonces/<?= $annonce->id ?>"><button class='plus'>Lire plus</button></a>
     </span>

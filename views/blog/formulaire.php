@@ -1,6 +1,7 @@
 <?php //session_start(); 
 
 use App\Models\Categorie;
+use App\Models\Photo;
 
 
 
@@ -23,7 +24,7 @@ use App\Models\Categorie;
 <body>
 
     <?php $idtmp = rand(10000, 99999);
-    setcookie("idTmp", $idtmp, time() + 3600*10);  /* expire dans 1 heure */
+    setcookie("idTmp", $idtmp, time() + 3600 );  /* expire dans 1 heure */
     ?>
     <container>
 
@@ -44,21 +45,31 @@ use App\Models\Categorie;
                         <option value="Annecy">Annecy</option>
                         <option value="Lyon">Lyon</option>
                     </select>
+                    <?php
+                    if((isset($params['annonce']->id))) {
+                        $categorie = new Categorie($this->getDb());
+                        $nomCategorie = $categorie->findCategorieById($params['annonce']->categorie_id);
+                        // error_log(print_r($nomCategorie,1));
+                    }
+                 
+                    ?>
 
                     <label for="categorie">Quoi </label>
-                    <select name="categorie" id="pet-select">
-                        <?= (isset($params['annonce']->id)) ?  "<option>" . $params['annonce']->categorie . "</option>" : "<option disabled selected hidden>Catégorie</option>";
+                    <select name="categorie" id="">
+
+
+                        <?= (isset($params['annonce']->id)) ?  "<option value=".$nomCategorie->id_categorie.">". $nomCategorie->nom_categorie . "</option>" : "<option disabled selected hidden>Catégorie</option>";
                         ?>
 
                         <?php
                         $categorie = new Categorie($this->getDb());
-                        $liste = $categorie->findAll();
-                        print_r($liste);
+                        $liste = $categorie->findAllCategorie();
+                        // print_r($liste);
 
                         foreach ($liste as $cat) {
 
-                            print_r($cat->nom_categorie);
-                            print_r($cat->id_categorie);
+                        //     print_r($cat->nom_categorie);
+                        // error_log(print_r('numéro de l/id catégorie : '.$cat->id_categorie,1))    ;
 
                         ?>
                             <option value="<?= $cat->id_categorie ?>"><?= $cat->nom_categorie ?></option>
@@ -95,19 +106,23 @@ use App\Models\Categorie;
             <div class="partie2">
                 <fieldset>
                     <legend>Photos</legend>
+                 
+                    <label for="file">Ajouter photo </label>
+                        <?php
+                                                  if (isset($params['annonce']->id)) {
+                                                        $photo= new Photo($this->getDb());
+                                                        $listePhoto=$photo->findCheminsById($params['annonce']->id);
+
+                                                        foreach ($listePhoto as $photo) {
+                                                            echo '<img src= "' . $photo->chemin . '" alt="photo hébergement">';
+
+                                                        }
+                                                        echo "Veuillez insérer vos photos à nouveau".'<br>';
+                                                      
+                                                    } ?>
+                    <input type="file" name="file[]" multiple>
+
                     <?php
-                    // $test = 'photo';
-                    // for ($i = 1; $i <= 5; $i++) {
-
-                    //     $test = 'photo' . $i;
-                    ?>
-                        <label for="file">Ajouter photo  <?php
-                                                                    if (isset($params['annonce']->id)) {
-                                                                        echo '<img src= "../public/images/' . $params['annonce']->$test . '" alt="photo hébergement">';
-                                                                    } ?></label>
-                        <input type="file" name="file[]" multiple>
-
-                    <?php 
                     if (!isset($params['annonce']->id)) { ?>
 
                         <div>
@@ -131,17 +146,6 @@ use App\Models\Categorie;
         </form>
         <a href="/annonces/"><button class="btn btn-secondary">Retour</button></a>
 
-        <?php
-        $categorie = new Categorie($this->getDb());
-        $liste = $categorie->findAll();
-        print_r($liste);
-
-        foreach ($liste as $cat) {
-
-            print_r($cat->nom_categorie);
-            print_r($cat->id_categorie);
-        }
-
-        ?>
+     
 
     </container>

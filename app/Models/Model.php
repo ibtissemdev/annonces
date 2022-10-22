@@ -19,7 +19,8 @@ abstract class Model
 
   public function findAll(): array
   {
-    $sql = $this->db->getPDO()->query("SELECT COUNT(annonces.id), description,annonces.id, prix, ville, nom_categorie, chemin, annonces.nom FROM {$this->table} LEFT JOIN categorie ON annonces.categorie_id=categorie.id_categorie
+    $sql = $this->db->getPDO()->query("SELECT COUNT(annonces.id), description,annonces.id, prix, ville, nom_categorie,annonces.categorie_id, chemin, annonces.nom FROM {$this->table} 
+    LEFT JOIN categorie ON annonces.categorie_id=categorie.id_categorie
     LEFT JOIN liaison_photo ON liaison_photo.annonce_id=annonces.id 
     LEFT JOIN photos ON photos.id_photo=liaison_photo.photo_id
     GROUP BY annonces.id
@@ -28,10 +29,25 @@ abstract class Model
     return $sql->fetchAll();
   }
 
+  public function findAllCategorie(): array
+  {
+    $sql = $this->db->getPDO()->query("SELECT nom_categorie, id_categorie FROM {$this->table} ");
+    return $sql->fetchAll();
+  }
+
+  public function findCategorieById(int $id): stdClass //Classe standard prédéfinie
+  {
+    $sql = $this->db->getPDO()->query("SELECT nom_categorie, id_categorie FROM {$this->table} WHERE id_categorie=$id");
+    $sql->execute();
+    return $sql->fetch();
+  }
+
+
+
   public function findById(int $id): stdClass //Classe standard prédéfinie
   {
 
-    $sql = $this->db->getPDO()->prepare("SELECT description,annonces.id, prix, ville, nom_categorie, chemin, annonces.nom FROM {$this->table} 
+    $sql = $this->db->getPDO()->prepare("SELECT description,annonces.id, prix, ville, nom_categorie, chemin, annonces.nom, annonces.categorie_id FROM {$this->table} 
     LEFT JOIN categorie ON annonces.categorie_id=categorie.id_categorie
     LEFT JOIN liaison_photo ON liaison_photo.annonce_id=annonces.id 
     LEFT JOIN photos ON photos.id_photo=liaison_photo.photo_id WHERE annonces.id=?");
@@ -39,9 +55,16 @@ abstract class Model
     $sql->execute([$id]);
     return $sql->fetch();
   }
+  public function findAllChemin(): array
+  {
+    $sql = $this->db->getPDO()->query("SELECT chemin FROM {$this->table} ");
+    return $sql->fetchAll();
+  }
+
+
   public function findCheminsById(int $id): array //Classe standard prédéfinie
   {
-    $sql = $this->db->getPDO()->prepare("SELECT chemin FROM {$this->table} 
+    $sql = $this->db->getPDO()->prepare("SELECT chemin, id_photo FROM {$this->table} 
     LEFT JOIN liaison_photo ON liaison_photo.photo_id=photos.id_photo
     LEFT JOIN annonces ON annonces.id=liaison_photo.annonce_id WHERE annonces.id=?");
 
@@ -50,9 +73,9 @@ abstract class Model
   }
 
 
-  public function delete($id)
+  public function delete($id_annonce, $id)
   {
-    $sth = $this->db->getPDO()->prepare("DELETE FROM {$this->table} WHERE Id=$id");
+    $sth = $this->db->getPDO()->prepare("DELETE FROM {$this->table} WHERE $id_annonce=$id");
     $sth->execute();
   }
   private function valid_donnees($donnees)
@@ -109,7 +132,14 @@ abstract class Model
 
   public function recherche($recherche)
   {
-    $sql = "SELECT * FROM {$this->table} WHERE categorie LIKE '%$recherche%'";
+    $sql = "SELECT COUNT(annonces.id), description,annonces.id, prix, ville, nom_categorie, chemin, annonces.nom FROM {$this->table} 
+    LEFT JOIN categorie ON annonces.categorie_id=categorie.id_categorie
+    LEFT JOIN liaison_photo ON liaison_photo.annonce_id=annonces.id 
+    LEFT JOIN photos ON photos.id_photo=liaison_photo.photo_id
+    WHERE categorie.id_categorie LIKE '%$recherche%'
+    GROUP BY annonces.id
+    HAVING COUNT(annonces.id)";
+
     $sth = $this->db->getPDO()->prepare($sql);
     $sth->execute();
     $resultat = $sth->fetchall();

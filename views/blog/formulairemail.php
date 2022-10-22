@@ -1,3 +1,10 @@
+<?php //session_start(); 
+
+use App\Models\Categorie;
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -23,21 +30,25 @@
             <span>Prix : <?= $_POST['prix'] ?></span><br>
             <span>Description : <?= $_POST['description'] ?></span><br>
             <span>Catégorie_id : <?= $_POST['categorie'] ?></span><br>
+<?php 
+  $nbrPhoto=count($_FILES['file']['name']);
+  error_log($nbrPhoto);
 
 
-            <!-- <span><img src="http://localhost/annonces/public/images/<?= ($_FILES['photo1']) ? $_FILES['photo1']['name'] : $donnees[6] ?>"></span><br>
-            <span><img src="http://localhost/annonces/public/images/<?= ($_FILES['photo2']) ? $_FILES['photo2']['name'] : "image vide" ?>"></span><br>
-            <span><img src="http://localhost/annonces/public/images/<?= ($_FILES['photo3']) ? $_FILES['photo3']['name'] : "image vide" ?>"></span><br>
-            <span><img src="http://localhost/annonces/public/images/<?= ($_FILES['photo4']) ? $_FILES['photo4']['name'] : "image vide" ?>"></span><br>
-            <span><img src="http://localhost/annonces/public/images/<?= ($_FILES['photo5']) ? $_FILES['photo5']['name'] : "image vide" ?>"></span><br> -->
+for($i = 0; $i < $nbrPhoto; $i++) {
+    error_log($i);
+    ?>
+           
+            <span><img src="http://localhost/annonces/public/images/<?= ($_FILES['file']) ? $_FILES['file']['name'][$i] : "image vide" ?>"></span><br> 
 
-        <?php } else if (empty($_POST)) {
+
+        <?php }} else if (empty($_POST)) {
 
 error_log("formulairemail.php SANS POST");
 
             $tmp = str_replace("formulairemail/", "", $_GET['url']);
 
-            //Decrypte l'ensemble des données récupérées dans l'url
+            //Décode l'ensemble des données récupérées dans l'url
             $slugcrypter_modif = base64_decode($tmp);
             $donnees = explode("/", $slugcrypter_modif);
         ?>
@@ -59,14 +70,21 @@ error_log("formulairemail.php SANS POST");
                     <label for="categorie">Quoi </label>
                     <select name="categorie" id="">
                         <option value="<?= $donnees[2] ?>"><?= $donnees[2] ?></option>
-                        <option value="1">Immobilier</option>
-                        <option value="2">Vehicules</option>
-                        <option value="3">Loisirs</option>
-                        <option value="4">Meubles</option>
-                        <option value="5">Téléphonie</option>
-                        <option value="6">Mode</option>
-                        <option value="7">Emplois</option>
-                        <option value="8">Multimédia</option>
+                         <?php
+                        $categorie = new Categorie($this->getDb());
+                        $liste = $categorie->findAllCategorie();
+                        // print_r($liste);
+
+                        foreach ($liste as $cat) {
+
+                            // print_r($cat->nom_categorie);
+                            // print_r($cat->id_categorie);
+
+                        ?>
+                            <option value="<?= $cat->id_categorie ?>"><?= $cat->nom_categorie ?></option>
+
+                        <?php } ?>
+
                     </select>
 
                     <div>
@@ -92,7 +110,7 @@ error_log("formulairemail.php SANS POST");
 
                     <?php
                   
-                error_log(print_r($donnees),1)   ;
+                // error_log(print_r($donnees),1)   ;
                 $nbrPhotos =count($donnees)-2;
                 $j=0;
                     for ($i = 7; $i < $nbrPhotos; $i++) {
@@ -147,7 +165,7 @@ for($i = 0; $i < $nbrPhoto; $i++) {
 // error_log(print_r("liste des photos : " .$photo,1));
 
 
-            $slug = $_POST['idTmp'] . '/' . $_POST['ville'] . '/' . $_POST['categorie'] . '/' . $_POST['nom'] . '/' . $_POST['prix'] . '/' . $_POST['description'] . '/' . $_POST['mail'] . '/' . $photo . $_POST['categorie']. '/';
+            $slug = $_POST['idTmp'] . '/' . $_POST['ville'] . '/' . $_POST['categorie'] . '/' . $_POST['nom'] . '/' . $_POST['prix'] . '/' . $_POST['description'] . '/' . $_POST['mail'] . '/' . $photo . '/';
             
 
             // $_FILES['photo1']['name'] . '/' . $_FILES['photo2']['name'] . '/' . $_FILES['photo3']['name'] . '/' . $_FILES['photo4']['name'] . '/' . $_FILES['photo5']['name'] 
