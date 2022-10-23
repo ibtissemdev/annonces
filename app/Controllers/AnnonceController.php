@@ -16,17 +16,18 @@ class AnnonceController extends Controller
 
     public function index()
     { //Affiche la page d'accueil avec toutes les annonces
+        
         $annonce = new Annonce($this->getDb());
         $annonces = $annonce->findAll();
 
-        return $this->view('blog.index', compact('annonces')); //permet d'envoyer un tableau qui contient nos données qui aura la clée annonces
+        return $this->view('annonce.index', compact('annonces')); //permet d'envoyer un tableau qui contient nos données qui aura la clée annonces
     }
 
     public function genPdf()
     { //Affiche la page qui génère le pdf
         // $annonce = new Annonce($this->getDb());
         // $annonces = $annonce->findAll();
-        return $this->view('blog.genpdf'); //permet d'envoyer un tableau qui contient nos données qui aura la clée annonces
+        return $this->view('annonce.genpdf'); //permet d'envoyer un tableau qui contient nos données qui aura la clée annonces
 
     }
 
@@ -37,7 +38,7 @@ class AnnonceController extends Controller
 
         $photo = new Photo($this->getDb());
         $listeChemin = $photo->findCheminsById($id);
-        return $this->view('blog.show', compact('annonce', 'listeChemin'));
+        return $this->view('annonce.show', compact('annonce', 'listeChemin'));
     }
 
     public function search()
@@ -48,11 +49,11 @@ class AnnonceController extends Controller
             $recherche = $_POST['recherche'];
             $resultat = $annonce->recherche($recherche);
             // error_log(print_r($recherche, 1));
-            return $this->view('blog.index', compact('resultat'));
+            return $this->view('annonce.index', compact('resultat'));
         } else {
             $annonces = $annonce->findAll();
         }
-        return $this->view('blog.index', compact('annonces'));
+        return $this->view('annonce.index', compact('annonces'));
     }
 
     public function sup(int $id)
@@ -115,28 +116,24 @@ class AnnonceController extends Controller
     public function form()
     { //Affiche le premier formulaire vide (après avoir cliqué sur ajouter)
         $annonce = new Annonce($this->getDb());
-
-
-        return $this->view('blog.formulaire', compact('annonce'));
+        return $this->view('annonce.formulaire', compact('annonce'));
     }
 
     public function formUpdate()
     { //Afficher le formulaire depuis le lien du mail pour modifier l'annonce qui n'est pas encore dans la base de donnée
         $annonce = new Annonce($this->getDb());
-        return $this->view('blog.formulairemail', compact('annonce'));
+        return $this->view('annonce.formulairemail', compact('annonce'));
     }
+
     public function edit(int $id)
     { //Affiche le formulaire prérempli
         $annonce = (new Annonce($this->getDb()))->findById($id);
-        return $this->view('blog.formulaire', compact('annonce'));
+        return $this->view('annonce.formulaire', compact('annonce'));
     }
 
     public function create()
     { //Formulaire en cliquant sur ajouter dans la page d'accueil
-        $annonce = new Annonce($this->getDb());
-        $mail = new Mail($this->getDb());
-        $photo = new Photo($this->getDb());
-
+       
         //CONDITION SI $_POST N'EST PAS VIDE ALORS ON RECUPERE LES DONNEES
         if (!empty($_POST)) {
             //Update des images
@@ -144,7 +141,7 @@ class AnnonceController extends Controller
             $maxSize = 5000000;
 
             $nbrPhoto = count($_FILES);
-            error_log(print_r($_FILES, 1));
+            // error_log(print_r($_FILES, 1));
 
             for ($i = 0; $i <= $nbrPhoto; $i++) {
                 $filename = $_FILES["file"]['name'][$i];
@@ -153,17 +150,8 @@ class AnnonceController extends Controller
                 $file_extension = pathinfo($location, PATHINFO_EXTENSION);
                 $file_extension = strtolower($file_extension);
 
-                // for ($i = 1; $i <= 5; $i++) {
-
-                //     $filename = $_FILES["photo$i"]['name'];
-                //     $location = './images/' . $filename;
-                //     $file_extension = pathinfo($location, PATHINFO_EXTENSION);
-                //     $file_extension = strtolower($file_extension);
-
                 if (in_array($file_extension, $valid_ext)) {
                     if ($_FILES["file"]['size'][$i] < $maxSize) {
-
-                        // $photo[$i + 1] = $filename;
                         // error_log(print_r($_FILES["file"]['size'][$i], 1));
 
                     } else {
@@ -177,84 +165,75 @@ class AnnonceController extends Controller
                 move_uploaded_file($_FILES["file"]['tmp_name'][$i], $location);
             }
 
-
-
-            // move_uploaded_file($_FILES["photo$i"]['tmp_name'], './images/' . $filename);
-
             //ON DEFFINIE LES SETTERS
-            $newAnnonce = $annonce->setNom($_POST['nom'])
-                ->setDescription($_POST['description'])
-                ->setPrix($_POST['prix'])
-                ->setVille($_POST['ville'])
-                ->setCategorie_id($_POST['categorie']);
-
-
-
+            // $newAnnonce = $annonce->setNom($_POST['nom'])
+            //     ->setDescription($_POST['description'])
+            //     ->setPrix($_POST['prix'])
+            //     ->setVille($_POST['ville'])
+            //     ->setCategorie_id($_POST['categorie']);
 
             //CONDITION POUR VERIFIER SI ON A UN ID ALORS ON APPELLE LA FONCTION UPDATE
-            if (isset($_POST['id']) && !empty($_POST['id'])) {
-                //Upload des images qui vont remplacer celles d'origine
+            // if (isset($_POST['id']) && !empty($_POST['id'])) {
+            //     //Upload des images qui vont remplacer celles d'origine
+
+            //     //Update des images
+            //     $valid_ext = array("gif", "jpg", "png", "jpeg", "webp", "jfif");
+            //     $maxSize = 5000000;
+            //     $nbrPhoto = count($_FILES);
 
 
-                //Update des images
-                $valid_ext = array("gif", "jpg", "png", "jpeg", "webp", "jfif");
-                $maxSize = 5000000;
-                $nbrPhoto = count($_FILES);
+            //     for ($i = 0; $i <= $nbrPhoto; $i++) {
+            //         $filename = $_FILES["file"]['name'][$i];
+
+            //         $location = './images/' . $filename;
+            //         $file_extension = pathinfo($location, PATHINFO_EXTENSION);
+            //         $file_extension = strtolower($file_extension);
 
 
-                for ($i = 0; $i <= $nbrPhoto; $i++) {
-                    $filename = $_FILES["file"]['name'][$i];
+            //         if (in_array($file_extension, $valid_ext)) {
+            //             // if ($_FILES["file"]['size'][$i] < $maxSize) {
 
-                    $location = './images/' . $filename;
-                    $file_extension = pathinfo($location, PATHINFO_EXTENSION);
-                    $file_extension = strtolower($file_extension);
+            //             // error_log(print_r($_FILES["file"]['size'][$i], 1));
 
-
-                    if (in_array($file_extension, $valid_ext)) {
-                        // if ($_FILES["file"]['size'][$i] < $maxSize) {
-
-                        // $photo[$i + 1] = $filename;
-                        // error_log(print_r($_FILES["file"]['size'][$i], 1));
-
-                        move_uploaded_file($_FILES["file"]['tmp_name'][$i], $location);
-                        // } else {
-                        // echo 'taille trop grande  ';
-                        // error_log(print_r($_FILES["file"]['size'][$i], 1));
-                        // }
-                    } else {
-                        echo 'extension non valide';
-                        // error_log('extension non valide');
-                    }
-                }
+            //             move_uploaded_file($_FILES["file"]['tmp_name'][$i], $location);
+            //             // } else {
+            //             // echo 'taille trop grande  ';
+            //             // error_log(print_r($_FILES["file"]['size'][$i], 1));
+            //             // }
+            //         } else {
+            //             echo 'extension non valide';
+            //             // error_log('extension non valide');
+            //         }
+            //     }
 
 
-                $annonce->update($_POST['id'], $newAnnonce);
+            //     $annonce->update($_POST['id'], $newAnnonce);
 
+            //     // for ($i = 7; $i < 12; $i++) {
+            //     //     $newPoto = $photo->setChemin(self::PATH_IMG_ABSOLUTE . $filename[$i]);
+            //     //     $photo->insert($newPoto);
+            //     //     $idPhoto = $this->db->getPDO()->lastInsertId();
 
-                // for ($i = 7; $i < 12; $i++) {
-                //     $newPoto = $photo->setChemin(self::PATH_IMG_ABSOLUTE . $filename[$i]);
-                //     $photo->insert($newPoto);
-                //     $idPhoto = $this->db->getPDO()->lastInsertId();
+            //     //     // echo "<pre>", print_r($idPhoto, 1), "</pre>";
+            //     //     // echo "<pre>", print_r($result, 1), "</pre>";
 
-                //     // echo "<pre>", print_r($idPhoto, 1), "</pre>";
-                //     // echo "<pre>", print_r($result, 1), "</pre>";
-
-                //     $sth = $this->db->getPDO()->prepare("UPDATE liaison_photo SET photo_id = :photo_id WHERE annonce_id = ?");
-                //     $sth->bindParam(':photo_id', $idPhoto, PDO::PARAM_INT);
-                //     $sth->execute();
-                // }
+            //     //     $sth = $this->db->getPDO()->prepare("UPDATE liaison_photo SET photo_id = :photo_id WHERE annonce_id = ?");
+            //     //     $sth->bindParam(':photo_id', $idPhoto, PDO::PARAM_INT);
+            //     //     $sth->execute();
+            //     // }
 
 
 
-                //ENVOIE DU MAIL APRES AVOIR REMPLI LES CHAMPS ET ENVOYE LE FORMULAIRE
-            } else if (isset($_POST['envoyer']) && !empty($_POST['mail'])) {
+            //     //ENVOIE DU MAIL APRES AVOIR REMPLI LES CHAMPS ET ENVOYE LE FORMULAIRE
+            // } else 
+            if (isset($_POST['envoyer']) && !empty($_POST['mail'])) {
 
                 $mail = $_POST['mail'];
                 // print_r($mail);
                 $to = $mail;
                 $subject = "Vérification annonce";
                 ob_start();
-                require '../views/blog/formulairemail.php';
+                require '../views/annonce/formulairemail.php';
                 $message = ob_get_clean();
                 $message = wordwrap($message, 70, "\r\n");
                 // Le destinataire : 
@@ -283,10 +262,10 @@ class AnnonceController extends Controller
 
         //On supprime le mot valid dans l'Url
         $tmp = str_replace("valid/", "", $_GET['url']);
-        //Decrypte l'ensemble des données récupérées dans l'url
-        $slugcrypter_valid = base64_decode($tmp);
+        //Decode l'ensemble des données récupérées dans l'url
+        $slugEncode_valid = base64_decode($tmp);
         //on retourne un tableau avec toutes les données qui étaient séparées par un "/"
-        $donnees = explode("/", $slugcrypter_valid);
+        $donnees = explode("/", $slugEncode_valid);
 
         // error_log(print_r(end($donnees), 1));
 
@@ -308,8 +287,9 @@ class AnnonceController extends Controller
                 //print_r($newAnnonce);
                 //Insertion de l'e-mail dans la table mail avec l'id_annonce
                 $newMail = $mail->setMail($donnees[6])->setId_annonce($result);
+
                 $compteur = count($donnees) - 2;
-                error_log(print_r("nombre de données : " . count($donnees), 1));
+                // error_log(print_r("nombre de données : " . count($donnees), 1));
                 // Insertion des photos dans la table photo
                 for ($i = 7; $i < $compteur; $i++) {
                     $newPoto = $photo->setChemin(self::PATH_IMG_ABSOLUTE . $donnees[$i]);
@@ -323,15 +303,13 @@ class AnnonceController extends Controller
                     $this->db->getPDO()->exec($sth);
                 }
 
-
-
                 $mail->insert($newMail);
 
                 //Envoie du deuxième e-mail qui permet d'afficher/modifier/supprimer l'annonce qui vient d'être rentrée dans la bdd          
                 $to = $donnees[6];
                 $subject = "Votre annonce a été validé";
                 ob_start();
-                require '../views/blog/mail.sup.php';
+                require '../views/annonce/mail.sup.php';
                 $message = ob_get_clean();
                 $message = wordwrap($message, 70, "\r\n");
                 // Le destinataire : 
@@ -357,6 +335,8 @@ class AnnonceController extends Controller
                 }
             } else {
                 echo 'Le temps imparti est écoulé';
+
+                
                 $photo = new Photo($this->getDb());
 
                 //On récupère la liste des photos à supprimer dans la table photos
@@ -418,8 +398,6 @@ class AnnonceController extends Controller
             for ($i = 0; $i <= $nbrPhoto; $i++) {
                 $filename = $_FILES["file"]['name'][$i];
 
-
-                //  $photo[$i + 1] = $filename;
                 move_uploaded_file($_FILES["file"]['tmp_name'][$i], './images/' . $filename);
             }
             //ON DEFFINIE LES SETTERS
@@ -428,12 +406,7 @@ class AnnonceController extends Controller
                 ->setPrix($_POST['prix'])
                 ->setVille($_POST['ville'])
                 ->setCategorie_id($_POST['categorie']);
-            // ->setphoto1(self::PATH_IMG_ABSOLUTE . $_FILES['file']['name'])
-            // ->setphoto2(self::PATH_IMG_ABSOLUTE . $_FILES['file']['name'])
-            // ->setphoto3(self::PATH_IMG_ABSOLUTE . $_FILES['file']['name'])
-            // ->setphoto4(self::PATH_IMG_ABSOLUTE . $_FILES['file']['name'])
-            // ->setphoto5(self::PATH_IMG_ABSOLUTE . $_FILES['file']['name'])
-
+         
 
             //CONDITION POUR VERIFIER SI ON A UN ID ALORS ON APPELLE LA FONCTION UPDATE
             if (isset($_POST['id']) && !empty($_POST['id'])) {
@@ -444,9 +417,7 @@ class AnnonceController extends Controller
                     move_uploaded_file($_FILES["file"]['tmp_name'][$i], './images/' . $filename);
                 }
 
-
                 $annonce->update($_POST['id'], $newAnnonce);
-
 
                 for ($i = 0; $i < $nbrPhoto; $i++) {
 
@@ -468,8 +439,6 @@ class AnnonceController extends Controller
                     ->setId_annonce($result);
                 $mail->insert($newMail);
 
-
-
                 // Insertion des photos dans la table photo
                 $nbrPhoto = count($_FILES);
                 // error_log(print_r($_FILES, 1));
@@ -479,10 +448,8 @@ class AnnonceController extends Controller
 
                     $photo->insert($newPoto);
                     $idPhoto = $this->db->getPDO()->lastInsertId();
-
                     // echo "<pre>", print_r($idPhoto, 1), "</pre>";
                     // echo "<pre>", print_r($result, 1), "</pre>";
-
                     $sth = "INSERT INTO liaison_photo (photo_id,annonce_id) VALUES ($idPhoto,$result)";
                     $this->db->getPDO()->exec($sth);
                 }

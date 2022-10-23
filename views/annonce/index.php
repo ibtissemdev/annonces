@@ -1,42 +1,16 @@
 <?php
 
 use App\Models\Categorie;
-// PAGINATION
 
-//Si elle n'existe pas 1 s'affiche 
-/*$currentPage=(int)($_GET['page'] ?? 1);
-if($currentPage <=0) {
-  throw new Exception('Numéro de page invalide'); 
-}*/
-//Sous forme de tableau numérique, on récupère la première colonne
 $count = (int)  $this->db->getPDO()->query('SELECT COUNT(id)FROM annonces ')->fetch(PDO::FETCH_NUM)[0];
-//Arrondir à la virgule supérieur
-/*$perpage=3;
-$pages = ceil($count/ $perpage);
 
-if($currentPage > $pages) {
-  throw new Exception('Cette page n\'existe pas'); 
-}
-
-$offset = $perpage * ($currentPage - 1);
-$sql= $this->db->getPDO()->query("SELECT * FROM annonces ORDER BY nom DESC LIMIT $perpage OFFSET $offset");
-    $result= $sql->fetchAll(); */
 
 //Si l'utilisateur a tardé à valider l'annonce ce message s'affichera en le redirigeant sur la page d'accueil
 if (isset($_GET['cookie'])) {
   echo "<strong> Le délai d'une heure est écoulé, votre annonce n'a pas été publié recommencez votre saisie </strong><br>";
 }
 
-/*if(($currentPage>1) && ($currentPage<=$pages)):
-  
-?> 
-<div class="pagination">
-<div class="precedent"><a  href="/annonces/?page=<?=$currentPage-1?>"> Page précédente</a></div>
-<?php endif ?>
-<?php if(($currentPage>=1) && ($currentPage<$pages)):
-  ?> <div class="suivant"><a  href="/annonces/?page=<?=$currentPage+1?>"> Page suivante </a>
-  <?php endif 
-*/ ?>
+ ?>
 
 <a href="/annonces/formulaire"><button class='boutton'>Ajouter une annnonce</button></a>
 <div class="recherche">

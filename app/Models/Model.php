@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Models;
-
 use Database\DbConnection;
 use stdClass;
 
@@ -19,7 +18,7 @@ abstract class Model
 
   public function findAll(): array
   {
-    $sql = $this->db->getPDO()->query("SELECT COUNT(annonces.id), description,annonces.id, prix, ville, nom_categorie,annonces.categorie_id, chemin, annonces.nom FROM {$this->table} 
+    $sql = $this->db->getPDO()->query("SELECT COUNT(annonces.id) as a, description,annonces.id, prix, ville, nom_categorie,annonces.categorie_id, chemin, annonces.nom FROM {$this->table} 
     LEFT JOIN categorie ON annonces.categorie_id=categorie.id_categorie
     LEFT JOIN liaison_photo ON liaison_photo.annonce_id=annonces.id 
     LEFT JOIN photos ON photos.id_photo=liaison_photo.photo_id
@@ -80,10 +79,10 @@ abstract class Model
   }
   private function valid_donnees($donnees)
   {
-    $donnees = trim($donnees);
-    $donnees = stripslashes($donnees);
-    $donnees = htmlspecialchars($donnees);
-    $donnees = strip_tags($donnees);
+    $donnees = trim($donnees); //Supprime les espaces en début et fin de chaîne
+    $donnees = stripslashes($donnees); //Supprime les antislashs d'une chaîne
+    $donnees = htmlspecialchars($donnees);//Convertit les caractères spéciaux en entités HTML
+    $donnees = strip_tags($donnees);//Supprime les balises HTML et PHP d'une chaîne
 
     return $donnees;
   }
@@ -97,7 +96,7 @@ abstract class Model
     $values = [];
 
     foreach ($data as $key => $value) {
-      if ($value != null && $key != 'table' && $key != 'db') {
+      if ($value != null && $key != 'table' && $key != 'db') {//Pour ne pas prendre les propriété table et db
         $keys[] = $key;
         $champs[] = '?';
         $valueFiltre = $this->valid_donnees($value);

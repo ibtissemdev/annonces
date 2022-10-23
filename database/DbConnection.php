@@ -1,7 +1,6 @@
 <?php
 
 namespace Database;
-
 use PDO;
 
 class DbConnection {
@@ -10,7 +9,7 @@ class DbConnection {
     private $username;
     private $password;
     private $pdo;
-                                            //Dsn
+                                     //Dsn
     public function __construct(string $dbname, string $host, string $username, string $password)
     {
         $this->dbname = $dbname;

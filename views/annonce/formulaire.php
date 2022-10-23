@@ -3,12 +3,9 @@
 use App\Models\Categorie;
 use App\Models\Photo;
 
-
-
 ?>
 
 <h1> <?= (isset($params['annonce']->id) && !empty($params['annonce']->id)) ? "Modifier " : "Ajouter" ?> une annonce</h1>
-
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -27,8 +24,6 @@ use App\Models\Photo;
     setcookie("idTmp", $idtmp, time() + 3600 );  /* expire dans 1 heure */
     ?>
     <container>
-
-
         <form action="" method="post" enctype="multipart/form-data">
             <div class="partie1">
                 <input type="hidden" name="id" value="<?php if (isset($params['annonce']->id)) {
@@ -38,7 +33,7 @@ use App\Models\Photo;
                 <fieldset>
                     <legend>Informations annonces</legend>
                     <label for="lieux">Où </label>
-                    <select name="ville" id="ville">
+                    <select name="ville" id="ville" required>
                         <?= (isset($params['annonce']->id)) ?  "<option>" . $params['annonce']->ville . "</option>" : "<option disabled selected hidden>Ville</option>"; ?>
                         <option value="Chambery">Chambéry</option>
                         <option value="Grenoble">Grenoble</option>
@@ -55,37 +50,28 @@ use App\Models\Photo;
                     ?>
 
                     <label for="categorie">Quoi </label>
-                    <select name="categorie" id="">
-
+                    <select name="categorie" id="" required>
 
                         <?= (isset($params['annonce']->id)) ?  "<option value=".$nomCategorie->id_categorie.">". $nomCategorie->nom_categorie . "</option>" : "<option disabled selected hidden>Catégorie</option>";
                         ?>
-
                         <?php
                         $categorie = new Categorie($this->getDb());
                         $liste = $categorie->findAllCategorie();
                         // print_r($liste);
-
                         foreach ($liste as $cat) {
-
                         //     print_r($cat->nom_categorie);
                         // error_log(print_r('numéro de l/id catégorie : '.$cat->id_categorie,1))    ;
-
                         ?>
                             <option value="<?= $cat->id_categorie ?>"><?= $cat->nom_categorie ?></option>
 
                         <?php } ?>
-
                     </select>
-
 
                     <label for="titre">Titre : </label>
                     <input type="text" value="<?php
                                                 if (isset($params['annonce']->id)) {
                                                     echo  $params['annonce']->nom;
-                                                } ?>" id="logement" name="nom" required placeholder="Ex : Une superbe voiture">
-
-
+                                                } ?>" id="titre" name="nom" maxlength="20" pattern="^[A-Za-zéèê '-]+$" required placeholder="Ex : Une superbe voiture">
 
                     <label for="prix">Prix : </label>
                     <input type="number" value="<?php
@@ -94,12 +80,10 @@ use App\Models\Photo;
                                                 } ?>" id="wifi" name="prix" required placeholder="Ex : Un prix correct">
 
                     <label for="description">Desciption : </label>
-                    <input type="text" id="parking" value="<?php
+                    <input type="text" id="parking" maxlength="250" value="<?php
                                                             if (isset($params['annonce']->id)) {
                                                                 echo  $params['annonce']->description;
-                                                            } ?>" name="description" required placeholder="Ex : Détails sur le produit">
-
-
+                                                            } ?>" name="description" pattern="^[A-Za-zéèê '-]+$" required placeholder="Ex : Détails sur le produit">
 
             </div>
             </fieldset>
@@ -115,23 +99,23 @@ use App\Models\Photo;
 
                                                         foreach ($listePhoto as $photo) {
                                                             echo '<img src= "' . $photo->chemin . '" alt="photo hébergement">';
-
                                                         }
                                                         echo "Veuillez insérer vos photos à nouveau".'<br>';
                                                       
                                                     } ?>
+
                     <input type="file" name="file[]" multiple>
 
                     <?php
                     if (!isset($params['annonce']->id)) { ?>
-
                         <div>
                             <label for="email">Entrer votre email:</label>
-                            <input type="email" id="email" value=" " size="30" name="mail" id="mail" placeholder="Entrer le mail" required>
+                            <input type="email" id="email" value=" " maxlength="30" pattern="^[A-Za-z0-9]+@{1}[A-Za-z]+\.{1}[A-Za-z]{2,}$" name="mail" id="mail" placeholder="Entrer le mail" required>
 
                         </div>
                     <?php } ?>
                 </fieldset>
+
                 <div id="submit">
                     <input type="submit" name="envoyer" value="<?php
                                                                 if (isset($params['annonce']->id)) {
@@ -145,7 +129,5 @@ use App\Models\Photo;
             </div>
         </form>
         <a href="/annonces/"><button class="btn btn-secondary">Retour</button></a>
-
-     
 
     </container>
