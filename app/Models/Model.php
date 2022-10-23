@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Database\DbConnection;
 use stdClass;
 
@@ -96,7 +97,7 @@ abstract class Model
     $values = [];
 
     foreach ($data as $key => $value) {
-      if ($value != null && $key != 'table' && $key != 'db') {//Pour ne pas prendre les propriété table et db
+      if ($value != null && $key != 'table' && $key != 'db') {//Pour ne pas prendre les propriété table et 
         $keys[] = $key;
         $champs[] = '?';
         $valueFiltre = $this->valid_donnees($value);

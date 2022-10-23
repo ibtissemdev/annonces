@@ -16,7 +16,7 @@ class AnnonceController extends Controller
 
     public function index()
     { //Affiche la page d'accueil avec toutes les annonces
-        
+
         $annonce = new Annonce($this->getDb());
         $annonces = $annonce->findAll();
 
@@ -133,15 +133,15 @@ class AnnonceController extends Controller
 
     public function create()
     { //Formulaire en cliquant sur ajouter dans la page d'accueil
-       
+
         //CONDITION SI $_POST N'EST PAS VIDE ALORS ON RECUPERE LES DONNEES
         if (!empty($_POST)) {
             //Update des images
             $valid_ext = array("gif", "jpg", "png", "jpeg", "webp", "jfif");
             $maxSize = 5000000;
 
-            $nbrPhoto = count($_FILES);
-            // error_log(print_r($_FILES, 1));
+            $nbrPhoto = count($_FILES["file"]['name']);
+            error_log(print_r($_FILES["file"]['name'], 1));
 
             for ($i = 0; $i <= $nbrPhoto; $i++) {
                 $filename = $_FILES["file"]['name'][$i];
@@ -336,12 +336,12 @@ class AnnonceController extends Controller
             } else {
                 echo 'Le temps imparti est écoulé';
 
-                
+
                 $photo = new Photo($this->getDb());
 
                 //On récupère la liste des photos à supprimer dans la table photos
                 $result = $photo->findAllChemin();
-                // error_log(print_r($result, 1));
+                 error_log(print_r($result, 1));
 
                 //On leur supprime le path pour ne laisser que le nom du fichier photo et on les stocke dans un tableau
                 $photoAsupprimer = [];
@@ -351,7 +351,7 @@ class AnnonceController extends Controller
                     $photoAsupprimer[] = $photoPourSup;
                 }
 
-                // error_log(print_r($photoAsupprimer, 1));
+                 error_log(print_r($photoAsupprimer, 1));
                 //On parcour le dossier image et on stocke chaque fichier image dans un tableau
                 $dir = "images/";
                 $dossier = opendir($dir);
@@ -388,11 +388,17 @@ class AnnonceController extends Controller
         $annonce = new Annonce($this->getDb());
         $mail = new Mail($this->getDb());
         $photo = new Photo($this->getDb());
+        //ON DEFFINIE LES SETTERS
+        $newAnnonce = $annonce->setNom($_POST['nom'])
+        ->setDescription($_POST['description'])
+        ->setPrix($_POST['prix'])
+        ->setVille($_POST['ville'])
+        ->setCategorie_id($_POST['categorie']);
 
         //CONDITION SI $_POST N'EST PAS VIDE ALORS ON RECUPERE LES DONNEES
-        if ($_POST && ($_COOKIE['idTmp'] == $_POST['idTmp'])) {
+        if ($_POST && ($_COOKIE['idTmp'] == $_POST['idTmp']) && empty($_POST['id'])) {
             // error_log(print_r($_FILES, 1));
-            $nbrPhoto = count($_FILES);
+            $nbrPhoto = count($_FILES["file"]['name']);
 
 
             for ($i = 0; $i <= $nbrPhoto; $i++) {
@@ -400,38 +406,7 @@ class AnnonceController extends Controller
 
                 move_uploaded_file($_FILES["file"]['tmp_name'][$i], './images/' . $filename);
             }
-            //ON DEFFINIE LES SETTERS
-            $newAnnonce = $annonce->setNom($_POST['nom'])
-                ->setDescription($_POST['description'])
-                ->setPrix($_POST['prix'])
-                ->setVille($_POST['ville'])
-                ->setCategorie_id($_POST['categorie']);
-         
-
-            //CONDITION POUR VERIFIER SI ON A UN ID ALORS ON APPELLE LA FONCTION UPDATE
-            if (isset($_POST['id']) && !empty($_POST['id'])) {
-                $nbrPhoto = count($_FILES);
-                for ($i = 0; $i < $nbrPhoto; $i++) {
-                    $filename = $_FILES["file"]['name'][$i];
-
-                    move_uploaded_file($_FILES["file"]['tmp_name'][$i], './images/' . $filename);
-                }
-
-                $annonce->update($_POST['id'], $newAnnonce);
-
-                for ($i = 0; $i < $nbrPhoto; $i++) {
-
-                    $filename = $_FILES["file"]['name'][$i];
-                    $newPoto = $photo->setChemin(self::PATH_IMG_ABSOLUTE . $filename);
-                    $photo->insert($newPoto);
-                    $idPhoto = $this->db->getPDO()->lastInsertId();
-
-                    // $sth = $this->db->getPDO()->prepare("UPDATE liaison_photo SET photo_id = :photo_id WHERE annonce_id = ?");
-                    // $sth->bindParam(':photo_id', $idPhoto, PDO::PARAM_INT);
-                    // $sth->execute();
-
-                }
-            } else {
+            
 
                 $result = $annonce->insert($newAnnonce);
                 //Insertion de l'e-mail avec l'id_annonce
@@ -440,7 +415,7 @@ class AnnonceController extends Controller
                 $mail->insert($newMail);
 
                 // Insertion des photos dans la table photo
-                $nbrPhoto = count($_FILES);
+                $nbrPhoto = count($_FILES["file"]['name']);
                 // error_log(print_r($_FILES, 1));
                 for ($i = 0; $i <= $nbrPhoto; $i++) {
                     $newPoto = $photo->setChemin(self::PATH_IMG_ABSOLUTE . $_FILES['file']['name'][$i]);
@@ -458,7 +433,7 @@ class AnnonceController extends Controller
                 $to = $_POST['mail'];
                 $subject = "Votre annonce a été validé";
                 ob_start();
-                require '../views/blog/mail.sup.php';
+                require '../views/annonce/mail.sup.php';
                 $message = ob_get_clean();
                 $message = wordwrap($message, 70, "\r\n");
                 // Le destinataire : 
@@ -466,16 +441,108 @@ class AnnonceController extends Controller
                 $headers[] = 'MIME-Version: 1.0';
                 $headers[] = 'Content-type: text/html; charset=utf-8';
 
-                error_log($message);
 
                 if (mail($to, $subject, $message, implode("\r\n", $headers))) {
                     error_log($_POST['mail']);
                     echo 'Votre annonce a été ajouté avec succés, vous allez recevoir un e-mail à l\'adresse indiquée. <a href="/annonces/"><button class="btn btn-secondary">Retour</button></a>';
                 } else {
-                    error_log("erreur");
+                    error_log("Votre message n\'a pas pu être envoyé");
                     echo 'Votre message n\'a pas pu être envoyé';
                 }
+
             }
-        }
+
+
+            //CONDITION POUR VERIFIER SI ON A UN ID ALORS ON APPELLE LA FONCTION UPDATE
+            if (isset($_POST['id']) && !empty($_POST['id'])) {
+                $idAnnonce = $_POST['id'];
+
+                 //On récupère la liste des photos à supprimer dans la table photos
+                $result = $photo->findCheminsById($idAnnonce);
+                // error_log(print_r($result, 1));
+
+                foreach ($result as $photoSup) {
+                    $photo->delete('id_photo', $photoSup->id_photo);
+                }
+
+                //Suppression des liaisons qui correspondent à l'annonce
+                $sth = $this->db->getPDO()->prepare("DELETE FROM liaison_photo WHERE annonce_id=$idAnnonce");
+                $sth->execute();
+
+                $nbrPhoto = count($_FILES["file"]['name']);
+                for ($i = 0; $i < $nbrPhoto; $i++) {
+                    $filename = $_FILES["file"]['name'][$i];
+
+                    move_uploaded_file($_FILES["file"]['tmp_name'][$i], './images/' . $filename);
+                }
+
+                $annonce->update($_POST['id'], $newAnnonce);
+
+               
+
+                error_log(print_r($_FILES, 1));
+                $nbrPho=count($_FILES["file"]['name']);
+                error_log($nbrPho);
+
+                for ($i = 0; $i < $nbrPho; $i++) {
+                    error_log(print_r($i, 1));
+
+                    $filename = $_FILES["file"]['name'][$i];
+                     error_log(print_r($filename, 1));
+                    $newPoto = $photo->setChemin(self::PATH_IMG_ABSOLUTE . $filename);
+                    $photo->insert($newPoto);
+                    $idPhoto = $this->db->getPDO()->lastInsertId();
+
+
+                    $sth = "INSERT INTO liaison_photo (photo_id,annonce_id) VALUES ($idPhoto,$idAnnonce)";
+                    $this->db->getPDO()->exec($sth);
+                }
+            }
+             
+
+                // $result = $annonce->insert($newAnnonce);
+                // //Insertion de l'e-mail avec l'id_annonce
+                // $newMail = $mail->setMail($_POST['mail'])
+                //     ->setId_annonce($result);
+                // $mail->insert($newMail);
+
+                // // Insertion des photos dans la table photo
+                // $nbrPhoto = count($_FILES);
+                // // error_log(print_r($_FILES, 1));
+                // for ($i = 0; $i <= $nbrPhoto; $i++) {
+                //     $newPoto = $photo->setChemin(self::PATH_IMG_ABSOLUTE . $_FILES['file']['name'][$i]);
+
+
+                //     $photo->insert($newPoto);
+                //     $idPhoto = $this->db->getPDO()->lastInsertId();
+                //     // echo "<pre>", print_r($idPhoto, 1), "</pre>";
+                //     // echo "<pre>", print_r($result, 1), "</pre>";
+                //     $sth = "INSERT INTO liaison_photo (photo_id,annonce_id) VALUES ($idPhoto,$result)";
+                //     $this->db->getPDO()->exec($sth);
+                // }
+
+
+                // $to = $_POST['mail'];
+                // $subject = "Votre annonce a été validé";
+                // ob_start();
+                // require '../views/annonce/mail.sup.php';
+                // $message = ob_get_clean();
+                // $message = wordwrap($message, 70, "\r\n");
+                // // Le destinataire : 
+                // $headers[] = "From: ibtissem.khiri@gmail.com";
+                // $headers[] = 'MIME-Version: 1.0';
+                // $headers[] = 'Content-type: text/html; charset=utf-8';
+
+                // error_log($message);
+
+                // if (mail($to, $subject, $message, implode("\r\n", $headers))) {
+                //     error_log($_POST['mail']);
+                //     echo 'Votre annonce a été ajouté avec succés, vous allez recevoir un e-mail à l\'adresse indiquée. <a href="/annonces/"><button class="btn btn-secondary">Retour</button></a>';
+                // } else {
+                //     error_log("erreur");
+                //     echo 'Votre message n\'a pas pu être envoyé';
+                // }
+         
+        
     }
 }

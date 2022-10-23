@@ -103,9 +103,9 @@ use App\Models\Categorie;
                         </div>
                         <div>
                             <label for="description">Desciption : </label>
-                            <input type="text" id="parking" value="<?= $donnees[5] ?>" name="description" maxlength="250" pattern="^[A-Za-zéèê '-]+$" required placeholder="Ex : Détails sur le produit" >
+                            <input type="text" id="parking" value="<?= $donnees[5] ?>" name="description" maxlength="250" pattern="^[A-Za-zéèê0-9 '-]+$" required placeholder="Ex : Détails sur le produit" >
                         </div>
-                        
+
                     </fieldset>
                 </div>
 

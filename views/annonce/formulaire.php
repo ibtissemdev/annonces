@@ -21,7 +21,7 @@ use App\Models\Photo;
 <body>
 
     <?php $idtmp = rand(10000, 99999);
-    setcookie("idTmp", $idtmp, time() + 3600 );  /* expire dans 1 heure */
+    setcookie("idTmp", $idtmp, time() + 60 );  /* expire dans 1 heure */
     ?>
     <container>
         <form action="" method="post" enctype="multipart/form-data">
