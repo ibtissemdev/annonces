@@ -16,12 +16,9 @@ $tableau= implode('","',$tableau);
 print_r($tableau);
 ?></p>
 
-
-
 <div id="slider">
   
         <img src="<?= $params['annonce']->chemin ?>" alt="photo1" id="slide">
-   
         <div id="precedent" onclick="ChangeSlide(-1)"><</div>
         <div id="suivant" onclick="ChangeSlide(1)">></div>
 </div>
@@ -42,6 +39,5 @@ function ChangeSlide(sens) {
 setInterval("ChangeSlide(1)", 3000);
 </script>
 
-<!--<a href="/annonces/annonces/delete/<?= $params['annonce']->id ?>" ><button class="btn btn-secondary">Supprimer</button></a>
-<a href="/annonces/formulaire/<?= $params['annonce']->id ?>" ><button class="btn btn-secondary">Modifier</button></a> ->
+
 

@@ -10,32 +10,39 @@ if (isset($_GET['cookie'])) {
   echo "<strong> Le délai d'une heure est écoulé, votre annonce n'a pas été publié recommencez votre saisie </strong><br>";
 }
 
- ?>
+?>
 
-<a href="/annonces/formulaire"><button class='boutton'>Ajouter une annnonce</button></a>
-<div class="recherche">
-<form action="" method="post">
-  <label for="recherche">Recherche</label>
-  <select name="recherche" id="recherche">
-  <option value= "" disabled selected hidden>Catégorie</option>
-    <?php
-                        $categorie = new Categorie($this->getDb());
-                        $liste = $categorie->findAllCategorie();
-                        // print_r($liste);
+<a href="/annonces/formulaire"><button class='boutton ajouter'>Ajouter une annnonce</button></a>
 
-                        foreach ($liste as $cat) {
 
-                            // print_r($cat->nom_categorie);
-                            // print_r($cat->id_categorie);
+<form action="" method="post" class="formRecherche">
+  <div class="recherche">
+    <fieldset>
+      <legend>Recherche</legend>
+      <select name="recherche" id="recherche">
+        <option value="" disabled selected hidden>Catégorie
 
-                        ?>
-                            <option value="<?= $cat->id_categorie ?>"><?= $cat->nom_categorie ?></option>
+        </option><?php
+                  $categorie = new Categorie($this->getDb());
+                  $liste = $categorie->findAllCategorie();
+                  // print_r($liste);
 
-                        <?php } ?>
-  </select>
-  <button class="boutton" type="search">Envoyer</button>
+                  foreach ($liste as $cat) {
+
+                    // print_r($cat->nom_categorie);
+                    // print_r($cat->id_categorie);
+
+                  ?>
+          <option value="<?= $cat->id_categorie ?>"><?= $cat->nom_categorie ?></option>
+
+        <?php } ?>
+      </select>
+      <button class="boutton" type="search">Envoyer</button>
+    </fieldset>
+
+  </div>
 </form>
-</div>
+
 
 <h1>Les dernières annonces</h1>
 
@@ -56,9 +63,9 @@ if (isset($_GET['cookie'])) {
         <span>
           <div class="nom">
             <h2>Non : <?= $annonce->nom // on récupère en objet
-                  ?></h2>
+                      ?></h2>
             <p>Catégorie : <?= $annonce->nom_categorie // on récupère en objet
-                ?></p>
+                            ?></p>
           </div>
           <img src="<?= $annonce->chemin ?>" alt="photo annonce">
 
@@ -84,7 +91,7 @@ if (isset($_GET['cookie'])) {
     <span>
       <div class="nom">
         <h2> <?= $annonce->nom; // on récupère en objet
-     
+
               ?></h2>
         <p><?= $annonce->nom_categorie // on récupère en objet
             ?></p>

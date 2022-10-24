@@ -309,7 +309,7 @@ class AnnonceController extends Controller
                 $to = $donnees[6];
                 $subject = "Votre annonce a été validé";
                 ob_start();
-                require '../views/annonce/mail.sup.php';
+                require '../index.html';
                 $message = ob_get_clean();
                 $message = wordwrap($message, 70, "\r\n");
                 // Le destinataire : 

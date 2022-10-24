@@ -60,11 +60,12 @@ use App\Models\Categorie;
 
             <form action="" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="idTmp" value="<?= $donnees[0] ?>">
+                <div class="formulaire">
                 <div class="partie1">
                     <fieldset>
                         <legend>Informations annonces</legend>
                         <label for="ville">Où </label>
-                        <select name="ville" id="ville" required>
+                        <select name="ville" id="ville"  required>
                             <option value="<?= $donnees[1] ?>"><?= $donnees[1] ?></option>
                             <option value="Chambery">Chambéry</option>
                             <option value="Grenoble">Grenoble</option>
@@ -94,7 +95,7 @@ use App\Models\Categorie;
 
                         <div>
                             <label for="logement">Titre : </label>
-                            <input type="text" value="<?= $donnees[3] ?>" id="titre" name="nom" maxlength="20" pattern="^[A-Za-zéèê '-]+$" required placeholder="Ex : Une superbe voiture" >
+                            <input type="text" value="<?= $donnees[3] ?>" id="titre" name="nom" maxlength="20" pattern="^[A-Za-zéèê '-]+$" required placeholder="Ex : Une superbe voiture">
                         </div>
 
                         <div>
@@ -103,7 +104,7 @@ use App\Models\Categorie;
                         </div>
                         <div>
                             <label for="description">Desciption : </label>
-                            <input type="text" id="parking" value="<?= $donnees[5] ?>" name="description" maxlength="250" pattern="^[A-Za-zéèê0-9 '-]+$" required placeholder="Ex : Détails sur le produit" >
+                            <input type="text" id="parking" value="<?= $donnees[5] ?>" name="description" maxlength="250" pattern="^[A-Za-zéèê0-9 '-]+$" required placeholder="Ex : Détails sur le produit">
                         </div>
 
                     </fieldset>
@@ -133,18 +134,20 @@ use App\Models\Categorie;
                                 <input type="hidden" id="mail" value="<?= $donnees[6] ?>" name="mail">
                             </div>
                     </fieldset>
+                    <input type="reset">
                     <div id="submit">
                         <button type="submit" name="modifier">Modifier</button><br>
 
                     </div>
 
-                    <input type="reset">
+                
 
+                </div>
                 </div>
             </form>
             <a href="/annonces/"><button class="btn btn-secondary">Retour</button></a>
 
-        <?php echo $donnees[6];
+        <?php 
         }
 
 
@@ -174,7 +177,7 @@ use App\Models\Categorie;
         ?>
             <button type="submit" name="envoyer"><a href="http://localhost/annonces/valid/<?= $slugEncode_valid ?>">Valider</a></button><br>
             <button type="submit" name="envoyer"><a href="http://localhost/annonces/formulairemail/<?= $slugEncode_update ?>">Modifier</a></button><br>
-          
+
         <?php    } ?>
         <a href="http://localhost/annonces/"><button class="btn btn-secondary">Retour</button></a>
     </container>

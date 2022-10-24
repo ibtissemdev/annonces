@@ -9,18 +9,28 @@
    
 </head>
 <body>
-<nav>
+  <header>
+  <nav>
   
   <a class="logo" href="/annonces"><img class="logo" src="../../annonces\lebonteko.png" alt="logo le bon T ko"></a>
 
   
 </nav>
+  </header>
+
+
 
     <div class="container">
             <?= $content ?>
     </div>
    
 </body>
+
+<footer>
+<h2> &copy; Site créé par Ibtissem KHIRI - 2022 </h2>
+
+</footer>
+
 </html>
 
 
