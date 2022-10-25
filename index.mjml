@@ -30,7 +30,7 @@
         <mj-text align="center" font-size="26px" line-height="30px" font-family="Alice, Helvetica, Arial, sans-serif">Pour afficher votre annonce : </mj-text>
         <mj-divider width="20px" padding="20px 0" border-width="2px" border-color="#000000"></mj-divider>
         <mj-text align="center" padding="0 40px">Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Lorem Ipsum</mj-text>
-        <mj-button background-color="#F44E3C" color="white" padding="20px 20px 10px 20px" border-radius="20px"><a href="http://localhost/annonces/annonces/" target="_blank" style="color: #9B9B9B; text-decoration: none;">Call to action</a></mj-button>
+        <mj-button background-color="#F44E3C" color="white" padding="20px 20px 10px 20px" border-radius="20px"><a href="http://localhost/annonces/annonces/{{id}}" target="_blank" style="color: #9B9B9B; text-decoration: none;">Call to action</a></mj-button>
       </mj-column>
     </mj-section>
     <mj-section padding="20px" background-color="#FFFFFF">

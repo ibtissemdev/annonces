@@ -19,12 +19,12 @@ abstract class Model
 
   public function findAll(): array
   {
-    $sql = $this->db->getPDO()->query("SELECT COUNT(annonces.id) as a, description,annonces.id, prix, ville, nom_categorie,annonces.categorie_id, chemin, annonces.nom FROM {$this->table} 
+    $sql = $this->db->getPDO()->query("SELECT annonces.id, description, prix, ville, nom_categorie,annonces.categorie_id, chemin, annonces.nom FROM {$this->table} 
     LEFT JOIN categorie ON annonces.categorie_id=categorie.id_categorie
     LEFT JOIN liaison_photo ON liaison_photo.annonce_id=annonces.id 
     LEFT JOIN photos ON photos.id_photo=liaison_photo.photo_id
     GROUP BY annonces.id
-    HAVING COUNT(annonces.id)
+ 
     ");
     return $sql->fetchAll();
   }
@@ -46,7 +46,6 @@ abstract class Model
 
   public function findById(int $id): stdClass //Classe standard prédéfinie
   {
-
     $sql = $this->db->getPDO()->prepare("SELECT description,annonces.id, prix, ville, nom_categorie, chemin, annonces.nom, annonces.categorie_id FROM {$this->table} 
     LEFT JOIN categorie ON annonces.categorie_id=categorie.id_categorie
     LEFT JOIN liaison_photo ON liaison_photo.annonce_id=annonces.id 
@@ -55,6 +54,8 @@ abstract class Model
     $sql->execute([$id]);
     return $sql->fetch();
   }
+
+
   public function findAllChemin(): array
   {
     $sql = $this->db->getPDO()->query("SELECT chemin FROM {$this->table} ");

@@ -153,28 +153,22 @@ use App\Models\Categorie;
 
         if ($_POST) {
 
-            error_log("formulairemail.php AVEC POST avant envoie du mail");
-
+            // error_log("formulairemail.php AVEC POST avant envoie du mail");
             //  error_log(print_r($_FILES,1));
             $nbrPhoto = count($_FILES['file']['name']);
-
             $photo = "";
             for ($i = 0; $i < $nbrPhoto; $i++) {
-                //    $_FILES[$i]['file']['name'];
-
                 // error_log(print_r("liste des photos : " .$_FILES['file']['name'][$i],1));
                 $photo .= $_FILES['file']['name'][$i];
                 $photo .= '/';
             }
             // error_log(print_r("liste des photos : " .$photo,1));
 
-
             $slug = $_POST['idTmp'] . '/' . $_POST['ville'] . '/' . $_POST['categorie'] . '/' . $_POST['nom'] . '/' . $_POST['prix'] . '/' . $_POST['description'] . '/' . $_POST['mail'] . '/' . $photo . '/';
 
             $slugEncode_valid = base64_encode($slug . "valid");
-            $slugEncode_update = base64_encode($slug . "update");
+            $slugEncode_update = base64_encode($slug . "update");?>
 
-        ?>
             <button type="submit" name="envoyer"><a href="http://localhost/annonces/valid/<?= $slugEncode_valid ?>">Valider</a></button><br>
             <button type="submit" name="envoyer"><a href="http://localhost/annonces/formulairemail/<?= $slugEncode_update ?>">Modifier</a></button><br>
 
