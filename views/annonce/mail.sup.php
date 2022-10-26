@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
-  <title> Annonce validée </title>
+  <title> Mail envoyé après que l'annonce aie été validée </title>
   <!--[if !mso]><!-->
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!--<![endif]-->
@@ -164,19 +164,6 @@
                                 <div style="font-family:Roboto, Helvetica, Arial, sans-serif;font-size:14px;font-weight:400;line-height:21px;text-align:center;color:#000000;">A tout moment vous pourrez voir, modifier ou supprimer votre annonce.</div>
                               </td>
                             </tr>
-                            <tr>
-                              <td align="center" style="font-size:0px;padding:30px 0 10px 0;word-break:break-word;">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;">
-                                  <tbody>
-                                    <tr>
-                                      <td style="width:50px;">
-                                        <img alt="" height="auto" src="http://nimus.de/share/tpl-realestate/icon-2.png" style="border:none;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="50" />
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
                           </tbody>
                         </table>
                       </td>
@@ -189,9 +176,22 @@
                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                   <tbody>
                     <tr>
-                      <td style="background-color:#FAC900;vertical-align:top;padding:0px;">
+                      <td style="vertical-align:top;padding:0px;">
                         <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="" width="100%">
                           <tbody>
+                            <tr>
+                              <td align="center" style="font-size:0px;padding:30px 0 10px 0;word-break:break-word;">
+                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;">
+                                  <tbody>
+                                    <tr>
+                                      <td style="width:50px;">
+                                        <img alt="" height="auto" src="http://nimus.de/share/tpl-realestate/icon-3.png" style="border:none;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="50" />
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
                           </tbody>
                         </table>
                       </td>
@@ -364,8 +364,8 @@
                                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;">
                                   <tbody>
                                     <tr>
-                                      <td style="width:280px;">
-                                        <img alt="" height="auto" src="https://pixabay.com/get/g7090965cb672be6bc6bf6d0266d338c025c254b0ed269a94e38a586420b91cf53fe306d05d776f054f8be5699389ea8482a47e0a96653cf7093021d13d4180e74a3949ab82f8c72342ec892aa17dc804_1920.jpg" style="border:none;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="280" />
+                                      <td style="width:200px;">
+                                        <img alt="" height="auto" src="http://nimus.de/share/tpl-realestate/icon-1.png" style="border:none;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="200" />
                                       </td>
                                     </tr>
                                   </tbody>

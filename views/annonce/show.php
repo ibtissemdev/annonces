@@ -1,9 +1,5 @@
-<h1>Annonce : <?= ucfirst($params['annonce']->nom )?></h1>
-<h2>Catégorie : <?=$params['annonce']->nom_categorie?></h2>
-<h3><?=$params['annonce']->nom_categorie?></h3>
-
-<div class="description"><p> Descritpion : <?= $params['annonce']->description ?></p></div>
-<p><?php 
+<h1> <?= ucfirst($params['annonce']->nom )?></h1>
+<?php 
 // print_r($params['listeChemin']);
 $tableau=[];
 foreach($params['listeChemin'] as $photo) {
@@ -23,6 +19,17 @@ $tableau= implode('","',$tableau);
         <div id="precedent" onclick="ChangeSlide(-1)"><</div>
         <div id="suivant" onclick="ChangeSlide(1)">></div>
 </div>
+
+
+
+
+<h2>Catégorie : <?=$params['annonce']->nom_categorie?></h2>
+<h3>Date de création : <?=date("d/m/Y",strtotime($params['annonce']->date_creation))?></h3> 
+
+
+<div class="description"><h3> Descritpion : </h3><p><?= $params['annonce']->description ?></p></div>
+<p>
+
 <a href="/annonces/"><button class="boutton">Retour</button></a>
 
 <script>
@@ -39,6 +46,3 @@ function ChangeSlide(sens) {
 }
 setInterval("ChangeSlide(1)", 3000);
 </script>
-
-
-

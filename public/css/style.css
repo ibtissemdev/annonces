@@ -90,7 +90,7 @@ span {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 90%;
+  width: 100%;
 }
 .container .description {
   margin-left: 20%;
@@ -114,7 +114,6 @@ span {
 }
 @media (max-width: 1080px) {
   .container {
-    margin: 30px;
     width: auto;
   }
 }
@@ -130,12 +129,17 @@ span {
   border-radius: 6px;
   margin: 10px;
   box-shadow: 10px 10px 10px rgb(214, 212, 212);
-  width: 400px;
+  width: 430px;
   height: auto;
+}
+@media (max-width: 1300px) {
+  .annonce {
+    width: 350px;
+  }
 }
 @media (max-width: 850px) {
   .annonce {
-    width: 300px;
+    width: auto;
   }
 }
 
@@ -143,7 +147,7 @@ button {
   margin: 10px;
 }
 
-.plus {
+.plus, button {
   background-color: #FAC900;
   /* Green */
   border: none;
@@ -156,13 +160,14 @@ button {
   -webkit-transition-duration: 0.4s;
   /* Safari */
   transition-duration: 0.4s;
+  box-shadow: 5px 5px 5px #44D9E6;
 }
 
-.plus:hover {
-  background-color: #323432;
+.plus:hover, button:hover {
+  background-color: #44D9E6;
   /* Green */
   color: white;
-  box-shadow: 10px 5px 5px rgb(214, 212, 212);
+  box-shadow: 10px 5px 5px #FAC900;
 }
 
 .logo {
@@ -337,7 +342,11 @@ input {
   box-shadow: 1px 1px 2px #C0C0C0 inset;
 }
 
-input[type=submit] {
+#image {
+  margin-top: 10px;
+}
+
+input[type=submit], button[type=search] {
   width: auto;
   cursor: pointer;
   background-color: #44D9E6;
@@ -352,6 +361,7 @@ input[type=submit] {
   -webkit-transition-duration: 0.4s;
   /* Safari */
   transition-duration: 0.4s;
+  box-shadow: none;
 }
 
 #submit button {

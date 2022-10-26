@@ -76,26 +76,27 @@ use App\Models\Photo;
                         <label for="description">Desciption : </label>
 
                         <textarea id="parking" maxlength="250" cols=30 rows=3 value="<?php if (isset($params['annonce']->id)){$params['annonce']->description;
-                    }?>" name="description" pattern="^[A-Za-zéèê0-9 '-,:.]+$" required placeholder="Ex : Détails sur le produit"><?php if (isset($params['annonce']->id)){$params['annonce']->description;}?></textarea>
+                    }?>" name="description" pattern="^[A-Za-zéèê0-9 '-,:.]+$" required placeholder="Ex : Détails sur le produit"><?php if (isset($params['annonce']->id)){echo $params['annonce']->description;}?></textarea>
                 </div>
                 </fieldset>
                 <div class="partie2">
                     <fieldset class="upload">
                         <legend>Photos</legend>
 
-                        <label for="file">Ajouter photo </label>
+                     
                         <?php
                         if (isset($params['annonce']->id)) {
                             $photo = new Photo($this->getDb());
                             $listePhoto = $photo->findCheminsById($params['annonce']->id);
 
                             foreach ($listePhoto as $photo) {
-                                echo '<img src= "' . $photo->chemin . '" alt="photo hébergement">';
+                                echo '<img src= "' . $photo->chemin . '" alt="photo hébergement"><br>';
                             }
-                            echo "Veuillez insérer vos photos à nouveau" . '<br>';
+                            
                         }?>
-
-                        <input type="file" name="file[]" multiple required>
+   <label for="file">Sélectionnez des photos à charger  </label>
+                        <input type="file" id="image" name="file[]"   multiple required >
+                      
 
                         <?php
                         if (!isset($params['annonce']->id)) {?>
@@ -121,4 +122,17 @@ use App\Models\Photo;
         </form>
         <a href="/annonces/"><button class="boutton">Retour</button></a>
 
+        <?php 
+      if  (isset($params['annonce']->id)) { ?>
+            <script>
+            let image=document.getElementById('image')
+            image.addEventListener('click', event => {
+                window.alert("Veuillez à nouveau insérer vos photos");
+            });
+                        
+        </script>
+      <?php }
+        ?>
+        
+   
     </container>

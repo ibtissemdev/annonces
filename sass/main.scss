@@ -128,7 +128,7 @@ span {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 90%;
+    width: 100%;
     .description {
 margin-left: 20%;
 margin-right: 20%;
@@ -152,7 +152,7 @@ margin-right: 20%;
     }
 
     @media (max-width:1080px) {
-        margin: 30px;
+   
         width: auto;
 
     }
@@ -172,14 +172,16 @@ margin-right: 20%;
     border-radius: 6px;
     margin: 10px;
     box-shadow: 10px 10px 10px rgb(214, 212, 212);
-    width: 400px;
+    width: 430px;
     height: auto;
 
-    @media (max-width:1080px) {}
+    @media (max-width:1300px) {
+        width: 350px;
+    }
 
     @media (max-width:850px) {
 
-        width: 300px;
+        width: auto;
 
 
     }
@@ -190,7 +192,7 @@ button {
     margin: 10px;
 }
 
-.plus {
+.plus , button {
     background-color: #FAC900;
     /* Green */
     border: none;
@@ -203,16 +205,16 @@ button {
     -webkit-transition-duration: 0.4s;
     /* Safari */
     transition-duration: 0.4s;
-
+    box-shadow: 5px 5px 5px #44D9E6;
 
 }
 
 
-.plus:hover {
-    background-color: #323432;
+.plus:hover, button:hover {
+    background-color: #44D9E6;
     /* Green */
     color: white;
-    box-shadow: 10px 5px 5px rgb(214, 212, 212);
+    box-shadow: 10px 5px 5px #FAC900;
 }
 
 .logo {
@@ -418,6 +420,8 @@ select {
     width: 91%;
 }
 
+
+
 fieldset {
     margin-bottom: 15px;
     padding: 10px;
@@ -449,11 +453,13 @@ input {
 
 }
 
+#image {
+margin-top: 10px;
+}
 
 
 
-
-input[type=submit] {
+input[type=submit],button[type=search] {
     width: auto;
 
     cursor: pointer;
@@ -470,10 +476,11 @@ input[type=submit] {
     -webkit-transition-duration: 0.4s;
     /* Safari */
     transition-duration: 0.4s;
-
-
+    box-shadow: none;
 
 }
+
+
 
 
 #submit {

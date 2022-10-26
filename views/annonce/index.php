@@ -2,7 +2,7 @@
 
 <?php
 
-session_start();
+
 use App\Models\Categorie;
 
 $count = (int)  $this->db->getPDO()->query('SELECT COUNT(id)FROM annonces ')->fetch(PDO::FETCH_NUM)[0];
@@ -42,7 +42,7 @@ if (isset($_GET['cookie'])) {
 
         <?php } ?>
       </select>
-      <button class="boutton" type="search">Envoyer</button>
+      <button type="search">Envoyer</button>
     </fieldset>
 
   </div>
@@ -51,20 +51,21 @@ if (isset($_GET['cookie'])) {
 
 <h1>Les dernières annonces</h1>
 
-<header><?= $count ?> Enregistrements au total</header>
-
-
-<div class="liste">
-
   <?php
   if (!isset($params['resultat'])) {
+
+    ?>
+<p><?= $count ?> Enregistrements au total</p>
+
+<div class="liste">
+<?php
     foreach ($params['annonces'] as $annonce) : ?>
 
       <div class="annonce">
         <span>
           <div class="nom">
-            <h2>Non : <?= $annonce->nom // on récupère en objet?></h2>
-            <p>Catégorie : <?= $annonce->nom_categorie // on récupère en objet?></p>
+            <h2> <?= $annonce->nom // on récupère en objet?></h2>
+            <h3>Catégorie : <?= $annonce->nom_categorie // on récupère en objet?></h3>
           </div>
           <img src="<?= $annonce->chemin ?>" alt="photo annonce">
           <a href="/annonces/annonces/<?= $annonce->id ?>"><button class='plus'>Lire plus</button></a>
@@ -72,11 +73,11 @@ if (isset($_GET['cookie'])) {
       </div>
       
     <?php endforeach;  ?>
+   
 </div>
 
 <?php
-  } else {
-
+  } else { 
 
     foreach ($params['resultat'] as $annonce) :
       //foreach ($result as $annonce) :
@@ -100,6 +101,9 @@ if (isset($_GET['cookie'])) {
   </div>
 
 
-<?php endforeach;
+<?php endforeach; ?>
+<a href="/annonces/"><button class="boutton">Retour</button></a>
+<?php
   } ?>
+  
 </div>

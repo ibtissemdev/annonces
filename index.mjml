@@ -1,6 +1,6 @@
 <mjml>
   <mj-head>
-    <mj-title>Annonce validée</mj-title>
+    <mj-title>Mail envoyé après que l'annonce aie été validée</mj-title>
     <mj-font name="Alice" href="https://fonts.googleapis.com/css?family=Alice"></mj-font>
     <mj-font name="Roboto" href="https://fonts.googleapis.com/css?family=Roboto:400,700"></mj-font>
     <mj-attributes>
@@ -12,12 +12,13 @@
     
     <mj-section padding="30px" background-color="#FFFFFF">
       <mj-column width="60%">
+        
         <mj-text align="center" padding-bottom="20px" font-size="26px" line-height="30px" font-family="Alice, Helvetica, Arial, sans-serif">Votre annonce a été ajouté avec succès</mj-text>
         <mj-text align="center" padding="0 40px">A tout moment vous pourrez voir, modifier ou supprimer votre annonce.</mj-text>
-        <mj-image src="http://nimus.de/share/tpl-realestate/icon-2.png" alt="" padding="30px 0 10px 0" width="50px" align="center" border="none"></mj-image>
       </mj-column>
-      <mj-column width="40%" background-color="#FAC900">
-        
+
+      <mj-column width="40%">
+         <mj-image src="http://nimus.de/share/tpl-realestate/icon-3.png" alt="" padding="30px 0 10px 0" width="50px" align="center" border="none"></mj-image>
       </mj-column>
     </mj-section>
     <mj-section padding="20px" background-color="#FFFFFF">
@@ -40,7 +41,7 @@
     </mj-section>
     <mj-section padding="30px 30px 30px" background-color="white">
       <mj-column width="55%">
-        <mj-image src="https://pixabay.com/get/g7090965cb672be6bc6bf6d0266d338c025c254b0ed269a94e38a586420b91cf53fe306d05d776f054f8be5699389ea8482a47e0a96653cf7093021d13d4180e74a3949ab82f8c72342ec892aa17dc804_1920.jpg" width="280px" padding-bottom="20px" alt="" align="center" border="none"></mj-image>
+        <mj-image src="http://nimus.de/share/tpl-realestate/icon-1.png" width="200px" padding-bottom="20px" alt="" align="center" border="none"></mj-image>
       </mj-column>
       <mj-column width="45%" background-color="white">
         <mj-text align="center" padding-bottom="20px" font-size="26px" line-height="30px" font-family="Alice, Helvetica, Arial, sans-serif">Pour modifier votre annonce</mj-text>

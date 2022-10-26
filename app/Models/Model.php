@@ -46,7 +46,7 @@ abstract class Model
 
   public function findById(int $id): stdClass //Classe standard prédéfinie
   {
-    $sql = $this->db->getPDO()->prepare("SELECT description,annonces.id, prix, ville, nom_categorie, chemin, annonces.nom, annonces.categorie_id FROM {$this->table} 
+    $sql = $this->db->getPDO()->prepare("SELECT description,annonces.id, prix,date_creation, ville, nom_categorie, chemin, annonces.nom, annonces.categorie_id FROM {$this->table} 
     LEFT JOIN categorie ON annonces.categorie_id=categorie.id_categorie
     LEFT JOIN liaison_photo ON liaison_photo.annonce_id=annonces.id 
     LEFT JOIN photos ON photos.id_photo=liaison_photo.photo_id WHERE annonces.id=?");
