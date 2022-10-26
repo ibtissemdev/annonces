@@ -1,7 +1,7 @@
 <?php //session_start(); 
 
 use App\Models\Categorie;
-
+$categorie = new Categorie($this->getDb());
 ?>
 
 
@@ -21,18 +21,19 @@ use App\Models\Categorie;
 
     <container>
 
-        <h4>Récapitulatif de votre annonce </h4>
+        <strong>Récapitulatif de votre annonce </strong>
 
         <?php if ($_POST) {
             error_log("formulairemail.php avec POST");  ?>
 
             <span>Ville : <?= $_POST['ville'] ?></span><br>
-            <span>Catégorie :<?= $_POST['categorie'] ?></span><br>
+            <span>Catégorie : <?=$categorie->findCategorieById($_POST['categorie'])->nom_categorie;
+          ?></span><br>
             <span>Nom : <?= $_POST['nom'] ?></span><br>
-            <span>Prix : <?= $_POST['prix'] ?></span><br>
+            <span>Prix : <?= $_POST['prix'] ?> €</span><br>
             <span>Description : <?= $_POST['description'] ?></span><br>
-            <span>Catégorie_id : <?= $_POST['categorie'] ?></span><br>
 
+           
 
             <?php
             $nbrPhoto = count($_FILES['file']['name']);
@@ -43,7 +44,7 @@ use App\Models\Categorie;
                 error_log($i);
             ?>
 
-                <span><img src="http://localhost/annonces/public/images/<?= ($_FILES['file']) ? $_FILES['file']['name'][$i] : "image vide" ?>"></span><br>
+              <!--  <span><img src="http://localhost/annonces/public/images/<?= ($_FILES['file']) ? $_FILES['file']['name'][$i] : "image vide" ?>"></span><br> -->
 
 
             <?php }
@@ -62,7 +63,7 @@ use App\Models\Categorie;
                 <input type="hidden" name="idTmp" value="<?= $donnees[0] ?>">
                 <div class="formulaire">
                 <div class="partie1">
-                    <fieldset>
+                    <fieldset name="information-modifier">
                         <legend>Informations annonces</legend>
                         <label for="ville">Où </label>
                         <select name="ville" id="ville"  required>
@@ -77,7 +78,7 @@ use App\Models\Categorie;
                         <select name="categorie" id="" required>
                             <option value="<?= $donnees[2] ?>"><?= $donnees[2] ?></option>
                             <?php
-                            $categorie = new Categorie($this->getDb());
+                    
                             $liste = $categorie->findAllCategorie();
                             // print_r($liste);
 
@@ -104,14 +105,14 @@ use App\Models\Categorie;
                         </div>
                         <div>
                             <label for="description">Desciption : </label>
-                            <input type="text" id="parking" value="<?= $donnees[5] ?>" name="description" maxlength="250" pattern="^[A-Za-zéèê0-9 '-]+$" required placeholder="Ex : Détails sur le produit">
+                        <textarea id="parking" maxlength="300" rows="5" cols="26" value="<?= $donnees[5] ?>" name="description" maxlength="250" pattern="^[A-Za-zéèê0-9 '-]+$" required placeholder="Ex : Détails sur le produit"></textarea>
                         </div>
 
                     </fieldset>
                 </div>
 
                 <div class="partie2">
-                    <fieldset>
+                    <fieldset name="photo-modifier">
                         <legend>Photos</legend>
                         <label for="file"> Photos chargés :</label>
 
@@ -133,10 +134,12 @@ use App\Models\Categorie;
 
                                 <input type="hidden" id="mail" value="<?= $donnees[6] ?>" name="mail">
                             </div>
+                          
                     </fieldset>
+              
+                    <div id="submit" name="modifier">
                     <input type="reset">
-                    <div id="submit">
-                        <button type="submit" name="modifier">Modifier</button><br>
+                        <button type="submit" class="boutton" name="modifier">Modifier</button><br>
 
                     </div>
 
@@ -145,7 +148,7 @@ use App\Models\Categorie;
                 </div>
                 </div>
             </form>
-            <a href="/annonces/"><button class="btn btn-secondary">Retour</button></a>
+            <a href="/annonces/"><button class="boutton">Retour</button></a>
 
         <?php 
         }
@@ -169,11 +172,18 @@ use App\Models\Categorie;
             $slugEncode_valid = base64_encode($slug . "valid");
             $slugEncode_update = base64_encode($slug . "update");?>
 
+
+<p>Si votre annonce vous convient, vous pouvez la valider : </p><br>
             <button type="submit" name="envoyer"><a href="http://localhost/annonces/valid/<?= $slugEncode_valid ?>">Valider</a></button><br>
+ <p>Si vous souhaiter la modifier, vous pouvez le faire en suivant ce lien</p>  <br>         
             <button type="submit" name="envoyer"><a href="http://localhost/annonces/formulairemail/<?= $slugEncode_update ?>">Modifier</a></button><br>
+            <p>Vous pouvez tout annuler, en cliquant sur le bouton retour</p>  <br> 
+            <a href="http://localhost/annonces/"><button class="btn btn-secondary">Retour</button></a>
 
         <?php    } ?>
-        <a href="http://localhost/annonces/"><button class="btn btn-secondary">Retour</button></a>
+
+
+     
     </container>
 </body>
 

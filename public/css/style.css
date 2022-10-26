@@ -11,6 +11,12 @@ footer {
   font-size: 12px;
 }
 
+textarea {
+  resize: none;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
 .liste {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -85,6 +91,26 @@ span {
   justify-content: center;
   align-items: center;
   width: 90%;
+}
+.container .description {
+  margin-left: 20%;
+  margin-right: 20%;
+  text-align: center;
+}
+@media (max-width: 1080px) {
+  .container .description {
+    margin: 30px;
+    width: auto;
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+}
+@media (max-width: 850px) {
+  .container .description {
+    width: auto;
+    margin-left: 10%;
+    margin-right: 10%;
+  }
 }
 @media (max-width: 1080px) {
   .container {
@@ -231,8 +257,23 @@ form .formRecherche {
   justify-content: center;
 }
 .partie2 input[type=reset] {
+  width: auto;
   margin-bottom: 20px;
   margin-left: 20px;
+  margin-top: 20px;
+  cursor: pointer;
+  background-color: #44D9E6;
+  /* Green */
+  border: none;
+  color: white;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  -webkit-transition-duration: 0.4s;
+  /* Safari */
+  transition-duration: 0.4s;
 }
 .formulaire {
   width: 100%;

@@ -1,5 +1,8 @@
+
+
 <?php
 
+session_start();
 use App\Models\Categorie;
 
 $count = (int)  $this->db->getPDO()->query('SELECT COUNT(id)FROM annonces ')->fetch(PDO::FETCH_NUM)[0];
@@ -8,7 +11,9 @@ $count = (int)  $this->db->getPDO()->query('SELECT COUNT(id)FROM annonces ')->fe
 //Si l'utilisateur a tardé à valider l'annonce ce message s'affichera en le redirigeant sur la page d'accueil
 if (isset($_GET['cookie'])) {
   echo "<strong> Le délai d'une heure est écoulé, votre annonce n'a pas été publié recommencez votre saisie </strong><br>";
+  
 }
+
 
 ?>
 

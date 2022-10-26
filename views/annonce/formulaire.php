@@ -1,4 +1,4 @@
-<?php //session_start(); 
+<?php session_start(); 
 
 use App\Models\Categorie;
 use App\Models\Photo;
@@ -27,10 +27,9 @@ use App\Models\Photo;
         <form action="" method="post" enctype="multipart/form-data">
             <div class="formulaire">
                 <div class="partie1">
-                    <input type="hidden" name="id" value="
-                <?php if (isset($params['annonce']->id)) {
+                    <input type="hidden" name="id" value="<?php if (isset($params['annonce']->id)) {
                     echo  $params['annonce']->id;
-                } ?>">
+                }?>">
                     <input type="hidden" name="idTmp" value="<?= $idtmp ?>">
 
                     <fieldset>
@@ -48,7 +47,7 @@ use App\Models\Photo;
                             $categorie = new Categorie($this->getDb());
                             $nomCategorie = $categorie->findCategorieById($params['annonce']->categorie_id);
                             // error_log(print_r($nomCategorie,1));
-                        } ?>
+                        }?>
                         <label for="categorie">Quoi </label>
                         <select name="categorie" id="" required>
                             <?= (isset($params['annonce']->id)) ?  "<option value=" . $nomCategorie->id_categorie . ">" . $nomCategorie->nom_categorie . "</option>" : "<option disabled selected hidden value=''>Catégorie</option>";
@@ -66,19 +65,18 @@ use App\Models\Photo;
                         <input type="text" value="<?php
                     if (isset($params['annonce']->id)) {
                         echo  $params['annonce']->nom;
-                    } ?>" id="titre" name="nom" maxlength="20" pattern="^[A-Za-zéèê '-]+$" required placeholder="Ex : Une superbe voiture">
+                    }?>" id="titre" name="nom" maxlength="30" pattern="^[A-Za-zéèê0-9 '-,:.]+$" required placeholder="Ex : Une superbe voiture">
 
                         <label for="prix">Prix : </label>
                         <input type="number" value="<?php
-                    if (isset($params['annonce']->id)) {
+                    if (isset($params['annonce']->id)){
                         echo  $params['annonce']->prix;
                     } ?>" id="wifi" name="prix" required placeholder="Ex : Un prix correct">
 
                         <label for="description">Desciption : </label>
-                        <input type="text" id="parking" maxlength="250" value="<?php
-                    if (isset($params['annonce']->id)) {
-                        echo  $params['annonce']->description;
-                    } ?>" name="description" pattern="^[A-Za-zéèê '-]+$" required placeholder="Ex : Détails sur le produit">
+
+                        <textarea id="parking" maxlength="250" cols=30 rows=3 value="<?php if (isset($params['annonce']->id)){$params['annonce']->description;
+                    }?>" name="description" pattern="^[A-Za-zéèê0-9 '-,:.]+$" required placeholder="Ex : Détails sur le produit"><?php if (isset($params['annonce']->id)){$params['annonce']->description;}?></textarea>
                 </div>
                 </fieldset>
                 <div class="partie2">
@@ -95,24 +93,22 @@ use App\Models\Photo;
                                 echo '<img src= "' . $photo->chemin . '" alt="photo hébergement">';
                             }
                             echo "Veuillez insérer vos photos à nouveau" . '<br>';
-                        } ?>
+                        }?>
 
                         <input type="file" name="file[]" multiple required>
 
                         <?php
-                        if (!isset($params['annonce']->id)) { ?>
+                        if (!isset($params['annonce']->id)) {?>
                             <div>
                                 <label for="email">Entrer votre email:</label>
                                 <input type="email" id="email" value=" " maxlength="30" pattern="^[A-Za-z0-9]+@{1}[A-Za-z]+\.{1}[A-Za-z]{2,}$" name="mail" id="mail" placeholder="Entrer le mail" required>
 
-                            </div>
-                        <?php } ?>
+                            </div><?php }?>
                       
                     </fieldset>
                     <input class="" type="reset">
                     <div id="submit">
-                        <input class="submit" type="submit" name="envoyer" value="<?php
-                        if (isset($params['annonce']->id)) {
+                        <input class="submit" type="submit" name="envoyer" value="<?php if (isset($params['annonce']->id)) {
                             echo  'Modifier une annonce';
                         } else {
                             echo 'Ajouter une annonce';

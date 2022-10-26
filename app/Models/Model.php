@@ -127,8 +127,11 @@ abstract class Model
     }
     $values[] = $id;
     $keys = implode(",", $keys);
+     
+error_log(print_r($values,1));
     $sth = $this->db->getPDO()->prepare("UPDATE $this->table SET $keys WHERE id = ?");
     $sth->execute($values);
+  
   }
 
   public function recherche($recherche)

@@ -1,6 +1,8 @@
-<h1><?= $params['annonce']->nom ?></h1>
+<h1>Annonce : <?= ucfirst($params['annonce']->nom )?></h1>
+<h2>Catégorie : <?=$params['annonce']->nom_categorie?></h2>
+<h3><?=$params['annonce']->nom_categorie?></h3>
 
-<p> Descritpion : <?= $params['annonce']->description ?></p>
+<div class="description"><p> Descritpion : <?= $params['annonce']->description ?></p></div>
 <p><?php 
 // print_r($params['listeChemin']);
 $tableau=[];
@@ -13,7 +15,6 @@ $tableau[]=$photo->chemin;
 
 $tableau= implode('","',$tableau);
 
-print_r($tableau);
 ?></p>
 
 <div id="slider">
