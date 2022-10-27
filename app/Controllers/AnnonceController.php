@@ -31,6 +31,14 @@ class AnnonceController extends Controller
 
     }
 
+    public function recherche()
+    { //Affiche la page qui récupère la recherhe
+        // $annonce = new Annonce($this->getDb());
+        // $annonces = $annonce->findAll();
+        return $this->view('annonce.recherche'); //permet d'envoyer un tableau qui contient nos données qui aura la clée annonces
+
+    }
+
     public function show(int $id)
     { // Affiche une page de manière dynamique selon l'Id de l'annonce
         $annonce = new Annonce($this->getDb());
@@ -44,11 +52,11 @@ class AnnonceController extends Controller
     public function search()
     { //Barre de recherche selon la catégorie de l'annonce
         $annonce = new Annonce($this->getDb());
-        if (isset($_POST['recherche'])) {
+        if (isset($_GET['recherche'])) {
 
-            $recherche = $_POST['recherche'];
+            $recherche = $_GET['recherche'];
             $resultat = $annonce->recherche($recherche);
-            // error_log(print_r($recherche, 1));
+           
             return $this->view('annonce.index', compact('resultat'));
         } else {
             $annonces = $annonce->findAll();

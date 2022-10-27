@@ -21,7 +21,7 @@ $categorie = new Categorie($this->getDb());
 
     <container>
 
-        <strong>Récapitulatif de votre annonce </strong>
+        <h1>Récapitulatif de votre annonce </h1>
 
         <?php if ($_POST) {
             error_log("formulairemail.php avec POST");  ?>

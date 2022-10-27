@@ -27,6 +27,8 @@ $router->post('/formulairemail/:slug', 'App\Controllers\AnnonceController@update
 // $router->get('/annonces/:page', 'App\Controllers\AnnonceController@pagination');
 $router->get('/annonces', 'App\Controllers\AnnonceController@search');
 $router->get('/genpdf', 'App\Controllers\AnnonceController@genPdf');
+$router->get('/recherche/:recherche', 'App\Controllers\AnnonceController@recherche');
+
 
 //Vérifie si notre route match
 $router->run();

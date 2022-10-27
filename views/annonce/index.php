@@ -20,11 +20,11 @@ if (isset($_GET['cookie'])) {
 <a href="/annonces/formulaire"><button class='boutton ajouter'>Ajouter une annnonce</button></a>
 
 
-<form action="" method="post" class="formRecherche">
+<form action="" method="get" class="formRecherche">
   <div class="recherche">
     <fieldset>
       <legend>Recherche</legend>
-      <select name="recherche" id="recherche">
+      <select name="recherche" onchange="request(this.value)" id="recherche" >
         <option value="" disabled selected hidden>Catégorie
 
         </option><?php
@@ -38,11 +38,11 @@ if (isset($_GET['cookie'])) {
                     // print_r($cat->id_categorie);
 
                   ?>
-          <option value="<?= $cat->id_categorie ?>"><?= $cat->nom_categorie ?></option>
+          <option  value="<?= $cat->id_categorie ?>"><?= $cat->nom_categorie ?></option>
 
         <?php } ?>
       </select>
-      <button type="search">Envoyer</button>
+      <button type="search" >Envoyer</button>
     </fieldset>
 
   </div>
@@ -57,7 +57,7 @@ if (isset($_GET['cookie'])) {
     ?>
 <p><?= $count ?> Enregistrements au total</p>
 
-<div class="liste">
+<div class="liste" id="liste">
 <?php
     foreach ($params['annonces'] as $annonce) : ?>
 
@@ -107,3 +107,58 @@ if (isset($_GET['cookie'])) {
   } ?>
   
 </div>
+
+
+<script>
+
+
+    
+function request(recherche) {
+
+  
+console.log(recherche);
+
+    var  httpRequest = new XMLHttpRequest();
+    //    requête en mode GET, construction de l'URL en récupérant l'id_categorie, rendre la requête asynchrone
+
+httpRequest.open('GET', 'http://localhost/annonces/recherche/'+recherche, true);
+
+httpRequest.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');//encapsule la requête dans une entête que l'on définit dans une URL
+    
+    httpRequest.onreadystatechange = function() {
+        console.log('variable à transmettre :'+recherche);
+        // window.alert('variable à transmettre :'+recherche);
+        //Si la requête a été reçu (statut 200 : réseau) et 4 : traité
+        if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+
+           // Response
+           var response =httpRequest.responseText; 
+  //  console.log(response);  
+// console.log(document.getElementById('liste'));
+// var annonce= JSON.parse(response)
+
+
+let sup=document.getElementById('liste').innerHTML ="";
+
+let objet_json= 
+ [ {
+    "from": "amazon",
+    "subject": "votre colis a"
+  }]
+
+var objet=JSON.stringify(objet_json)
+
+objet=JSON.parse(objet)
+
+ const nouveau =document.getElementById('liste').innerHTML=objet[0].subject
+
+console.log(objet[0].subject)
+    }};
+    
+     httpRequest.send();
+    //  window.alert("requête traitée avec "+recherche);
+
+
+}
+
+</script>
