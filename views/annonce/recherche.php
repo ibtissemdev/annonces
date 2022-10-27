@@ -13,11 +13,13 @@ $id_categorie= explode('/', filter_var($_GET['url']), FILTER_SANITIZE_URL);
  $result=$annonces->recherche($id_categorie[1]);
 
 
+$encoder=json_encode($result,JSON_UNESCAPED_UNICODE);
+$encoder=str_replace("\/","/",$encoder);
 
-$encoder= json_encode($result) ;
+echo $encoder ;
 // echo json_encode($result,JSON_FORCE_OBJECT);
 
-error_log(print_r($encoder,1));
+ error_log(print_r($encoder,1));
 
 
 ?>

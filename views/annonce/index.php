@@ -132,27 +132,38 @@ httpRequest.setRequestHeader('Content-type', 'application/x-www-form-urlencoded'
         if (httpRequest.readyState == 4 && httpRequest.status == 200) {
 
            // Response
-           var response =httpRequest.responseText; 
-  //  console.log(response);  
+           var response =httpRequest.responseText
+
+    console.log(response);  
+
+    let contenu= document.getElementById('liste')
+
+    console.log(contenu)
+
+
+
 // console.log(document.getElementById('liste'));
 // var annonce= JSON.parse(response)
+// console.log(response);
+// let sup=document.getElementById('liste').innerHTML ="";
 
+// let objet_json= 
+//  [ {
+//     "from": "amazon",
+//     "subject": "votre colis a été livré"
+//   }, {
+//     "from": "vente",
+//     "subject": "colis en retard"
+//   }]
 
-let sup=document.getElementById('liste').innerHTML ="";
+//   response=JSON.stringify(response)
+// // newResponse=JSON.stringify(response)
 
-let objet_json= 
- [ {
-    "from": "amazon",
-    "subject": "votre colis a"
-  }]
+// // responseDecode =JSON.parse(newResponse)
+// response =JSON.parse(response)
+// //  const nouveau =document.getElementById('liste').innerHTML=objet[0].subject
 
-var objet=JSON.stringify(objet_json)
-
-objet=JSON.parse(objet)
-
- const nouveau =document.getElementById('liste').innerHTML=objet[0].subject
-
-console.log(objet[0].subject)
+//  console.log(response)
     }};
     
      httpRequest.send();
