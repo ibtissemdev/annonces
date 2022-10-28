@@ -20,11 +20,11 @@ if (isset($_GET['cookie'])) {
 <a href="/annonces/formulaire"><button class='boutton ajouter'>Ajouter une annnonce</button></a>
 
 
-<form action="" method="get" class="formRecherche">
+<form action="" method="post" class="formRecherche">
   <div class="recherche">
     <fieldset>
       <legend>Recherche</legend>
-      <select name="recherche" onchange="request(this.value)" id="recherche" >
+      <select name="recherche"  id="recherche" >
         <option value="" disabled selected hidden>Catégorie
 
         </option><?php
@@ -108,68 +108,3 @@ if (isset($_GET['cookie'])) {
   
 </div>
 
-
-<script>
-
-
-    
-function request(recherche) {
-
-  
-console.log(recherche);
-
-    var  httpRequest = new XMLHttpRequest();
-    //    requête en mode GET, construction de l'URL en récupérant l'id_categorie, rendre la requête asynchrone
-
-httpRequest.open('GET', 'http://localhost/annonces/recherche/'+recherche, true);
-
-httpRequest.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');//encapsule la requête dans une entête que l'on définit dans une URL
-    
-    httpRequest.onreadystatechange = function() {
-        console.log('variable à transmettre :'+recherche);
-        // window.alert('variable à transmettre :'+recherche);
-        //Si la requête a été reçu (statut 200 : réseau) et 4 : traité
-        if (httpRequest.readyState == 4 && httpRequest.status == 200) {
-
-           // Response
-           var response =httpRequest.responseText
-
-    console.log(response);  
-
-    let contenu= document.getElementById('liste')
-
-    console.log(contenu)
-
-
-
-// console.log(document.getElementById('liste'));
-// var annonce= JSON.parse(response)
-// console.log(response);
-// let sup=document.getElementById('liste').innerHTML ="";
-
-// let objet_json= 
-//  [ {
-//     "from": "amazon",
-//     "subject": "votre colis a été livré"
-//   }, {
-//     "from": "vente",
-//     "subject": "colis en retard"
-//   }]
-
-//   response=JSON.stringify(response)
-// // newResponse=JSON.stringify(response)
-
-// // responseDecode =JSON.parse(newResponse)
-// response =JSON.parse(response)
-// //  const nouveau =document.getElementById('liste').innerHTML=objet[0].subject
-
-//  console.log(response)
-    }};
-    
-     httpRequest.send();
-    //  window.alert("requête traitée avec "+recherche);
-
-
-}
-
-</script>

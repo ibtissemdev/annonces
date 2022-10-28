@@ -1,6 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Beau+Rivage&display=swap');
 
 
+$couleurPrimaire: #FAC900;
+$couleurSecondaire:#44D9E6;
+$couleurDark: black;
+
+
+
+
 body {
     margin: 20px;
     text-align: center;
@@ -10,7 +17,7 @@ body {
 
 
 footer {
-    background: #FAC900;
+    background: $couleurPrimaire;
     height: 60px;
     padding: 10px;
 font-size: 12px;
@@ -22,7 +29,6 @@ textarea {
     border-radius: 5px;
   }
 
-  
 
 .liste {
     //flex-wrap: wrap;
@@ -47,7 +53,7 @@ textarea {
 
 
 nav {
-    background: #FAC900;
+    background: $couleurPrimaire;
     display: flex;
     justify-content: space-between;
     flex-direction: row;
@@ -67,30 +73,10 @@ nav {
 
         width: auto;
 
-        // object-fit: cover;
+     
 
     }
 
-
-    // .ml4 {
-    //     position: relative;
-    //     font-weight: 900;
-    //     font-size: 2em;
-    //     position: absolute;
-
-    // }
-
-    // .ml4 .letters {
-    //     position: absolute;
-    //     margin: auto;
-    //     left: 600px;
-    //     top: 0.3em;
-    //     bottom: 80px;
-    //     right: 0;
-    //     opacity: 0;
-    //     height: auto;
-
-    // }
 }
 
 .boutton {
@@ -123,6 +109,7 @@ span {
 
 }
 
+
 .container {
     display: flex;
     flex-direction: column;
@@ -132,7 +119,9 @@ span {
     .description {
 margin-left: 20%;
 margin-right: 20%;
-        text-align: center;
+        text-align: left;
+
+       
         @media (max-width:1080px) {
             margin: 30px;
             width: auto;
@@ -188,12 +177,64 @@ margin-right: 20%;
 
 }
 
+
+.infos {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+    background-color: $couleurPrimaire;
+    margin: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: auto;
+    .date, .cat {
+    font-size:16px ;
+    }
+    .date, .cat {
+        @media (max-width:1300px) {
+            font-size: 12px;
+        }
+    
+        @media (max-width:850px) {
+    
+            font-size:10px;
+    
+    
+        }
+    }
+  
+
+}
+
+.afficher {
+    border: 2px solid;
+    border: outset;
+    border-radius: 6px;
+    margin: 10px;
+    box-shadow: 10px 10px 10px rgb(214, 212, 212);
+    width: 800px;
+    height: auto;
+
+    @media (max-width:1300px) {
+        width: 350px;
+    }
+
+    @media (max-width:850px) {
+
+        width: auto;
+
+
+    }
+
+}
+
 button {
     margin: 10px;
 }
 
 .plus , button {
-    background-color: #FAC900;
+    background-color:$couleurPrimaire;
     /* Green */
     border: none;
     color: white;
@@ -214,7 +255,7 @@ button {
     background-color: #44D9E6;
     /* Green */
     color: white;
-    box-shadow: 10px 5px 5px #FAC900;
+    box-shadow: 10px 5px 5px $couleurPrimaire;
 }
 
 .logo {
@@ -230,7 +271,7 @@ button {
 // }
 
 .recherche {
-    background: #FAC900;
+    background: $couleurPrimaire;
     display: flex;
     justify-content:center;
     flex-direction: row;

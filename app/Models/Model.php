@@ -136,7 +136,7 @@ error_log(print_r($values,1));
 
   public function recherche($recherche)
   {
-    $sql = "SELECT  description,annonces.id, prix, ville, nom_categorie,  annonces.nom FROM {$this->table} 
+    $sql = "SELECT  description, annonces.id,chemin, prix, ville, nom_categorie,  annonces.nom FROM {$this->table}  
     LEFT JOIN categorie ON annonces.categorie_id=categorie.id_categorie
     LEFT JOIN liaison_photo ON liaison_photo.annonce_id=annonces.id 
     LEFT JOIN photos ON photos.id_photo=liaison_photo.photo_id

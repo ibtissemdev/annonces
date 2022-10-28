@@ -95,7 +95,7 @@ span {
 .container .description {
   margin-left: 20%;
   margin-right: 20%;
-  text-align: center;
+  text-align: left;
 }
 @media (max-width: 1080px) {
   .container .description {
@@ -139,6 +139,50 @@ span {
 }
 @media (max-width: 850px) {
   .annonce {
+    width: auto;
+  }
+}
+
+.infos {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #FAC900;
+  margin: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: auto;
+}
+.infos .date, .infos .cat {
+  font-size: 16px;
+}
+@media (max-width: 1300px) {
+  .infos .date, .infos .cat {
+    font-size: 12px;
+  }
+}
+@media (max-width: 850px) {
+  .infos .date, .infos .cat {
+    font-size: 10px;
+  }
+}
+
+.afficher {
+  border: 2px solid;
+  border: outset;
+  border-radius: 6px;
+  margin: 10px;
+  box-shadow: 10px 10px 10px rgb(214, 212, 212);
+  width: 800px;
+  height: auto;
+}
+@media (max-width: 1300px) {
+  .afficher {
+    width: 350px;
+  }
+}
+@media (max-width: 850px) {
+  .afficher {
     width: auto;
   }
 }

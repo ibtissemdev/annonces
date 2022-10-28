@@ -10,6 +10,7 @@ $router = new Router($_GET['url']);
         //      $path        namespace              $action
 $router->get('/', 'App\Controllers\AnnonceController@index');
 $router->post('/', 'App\Controllers\AnnonceController@search');
+$router->get('/annonces', 'App\Controllers\AnnonceController@search');
 $router->get('/annonces/:id', 'App\Controllers\AnnonceController@show'); 
 
 $router->get('/annonces/delete/:id', 'App\Controllers\AnnonceController@sup');
@@ -25,9 +26,9 @@ $router->post('/valid/:id', 'App\Controllers\AnnonceController@valid');
 $router->get('/formulairemail/:slug', 'App\Controllers\AnnonceController@formUpdate');
 $router->post('/formulairemail/:slug', 'App\Controllers\AnnonceController@updateMail');
 // $router->get('/annonces/:page', 'App\Controllers\AnnonceController@pagination');
-$router->get('/annonces', 'App\Controllers\AnnonceController@search');
+
 $router->get('/genpdf', 'App\Controllers\AnnonceController@genPdf');
-$router->get('/recherche/:recherche', 'App\Controllers\AnnonceController@recherche');
+// $router->get('/recherche/:recherche', 'App\Controllers\AnnonceController@recherche');
 
 
 //Vérifie si notre route match

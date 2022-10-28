@@ -1,6 +1,6 @@
 <mjml>
   <mj-head>
-    <mj-title>Mail envoyé après que l'annonce aie été validée</mj-title>
+    <mj-title>Mail envoyé après que l'annonce ait été validée</mj-title>
     <mj-font name="Alice" href="https://fonts.googleapis.com/css?family=Alice"></mj-font>
     <mj-font name="Roboto" href="https://fonts.googleapis.com/css?family=Roboto:400,700"></mj-font>
     <mj-attributes>
@@ -12,7 +12,6 @@
     
     <mj-section padding="30px" background-color="#FFFFFF">
       <mj-column width="60%">
-        
         <mj-text align="center" padding-bottom="20px" font-size="26px" line-height="30px" font-family="Alice, Helvetica, Arial, sans-serif">Votre annonce a été ajouté avec succès</mj-text>
         <mj-text align="center" padding="0 40px">A tout moment vous pourrez voir, modifier ou supprimer votre annonce.</mj-text>
       </mj-column>
