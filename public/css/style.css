@@ -105,13 +105,6 @@ span {
     margin-right: 10%;
   }
 }
-@media (max-width: 850px) {
-  .container .description {
-    width: auto;
-    margin-left: 10%;
-    margin-right: 10%;
-  }
-}
 @media (max-width: 1080px) {
   .container {
     width: auto;
@@ -153,16 +146,19 @@ span {
   padding-right: 10px;
   height: auto;
 }
-.infos .date, .infos .cat {
+.infos .date,
+.infos .cat {
   font-size: 16px;
 }
 @media (max-width: 1300px) {
-  .infos .date, .infos .cat {
+  .infos .date,
+.infos .cat {
     font-size: 12px;
   }
 }
 @media (max-width: 850px) {
-  .infos .date, .infos .cat {
+  .infos .date,
+.infos .cat {
     font-size: 10px;
   }
 }
@@ -191,7 +187,8 @@ button {
   margin: 10px;
 }
 
-.plus, button {
+.plus,
+button {
   background-color: #FAC900;
   /* Green */
   border: none;
@@ -207,7 +204,8 @@ button {
   box-shadow: 5px 5px 5px #44D9E6;
 }
 
-.plus:hover, button:hover {
+.plus:hover,
+button:hover {
   background-color: #44D9E6;
   /* Green */
   color: white;
@@ -390,7 +388,8 @@ input {
   margin-top: 10px;
 }
 
-input[type=submit], button[type=search] {
+input[type=submit],
+button[type=search] {
   width: auto;
   cursor: pointer;
   background-color: #44D9E6;

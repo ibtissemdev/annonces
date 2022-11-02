@@ -26,7 +26,7 @@ $categorie = new Categorie($this->getDb());
         <?php if ($_POST) {
             error_log("formulairemail.php avec POST");  ?>
 
-            <span style="font-size: 15px; font-weight: bold; font-family: arial, times, serif">Ville : <?= $_POST['ville'] ?></span><br>
+            <span>Ville : <?= $_POST['ville'] ?> <p></p></span>
             <span>Catégorie : <?=$categorie->findCategorieById($_POST['categorie'])->nom_categorie;
           ?></span><br>
             <span>Nom : <?= $_POST['nom'] ?></span><br>

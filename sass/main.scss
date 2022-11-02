@@ -2,7 +2,7 @@
 
 
 $couleurPrimaire: #FAC900;
-$couleurSecondaire:#44D9E6;
+$couleurSecondaire: #44D9E6;
 $couleurDark: black;
 
 
@@ -20,14 +20,14 @@ footer {
     background: $couleurPrimaire;
     height: 60px;
     padding: 10px;
-font-size: 12px;
+    font-size: 12px;
 }
 
 textarea {
     resize: none;
     border: 1px solid black;
     border-radius: 5px;
-  }
+}
 
 
 .liste {
@@ -73,7 +73,7 @@ nav {
 
         width: auto;
 
-     
+
 
     }
 
@@ -116,32 +116,24 @@ span {
     justify-content: center;
     align-items: center;
     width: 100%;
+
     .description {
-margin-left: 20%;
-margin-right: 20%;
+        margin-left: 20%;
+        margin-right: 20%;
         text-align: left;
 
-       
         @media (max-width:1080px) {
             margin: 30px;
             width: auto;
             margin-left: 10%;
             margin-right: 10%;
         }
-    
-        @media (max-width:850px) {
-    
-            width: auto;
-            margin-left: 10%;
-            margin-right: 10%;
-    
-    
-        }
 
     }
+    
 
     @media (max-width:1080px) {
-   
+
         width: auto;
 
     }
@@ -182,28 +174,32 @@ margin-right: 20%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    
+
     background-color: $couleurPrimaire;
     margin: 10px;
     padding-left: 10px;
     padding-right: 10px;
     height: auto;
-    .date, .cat {
-    font-size:16px ;
+
+    .date,
+    .cat {
+        font-size: 16px;
     }
-    .date, .cat {
+
+    .date,
+    .cat {
         @media (max-width:1300px) {
             font-size: 12px;
         }
-    
+
         @media (max-width:850px) {
-    
-            font-size:10px;
-    
-    
+
+            font-size: 10px;
+
+
         }
     }
-  
+
 
 }
 
@@ -233,8 +229,9 @@ button {
     margin: 10px;
 }
 
-.plus , button {
-    background-color:$couleurPrimaire;
+.plus,
+button {
+    background-color: $couleurPrimaire;
     /* Green */
     border: none;
     color: white;
@@ -251,7 +248,8 @@ button {
 }
 
 
-.plus:hover, button:hover {
+.plus:hover,
+button:hover {
     background-color: #44D9E6;
     /* Green */
     color: white;
@@ -273,7 +271,7 @@ button {
 .recherche {
     background: $couleurPrimaire;
     display: flex;
-    justify-content:center;
+    justify-content: center;
     flex-direction: row;
     align-items: center;
     padding-left: 50px;
@@ -297,8 +295,8 @@ button {
 
 }
 
-.ajouter{
-margin-bottom: 60px ;
+.ajouter {
+    margin-bottom: 60px;
     margin-bottom: 40px;
 }
 
@@ -325,12 +323,13 @@ form {
     flex-direction: row;
     justify-content: center;
     border: #44D9E6 solid 2px;
-.formRecherche {
-margin-top: 50px;
-    width: auto;
-    
-}
-    
+
+    .formRecherche {
+        margin-top: 50px;
+        width: auto;
+
+    }
+
 
     @media (max-width:1080px) {
         width: 400px;
@@ -381,7 +380,7 @@ margin-top: 50px;
     justify-content: center;
 
     input[type=reset] {
-width: auto;
+        width: auto;
         margin-bottom: 20px;
         margin-left: 20px;
         margin-top: 20px;
@@ -399,20 +398,16 @@ width: auto;
         -webkit-transition-duration: 0.4s;
         /* Safari */
         transition-duration: 0.4s;
-    
 
-
-    }
-
-    @media (max-width:1080px) {
-       
 
 
     }
+
+    @media (max-width:1080px) {}
 
     @media (max-width:850px) {
 
-    
+
 
         // object-fit: cover;
 
@@ -495,12 +490,13 @@ input {
 }
 
 #image {
-margin-top: 10px;
+    margin-top: 10px;
 }
 
 
 
-input[type=submit],button[type=search] {
+input[type=submit],
+button[type=search] {
     width: auto;
 
     cursor: pointer;
